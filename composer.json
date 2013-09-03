@@ -12,5 +12,8 @@
             "homepage": "http://dschini.org",
             "role": "Developer"
         }
-    ]
+    ],
+    "autoload": {
+        "psr-0": { "": "src/" }
+    }
 }
