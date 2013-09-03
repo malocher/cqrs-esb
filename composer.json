@@ -1,0 +1,16 @@
+{
+    "name": "dschini/cqrs",
+    "description": "cqrs",
+    "version": "0.3.0",
+    "type": "library",
+    "keywords": ["cqrs","ddd"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Manfred Weber",
+            "email": "manfred.weber@gmail.com",
+            "homepage": "http://dschini.org",
+            "role": "Developer"
+        }
+    ],
+}
