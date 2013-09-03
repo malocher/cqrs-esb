@@ -1,5 +1,5 @@
 {
-    "name": "dschini/cqrs-php",
+    "name": "crafics/cqrs-php",
     "description": "cqrs",
     "version": "0.3.0",
     "type": "library",
