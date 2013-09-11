@@ -1,4 +1,5 @@
 {
+    "name": "crafics/cqrs-php",
     "require-dev": {
         "phpunit/phpunit": "3.7.*"
     },
