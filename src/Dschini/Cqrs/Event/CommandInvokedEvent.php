@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Dschini\Cqrs\Events;
+namespace Dschini\Cqrs\Event;
 
 use Dschini\Cqrs\Event;
 
