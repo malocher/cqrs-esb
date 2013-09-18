@@ -10,11 +10,9 @@ namespace Cqrs\Bus;
 
 use Cqrs\Gate;
 use Cqrs\Command\CommandInterface;
-use Cqrs\Command\CommandHandlerInterface;
 use Cqrs\Command\CommandHandlerLoaderInterface;
 
 use Cqrs\Event\EventInterface;
-use Cqrs\Event\EventListenerInterface;
 use Cqrs\Event\EventListenerLoaderInterface;
 /**
  * AbstractBus
@@ -78,80 +76,49 @@ abstract class AbstractBus implements BusInterface
     }
     
     /**
-     * Map a command to a command handler
-     * 
-     * @param string                         $commandOrClass
-     * @param CommandHandlerInterface|string $commandHandlerOrAlias
-     * 
-     * @return void
+     * {@inheritDoc}
      */
-    public function mapCommand($commandClass, $commandHandlerOrAlias) {
+    public function mapCommand($commandClass, $callableOrDefinition) {
         
         if (!isset($this->commandHandlerMap[$commandClass])) {
             $this->commandHandlerMap[$commandClass] = array();
         }
         
-        $this->commandHandlerMap[$commandClass][] = $commandHandlerOrAlias;
+        $this->commandHandlerMap[$commandClass][] = $callableOrDefinition;
     }
     
     /**
-     * Hand over command to registered command handler(s)
-     * 
-     * @param CommandInterface $command
-     * 
-     * @return array List of success status for each command handler
+     * {@inheritDoc}
      */
     public function invokeCommand(CommandInterface $command) {
         $commandClass = get_class($command);
-        $successList = array();
         
-        foreach($this->commandHandlerMap[$commandClass] as $i => $commandHandlerOrAlias) {
-            $commandHandler = $this->getCommandHandler($commandHandlerOrAlias);
-            //cache command handler object
-            $this->commandHandlerMap[$commandClass][$i] = $commandHandler;
+        foreach($this->commandHandlerMap[$commandClass] as $i => $callableOrDefinition) {
+            if (is_callable($callableOrDefinition)) {
+                call_user_func($callableOrDefinition, $command, $this->gate);
+                return;
+            }
             
-            $successList[$commandClass] = $commandHandler->handleCommand($command, $this->gate);
+            if (is_array($callableOrDefinition)) {
+                $commandHandler = $this->commandHandlerLoader->getCommandHandler($callableOrDefinition['alias']);
+                $method = $callableOrDefinition['method'];
+                $commandHandler->{$method}($command, $this->gate);
+                return;
+            }
         }
-        
-        return $successList;
     }
     
     /**
-     * Register a listener for an event
-     * 
-     * @param string                        $eventClass
-     * @param EventListenerInterface|string $listenerOrAlias
-     * 
-     * @return void
+     * {@inheritDoc}
      */
-    public function registerEventListener($eventClass, $listenerOrAlias) {
+    public function registerEventListener($eventClass, $callableOrDefinition) {
         
     }
     
     /**
-     * Dispatch an event
-     * 
-     * @param EventInterface $event
-     * 
-     * @return void
+     * {@inheritDoc}
      */
-    public function dispatchEvent(EventInterface $event) {
+    public function publishEvent(EventInterface $event) {
         
-    }
-    
-    /**
-     * If provided argument is a string, then it is treated as an alias is passed
-     * to the CommandHandlerLoader to get an instance of the command handler
-     * 
-     * @param type $commandHandlerOrAlias
-     * 
-     * @return CommandHandlerInterface
-     */
-    protected function getCommandHandler($commandHandlerOrAlias) {
-        if (is_string($commandHandlerOrAlias)) {
-            $commandHandlerOrAlias = $this->commandHandlerLoader->getCommandHandler($commandHandlerOrAlias);
-        }
-        
-        return $commandHandlerOrAlias;
     }
 }

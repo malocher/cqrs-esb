@@ -1,19 +1,16 @@
 <?php
 namespace Test\Mock\Command;
 
-use Cqrs\Command\CommandHandlerInterface;
 use Cqrs\Command\CommandInterface;
 use Cqrs\Gate;
 
-class MockCommandHandler implements CommandHandlerInterface
+class MockCommandHandler
 {
     
     public function handleCommand(CommandInterface $command, Gate $gate)
     {
         if ($command instanceof MockCommand) {
-            return true;
+            $command->edit();
         }
-        
-        return false;
     }  
 }

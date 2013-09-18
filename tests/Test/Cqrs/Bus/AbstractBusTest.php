@@ -27,24 +27,50 @@ class AbstractBusTest extends \PHPUnit_Framework_TestCase
         $classMapCommandHandlerLoader = new ClassMapCommandHandlerLoader();
         $classMapEventListenerLoader = new ClassMapEventListenerLoader();
         $this->object = new Mock\Bus\BusMock($classMapCommandHandlerLoader, $classMapEventListenerLoader);
-        $this->object->mapCommand('Test\Mock\Command\MockCommand', 'Test\Mock\Command\MockCommandHandler');
         Gate::getInstance()->pipe($this->object);
     }
 
     /**
      * @covers Cqrs\Bus\AbstractBus::invokeCommand
      */
-    public function testInvokeCommand()
+    public function testInvokeCommand__withCommandHandlerDefinition()
     {
-        $mockCommand = new Mock\Command\MockCommand();
-        
-        $successList = Gate::getInstance()->getBus('mock_bus')->invokeCommand($mockCommand);
-        
-        $check = array(
-            'Test\Mock\Command\MockCommand' => true
+        $this->object->mapCommand(
+            'Test\Mock\Command\MockCommand', 
+            array(
+                'alias' => 'Test\Mock\Command\MockCommandHandler',
+                'method' => 'handleCommand'
+            )
         );
         
-        $this->assertEquals($check, $successList);
+        $mockCommand = new Mock\Command\MockCommand();
+        
+        Gate::getInstance()->getBus('mock_bus')->invokeCommand($mockCommand);
+        
+        //The MockCommandHandler should call $mockCommand->edit(), otherwise
+        //$mockCommand->isEdited() returns false
+        $this->assertTrue($mockCommand->isEdited());
+    }
+    
+    /**
+     * @covers Cqrs\Bus\AbstractBus::invokeCommand
+     */
+    public function testInvokeCommand__withCallableCommandHandler()
+    {
+        $this->object->mapCommand(
+            'Test\Mock\Command\MockCommand', 
+            function($command, $gate) {
+                $command->edit();
+            }
+        );
+        
+        $mockCommand = new Mock\Command\MockCommand();
+        
+        Gate::getInstance()->getBus('mock_bus')->invokeCommand($mockCommand);
+        
+        //The MockCommandHandler should call $mockCommand->edit(), otherwise
+        //$mockCommand->isEdited() returns false
+        $this->assertTrue($mockCommand->isEdited());
     }
 
     /**
@@ -63,7 +89,7 @@ class AbstractBusTest extends \PHPUnit_Framework_TestCase
      * @covers Cqrs\Bus\AbstractBus::dispatchEvent
      * @todo   Implement testDispatchEvent().
      */
-    public function testDispatchEvent()
+    public function testPublishEvent()
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(

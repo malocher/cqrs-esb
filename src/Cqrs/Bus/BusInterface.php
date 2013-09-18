@@ -52,45 +52,60 @@ interface BusInterface {
     /**
      * Map a command to a command handler
      * 
-     * @param string                         $commandOrClass
-     * @param CommandHandlerInterface|string $commandHandlerOrAlias
+     * You can provide every callable as command handler or a definition array,
+     * that contains the keys alias and method.
+     * 
+     * @example defintion:
+     * 
+     * $userCommandHandlerDefinition = array(
+     *      'alias'  => 'user_service',        //Alias is passed to CommandHandlerLoader
+     *      'method' => 'handleAddUserCommand' //Method is called after loading CommandHandler  
+     * );
+     * 
+     * The method that handles a command gets two arguments.
+     * The first one is the command and the second is the gate.
+     * 
+     * @param string         $commandClass
+     * @param callable|array $callableOrDefinition
      * 
      * @return void
      */
-    public function mapCommand($commandClass, $commandHandlerOrAlias);
+    public function mapCommand($commandClass, $callableOrDefinition);
     
     /**
      * Hand over command to registered command handler(s)
      * 
-     * @example:
-     * 
-     * $successList = $bus->invokeCommand(new CreateUserCommand(array('name' => 'John Doe')));
-     * //$successList = array(
-     * //   'user_command_handler' => true,
-     * //   'password_generator'   => true,
-     * //)
-     * 
      * @param CommandInterface $command
-     * @return array List of success status for each command handler
+     * @return void
      */
     public function invokeCommand(CommandInterface $command);
     
     /**
      * Register a listener for an event
      * 
-     * @param string                        $eventClass
-     * @param EventListenerInterface|string $listenerOrAlias
+     * You can provide every callable as event listener or a definition array,
+     * that contains the keys alias and method.
+     * 
+     * @example defintion:
+     * 
+     * $userAddedEventListenerDefinition = array(
+     *      'alias'  => 'password_generator', //Alias is passed to EventListenerLoader
+     *      'method' => 'onUserAdded'         //Method is called after loading the EventListener  
+     * );
+     * 
+     * @param string         $eventClass
+     * @param callable|array $callableOrDefinition
      * 
      * @return void
      */
-    public function registerEventListener($eventClass, $listenerOrAlias);
+    public function registerEventListener($eventClass, $callableOrDefinition);
     
     /**
-     * Dispatch an event
+     * Publish an event
      * 
      * @param EventInterface $event
      * 
      * @return void
      */
-    public function dispatchEvent(EventInterface $event);
+    public function publishEvent(EventInterface $event);
 }
