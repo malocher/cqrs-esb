@@ -9,31 +9,60 @@
 
 namespace Dschini\Cqrs;
 
+use Dschini\Cqrs\Bus\BusInterface;
+
 /**
  * Gate
  *
  * @author Manfred Weber <manfred.weber@gmail.com>
  */
 class Gate {
+    
+    /**
+     * Singleton instance
+     * 
+     * @var Gate
+     */
+    private static $instance;
 
     private $busSystems;
-    private $routing;
+    
+    /**
+     * 
+     * @return Gate
+     */
+    static public function getInstance()
+    {
+        if (is_null(static::$instance)) {
+            static::$instance = new static();
+        }
+        
+        return static::$instance;
+    }
 
-    public function __construct(Routing $routing){
+    /**
+     * Private constructor
+     */
+    private function __construct(){
         $this->busSystems = array();
-        $this->routing = $routing;
-        $routing->setGate($this);
+    }
+    
+    private function __clone()
+    {
+        //Singleton implementation, so clone is not allowed
     }
 
-    public function pipe(Bus $bus){
-        $bus->gate = $this;
-        $this->busSystems[$bus->name] = $bus;
+    public function pipe(BusInterface $bus){
+        $bus->setGate($this);
+        $this->busSystems[$bus->getName()] = $bus;
     }
 
-    public function getRouting(){
-        return $this->routing;
-    }
-
+    /**
+     * 
+     * @param string $name
+     * @return BusInterface
+     * @throws \Exception
+     */
     public function getBus($name){
         if(!isset($this->busSystems[$name])){
             throw new \Exception(sprintf("Bus [%s] does not exists",$name));

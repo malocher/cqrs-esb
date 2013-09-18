@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Dschini\Cqrs\Interfaces;
+namespace Dschini\Cqrs\Event;
 
 /**
  * EventInterfaces

@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Dschini\Cqrs\Interfaces;
+namespace Dschini\Cqrs\Command;
 
 /**
  * CommandInterfaces
@@ -15,5 +15,18 @@ namespace Dschini\Cqrs\Interfaces;
  * @author Manfred Weber <manfred.weber@gmail.com>
  */
 interface CommandInterface {
-
+    
+    /**
+     * Constructor
+     * 
+     * @param array $arguments
+     */
+    public function __construct(array $arguments = null);
+    
+    /**
+     * Get arguments of the command as array
+     * 
+     * @return array List of arguments
+     */
+    public function getArguments();
 }
