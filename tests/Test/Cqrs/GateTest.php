@@ -1,14 +1,12 @@
 <?php
-/**
- * Created by JetBrains PhpStorm.
- * User: manfredweber
- * Date: 11.09.13
- * Time: 21:27
- * To change this template use File | Settings | File Templates.
+/*
+ * This file is part of the Cqrs package.
+ * (c) Manfred Weber <manfred.weber@gmail.com> and Alexander Miertsch <kontakt@codeliner.ws>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
-
 namespace Test\Cqrs;
-
 
 use Cqrs\Gate;
 use Test\TestCase;
