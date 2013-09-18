@@ -4,6 +4,6 @@
         "phpunit/phpunit": "3.7.*"
     },
     "autoload": {
-        "psr-0": { "Dschini\\Test\\": "tests/","Dschini\\": "src/" }
+        "psr-0": { "Test\\": "tests/","Cqrs\\": "src/" }
     }
 }
