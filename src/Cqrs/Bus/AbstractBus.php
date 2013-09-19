@@ -113,7 +113,7 @@ abstract class AbstractBus implements BusInterface
      */
     public function registerEventListener($eventClass, $callableOrDefinition) {
         if (!isset($this->eventListenerMap[$eventClass])) {
-            $this->commandHandlerMap[$eventClass] = array();
+            $this->eventListenerMap[$eventClass] = array();
         }
         
         $this->eventListenerMap[$eventClass][] = $callableOrDefinition;
