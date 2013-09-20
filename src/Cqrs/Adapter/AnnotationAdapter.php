@@ -34,7 +34,7 @@ class AnnotationAdapter implements AdapterInterface {
     }
 
     /**
-     * Route
+     * Allow
      *
      * Link a Class (probably a service) to a service!
      * Note that we actually __allow__ a class to read/write to a bus.
@@ -66,17 +66,22 @@ class AnnotationAdapter implements AdapterInterface {
      * @param BusInterface  $bus
      * @param String        $qualifiedClassname
      */
-    public function route(BusInterface $bus,$qualifiedClassname)
+    public function allow(BusInterface $bus,$qualifiedClassname)
     {
         $reflClass = new \ReflectionClass($qualifiedClassname);
         $reflMs = $reflClass->getMethods();
 
         foreach($reflMs as $reflM){
+            // command mapping
             $aCommand = $this->annotationReader->getMethodAnnotation($reflM,'Cqrs\Annotation\Command');
-            $bus->mapCommand(
-                $aCommand->getCommandClass(),
-                array('alias'=>$reflM->class,'method'=>$reflM->name)
-            );
+            if($aCommand){
+                $bus->mapCommand($aCommand->getClass(),array('alias'=>$reflM->class,'method'=>$reflM->name));
+            }
+            // event registering
+            $aEvent = $this->annotationReader->getMethodAnnotation($reflM,'Cqrs\Annotation\Event');
+            if($aEvent){
+                $bus->registerEventListener($aEvent->getClass(),array('alias'=>$reflM->class,'method'=>$reflM->name));
+            }
         }
 
     }

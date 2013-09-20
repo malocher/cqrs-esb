@@ -8,9 +8,18 @@
  */
 namespace Test\Mock\Event;
 
-use Cqrs\Event\EventInterface;
 use Cqrs\Message;
+use Cqrs\Event\EventInterface;
 
 class MockEvent extends Message implements EventInterface
 {
+    protected $edited = false;
+
+    public function edit() {
+        $this->edited = true;
+    }
+
+    public function isEdited() {
+        return $this->edited;
+    }
 }

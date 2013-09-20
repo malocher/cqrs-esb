@@ -8,17 +8,19 @@
  */
 namespace Test\Mock\Service;
 
+use Test\Mock\Command\MockCommand;
+use Test\Mock\Event\MockEvent;
+
 class MockFooService {
 
     /**
      * @Cqrs\Annotation\Command("Test\Mock\Command\MockCommand")
      */
-    public function getFoo($command)
+    public function getFoo(MockCommand $command)
     {
-        var_dump(array(
-            'class' => __CLASS__,
-            'method' => __METHOD__,
-            'command' => $command
-        ));
+        $mockEvent = new MockEvent();
+        $mockEvent->edit();
+        $command->edit();
+        return $mockEvent;
     }
 }

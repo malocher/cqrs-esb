@@ -11,10 +11,10 @@ namespace Cqrs\Annotation;
 /**
  * @Annotation
  */
-class Command {
+class Event {
 
     /**
-     * @var string name of the command
+     * @var string name of the event
      */
     private $class;
 

@@ -13,7 +13,8 @@ class MockEventListener
     protected $mockEventMessage = null;
     
     public function onMock(MockEvent $event) {
-        $this->mockEventMessage = $event->getArguments()['message'];
+        $arguments = $event->getArguments();
+        $this->mockEventMessage = $arguments['message'];
     }
     
     public function getMockEventMessage() {

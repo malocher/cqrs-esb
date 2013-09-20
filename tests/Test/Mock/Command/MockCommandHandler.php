@@ -9,12 +9,11 @@
 namespace Test\Mock\Command;
 
 use Cqrs\Command\CommandInterface;
-use Cqrs\Gate;
 
 class MockCommandHandler
 {
     
-    public function handleCommand(CommandInterface $command, Gate $gate)
+    public function handleCommand(CommandInterface $command)
     {
         if ($command instanceof MockCommand) {
             $command->edit();

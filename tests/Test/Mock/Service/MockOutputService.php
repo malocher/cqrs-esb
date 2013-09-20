@@ -11,16 +11,24 @@ namespace Test\Mock\Service;
 use Test\Mock\Command\MockCommand;
 use Test\Mock\Event\MockEvent;
 
-class MockBarService {
+class MockOutputService {
 
     /**
-     * @Cqrs\Annotation\Command("Test\Mock\Command\MockCommand")
+     * @Cqrs\Annotation\Event("Test\Mock\Event\MockEvent")
      */
-    public function getBar(MockCommand $command)
+    public function getXml(MockEvent $event)
     {
-        $mockEvent = new MockEvent();
-        $mockEvent->edit();
-        $command->edit();
-        return $mockEvent;
+        var_dump(__METHOD__);
+        var_dump($event);
     }
+
+    /**
+     * @Cqrs\Annotation\Event("Test\Mock\Event\MockEvent")
+     */
+    public function getJson(MockEvent $event)
+    {
+        var_dump(__METHOD__);
+        var_dump($event);
+    }
+
 }

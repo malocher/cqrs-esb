@@ -11,15 +11,16 @@ namespace Test\Mock\Event;
 class InvokableEventListener
 {
     protected $mockEventMessage;
-    
+
     /**
      * Listen on MockEvents
-     * 
-     * @param Test\Mock\Event\MockEvent $event
+     *
+     * @param \Test\Mock\Event\MockEvent $event
      */
     public function __invoke(MockEvent $event)
     {
-        $this->mockEventMessage = $event->getArguments()['message'];
+        $arguments = $event->getArguments();
+        $this->mockEventMessage = $arguments['message'];
     }
     
     public function getMockEventMessage() {

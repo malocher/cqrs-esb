@@ -82,7 +82,7 @@ abstract class AbstractBus implements BusInterface
         if (!isset($this->commandHandlerMap[$commandClass])) {
             $this->commandHandlerMap[$commandClass] = array();
         }
-        
+
         $this->commandHandlerMap[$commandClass][] = $callableOrDefinition;
     }
     
@@ -91,18 +91,19 @@ abstract class AbstractBus implements BusInterface
      */
     public function invokeCommand(CommandInterface $command) {
         $commandClass = get_class($command);
-        
         foreach($this->commandHandlerMap[$commandClass] as $i => $callableOrDefinition) {
             if (is_callable($callableOrDefinition)) {
-                call_user_func($callableOrDefinition, $command, $this->gate);
-                return;
+                $event = call_user_func($callableOrDefinition, $command, $this->gate);
+                $this->publishEvent( $event );
+                //return;
             }
-            
+
             if (is_array($callableOrDefinition)) {
                 $commandHandler = $this->commandHandlerLoader->getCommandHandler($callableOrDefinition['alias']);
                 $method = $callableOrDefinition['method'];
-                $commandHandler->{$method}($command, $this->gate);
-                return;
+                $event = $commandHandler->{$method}($command);
+                $this->publishEvent( $event );
+                //return;
             }
         }
     }
@@ -114,7 +115,7 @@ abstract class AbstractBus implements BusInterface
         if (!isset($this->eventListenerMap[$eventClass])) {
             $this->eventListenerMap[$eventClass] = array();
         }
-        
+
         $this->eventListenerMap[$eventClass][] = $callableOrDefinition;
     }
     
@@ -123,18 +124,20 @@ abstract class AbstractBus implements BusInterface
      */
     public function publishEvent(EventInterface $event) {
         $eventClass = get_class($event);
-        
+        if(!isset($this->eventListenerMap[$eventClass])){
+            return;
+        }
         foreach($this->eventListenerMap[$eventClass] as $i => $callableOrDefinition) {
             if (is_callable($callableOrDefinition)) {
                 call_user_func($callableOrDefinition, $event);
-                return;
+                //return;
             }
-            
+
             if (is_array($callableOrDefinition)) {
                 $eventListener = $this->eventListenerLoader->getEventListener($callableOrDefinition['alias']);
                 $method = $callableOrDefinition['method'];
                 $eventListener->{$method}($event);
-                return;
+                //return;
             }
         }
     }

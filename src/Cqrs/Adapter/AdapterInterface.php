@@ -23,8 +23,8 @@ interface AdapterInterface {
     public function __construct();
 
     /**
-     * implement route
+     * implement allow
      */
-    public function route(BusInterface $bus,$qualifiedClassname);
+    public function allow(BusInterface $bus,$qualifiedClassname);
 
 }

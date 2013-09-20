@@ -34,15 +34,13 @@ class AnnotationAdapterTest extends TestCase
         $gate->pipe($bus);
 
         $adapter = new AnnotationAdapter();
-        $adapter->route($bus,'Test\Mock\Service\MockFooService');
-        $adapter->route($bus,'Test\Mock\Service\MockBarService');
+        $adapter->allow($bus,'Test\Mock\Service\MockFooService');
+        $adapter->allow($bus,'Test\Mock\Service\MockBarService');
+        $adapter->allow($bus,'Test\Mock\Service\MockOutputService');
 
         $mockCommand = new MockCommand();
         $bus->invokeCommand($mockCommand);
 
-        $this->markTestIncomplete(
-            'Event requires implementation! Also command caching is wrong!'
-        );
     }
 
 }

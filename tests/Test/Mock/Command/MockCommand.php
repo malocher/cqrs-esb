@@ -18,7 +18,7 @@ class MockCommand extends Message implements CommandInterface
     public function edit() {
         $this->edited = true;
     }
-    
+
     public function isEdited() {
         return $this->edited;
     }
