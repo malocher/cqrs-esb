@@ -8,9 +8,15 @@
  */
 namespace Test\Mock\Event;
 
-use Cqrs\Event\EventInterface;
-use Cqrs\Message;
-
-class MockEvent extends Message implements EventInterface
+class MockEventListener
 {
+    protected $mockEventMessage = null;
+    
+    public function onMock(MockEvent $event) {
+        $this->mockEventMessage = $event->getArguments()['message'];
+    }
+    
+    public function getMockEventMessage() {
+        return $this->mockEventMessage;
+    }
 }
