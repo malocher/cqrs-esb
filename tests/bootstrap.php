@@ -6,15 +6,8 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace Cqrs\Service;
+error_reporting(E_ALL);
 
-use Cqrs\Bus;
+$loader = require __DIR__.'/../vendor/autoload.php';
 
-/**
- * ServiceInterfaces
- *
- * @author Manfred Weber <manfred.weber@gmail.com>
- */
-interface ServiceInterface {
-
-}
+\Doctrine\Common\Annotations\AnnotationRegistry::registerFile(dirname(__DIR__).'/src/Cqrs/Annotation/Command.php');

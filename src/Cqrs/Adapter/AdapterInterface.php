@@ -6,16 +6,25 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace Cqrs;
+namespace Cqrs\Adapter;
 
-use Cqrs\Bus;
-use Cqrs\Service\ServiceInterface;
+use Cqrs\Bus\BusInterface;
 
 /**
- * Service
+ * AdapterInterface
  *
  * @author Manfred Weber <manfred.weber@gmail.com>
  */
-class Service implements ServiceInterface {
+interface AdapterInterface {
+
+    /**
+     * Constructor
+     */
+    public function __construct();
+
+    /**
+     * implement route
+     */
+    public function route(BusInterface $bus,$qualifiedClassname);
 
 }

@@ -79,7 +79,6 @@ abstract class AbstractBus implements BusInterface
      * {@inheritDoc}
      */
     public function mapCommand($commandClass, $callableOrDefinition) {
-        
         if (!isset($this->commandHandlerMap[$commandClass])) {
             $this->commandHandlerMap[$commandClass] = array();
         }

@@ -13,6 +13,9 @@ use Test\TestCase;
 
 class GateTest extends TestCase {
 
+    /**
+     * @covers Cqrs\Gate::getInstance
+     */
     public function testGateGetInstance(){
         $gate = Gate::getInstance();
         $this->assertInstanceOf("Cqrs\\Gate",$gate);
@@ -21,6 +24,7 @@ class GateTest extends TestCase {
 
     /**
      * @depends testGateGetInstance
+     * @covers Cqrs\Gate::getInstance
      */
     public function testGateIsSingleton(Gate $gate){
         $this->assertEquals($gate,Gate::getInstance());
