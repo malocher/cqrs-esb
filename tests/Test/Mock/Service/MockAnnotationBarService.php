@@ -9,28 +9,20 @@
 namespace Test\Mock\Service;
 
 use Cqrs\Adapter\AdapterTrait;
+use Test\Mock\Command\MockCommand;
 use Test\Mock\Event\MockEvent;
 
-class MockOutputService {
+class MockAnnotationBarService {
 
     use AdapterTrait;
 
     /**
-     * @Cqrs\Annotation\Event("Test\Mock\Event\MockEvent")
+     * @Cqrs\Annotation\Command("Test\Mock\Command\MockCommand")
      */
-    public function getXml(MockEvent $event)
+    public function getBar(MockCommand $command)
     {
-        var_dump(__METHOD__);
-        var_dump($event);
+        $mockEvent = new MockEvent();
+        $mockEvent->edit();
+        $this->getBus( "mock-annotation-bus" )->publishEvent( $mockEvent );
     }
-
-    /**
-     * @Cqrs\Annotation\Event("Test\Mock\Event\MockEvent")
-     */
-    public function getJson(MockEvent $event)
-    {
-        var_dump(__METHOD__);
-        var_dump($event);
-    }
-
 }

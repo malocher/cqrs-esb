@@ -23,7 +23,7 @@ class GateException extends \Exception
      */
     public static function pipeError($message)
     {
-        return new self('[Pipe Error] ' . $message);
+        return new self('[Pipe Error] ' . $message . "\n");
     }
 
     /**
@@ -34,7 +34,7 @@ class GateException extends \Exception
      */
     public static function busError($message)
     {
-        return new self('[Bus Error] ' . $message);
+        return new self('[Bus Error] ' . $message . "\n");
     }
 
 }

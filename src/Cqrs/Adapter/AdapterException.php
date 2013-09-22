@@ -23,7 +23,7 @@ class AdapterException extends \Exception
      */
     public static function annotationError($message)
     {
-        return new self('[Annotation Error] ' . $message);
+        return new self('[Annotation Error] ' . $message . "\n");
     }
 
 }

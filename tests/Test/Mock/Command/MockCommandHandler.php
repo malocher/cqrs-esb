@@ -8,11 +8,13 @@
  */
 namespace Test\Mock\Command;
 
+use Cqrs\Adapter\AdapterTrait;
 use Cqrs\Command\CommandInterface;
 
 class MockCommandHandler
 {
-    
+    use AdapterTrait;
+
     public function handleCommand(CommandInterface $command)
     {
         if ($command instanceof MockCommand) {

@@ -23,7 +23,7 @@ class BusException extends \Exception
      */
     public static function traitError($message)
     {
-        return new self('[Trait Error] ' . $message);
+        return new self('[Trait Error] ' . $message . "\n");
     }
 
 }

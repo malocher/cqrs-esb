@@ -12,17 +12,17 @@ use Cqrs\Adapter\AdapterTrait;
 use Test\Mock\Command\MockCommand;
 use Test\Mock\Event\MockEvent;
 
-class MockBarService {
+class MockAnnotationFooService {
 
     use AdapterTrait;
 
     /**
      * @Cqrs\Annotation\Command("Test\Mock\Command\MockCommand")
      */
-    public function getBar(MockCommand $command)
+    public function getFoo(MockCommand $command)
     {
         $mockEvent = new MockEvent();
         $mockEvent->edit();
-        $this->getBus( "mock-bus" )->publishEvent( $mockEvent );
+        $this->getBus( "mock-annotation-bus" )->publishEvent( $mockEvent );
     }
 }

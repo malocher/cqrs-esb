@@ -11,8 +11,9 @@ namespace Test\Cqrs\Adapter;
 use Cqrs\Command\ClassMapCommandHandlerLoader;
 use Cqrs\Event\ClassMapEventListenerLoader;
 use Cqrs\Gate;
+use Cqrs\Gate\GateException;
 use Doctrine\Common\Annotations\AnnotationRegistry;
-use Test\Mock\Bus\BusMock;
+use Test\Mock\Bus\BusAnnotationMock;
 use Test\Mock\Command\MockCommand;
 use Test\TestCase;
 use Cqrs\Adapter\AnnotationAdapter;
@@ -22,24 +23,63 @@ use Cqrs\Adapter\AnnotationAdapter;
  */
 class AnnotationAdapterTest extends TestCase
 {
+
     /**
-     * @covers Cqrs\Adapter\AnnotationAdapter::route
+     * @var Gate
+     */
+    protected $gate;
+
+    /**
+     * @var AnnotationAdapter
+     */
+    protected $adapter;
+
+    /**
+     * Sets up the fixture, for example, opens a network connection.
+     * This method is called before a test is executed.
+     */
+    protected function setUp()
+    {
+        $this->gate = Gate::getInstance();
+        if( !isset( $this->bus ) ){
+            $classMapCommandHandlerLoader = new ClassMapCommandHandlerLoader();
+            $classMapEventListenerLoader = new ClassMapEventListenerLoader();
+            $this->bus = new BusAnnotationMock($classMapCommandHandlerLoader, $classMapEventListenerLoader);
+        }
+        if( !isset( $this->adapter ) ){
+            $this->adapter = new AnnotationAdapter();
+        }
+    }
+
+    /**
+     * @covers Cqrs\Adapter\AnnotationAdapter::allow
+     */
+    public function testWrongOrMissingAnnotationCommand()
+    {
+        $this->setExpectedException('Cqrs\Adapter\AdapterException');
+        try{
+            $this->gate->pipe($this->bus);
+        } catch( GateException $e){
+            echo $e->getMessage();
+        }
+        $this->adapter->allow($this->bus,'Test\Mock\Service\MockWrongCommandAnnotationService');
+        $this->bus->invokeCommand(new MockCommand());
+    }
+
+    /**
+     * @covers Cqrs\Adapter\AnnotationAdapter::allow
      */
     public function testSendToMultiServices()
     {
-        $gate = Gate::getInstance();
-        $classMapCommandHandlerLoader = new ClassMapCommandHandlerLoader();
-        $classMapEventListenerLoader = new ClassMapEventListenerLoader();
-        $bus = new BusMock($classMapCommandHandlerLoader, $classMapEventListenerLoader);
-        $gate->pipe($bus);
-
-        $adapter = new AnnotationAdapter();
-        $adapter->allow($bus,'Test\Mock\Service\MockFooService');
-        $adapter->allow($bus,'Test\Mock\Service\MockBarService');
-        $adapter->allow($bus,'Test\Mock\Service\MockOutputService');
-
-        $mockCommand = new MockCommand();
-        $bus->invokeCommand($mockCommand);
+        try{
+            $this->gate->pipe($this->bus);
+        } catch( GateException $e){
+            echo $e->getMessage();
+        }
+        $this->adapter->allow($this->bus,'Test\Mock\Service\MockAnnotationFooService');
+        $this->adapter->allow($this->bus,'Test\Mock\Service\MockAnnotationBarService');
+        $this->adapter->allow($this->bus,'Test\Mock\Service\MockAnnotationOutputService');
+        $this->bus->invokeCommand(new MockCommand());
 
     }
 

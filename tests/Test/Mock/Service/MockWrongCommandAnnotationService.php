@@ -9,20 +9,19 @@
 namespace Test\Mock\Service;
 
 use Cqrs\Adapter\AdapterTrait;
-use Test\Mock\Command\MockCommand;
 use Test\Mock\Event\MockEvent;
 
-class MockFooService {
+class MockWrongCommandAnnotationService {
 
     use AdapterTrait;
 
     /**
-     * @Cqrs\Annotation\Command("Test\Mock\Command\MockCommand")
+     * @Cqrs\Annotation\Command("Test\Mock\Command\MockMissingOrWrongCommand")
      */
     public function getFoo(MockCommand $command)
     {
         $mockEvent = new MockEvent();
         $mockEvent->edit();
-        $this->getBus( "mock-bus" )->publishEvent( $mockEvent );
+        $this->getBus( "mock-annotation-bus" )->publishEvent( $mockEvent );
     }
 }

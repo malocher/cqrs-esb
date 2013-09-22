@@ -8,8 +8,12 @@
  */
 namespace Test\Mock\Event;
 
+use Cqrs\Adapter\AdapterTrait;
+
 class MockEventListener
 {
+    use AdapterTrait;
+
     protected $mockEventMessage = null;
     
     public function onMock(MockEvent $event) {
