@@ -9,6 +9,7 @@
 namespace Test\Cqrs;
 
 use Cqrs\Bus\BusInterface;
+use Cqrs\Bus\SystemBus;
 use Cqrs\Command\ClassMapCommandHandlerLoader;
 use Cqrs\Event\ClassMapEventListenerLoader;
 use Cqrs\Gate;
@@ -75,6 +76,28 @@ class GateTest extends TestCase {
         $classMapEventListenerLoader = new ClassMapEventListenerLoader();
         $anotherBusGateTestsMock = new BusGateTestsMock($classMapCommandHandlerLoader,$classMapEventListenerLoader);
         $this->gate->pipe($anotherBusGateTestsMock);
+    }
+
+    /**
+     * @depends testCreatePipe
+     * @covers Cqrs\Gate::pipe
+     */
+    public function testSystemBusPiped()
+    {
+        $this->assertInstanceOf('Cqrs\Bus\SystemBus',$this->gate->getBus('system-bus'));
+    }
+
+    /**
+     * @depends testCreatePipe
+     * @covers Cqrs\Gate::pipe
+     */
+    public function testPipeAnotherSystemBus()
+    {
+        $this->setExpectedException('Cqrs\Gate\GateException');
+        $classMapCommandHandlerLoader = new ClassMapCommandHandlerLoader();
+        $classMapEventListenerLoader = new ClassMapEventListenerLoader();
+        $anotherSystemBus = new SystemBus($classMapCommandHandlerLoader,$classMapEventListenerLoader);
+        $this->gate->pipe($anotherSystemBus);
     }
 
 }
