@@ -30,26 +30,28 @@ trait AdapterTrait {
      * Execute command
      *
      * @param $gate Gate
+     * @param $commandHandler object
      * @param $method Method the handler method to execute
      * @param $command CommandInterface to pass to the handler method
      */
-    public function executeCommand( Gate $gate, $method, CommandInterface $command)
+    public function executeCommand( Gate $gate, $commandHandler, $method, CommandInterface $command)
     {
         $this->gate = $gate;
-        $this->{$method}($command);
+        $commandHandler->{$method}($command);
     }
 
     /**
      * Execute event
      *
      * @param $gate Gate
+     * @param $eventListener object
      * @param $method the handler method to execute
      * @param $event EventInterface to pass to the handler method
      */
-    public function executeEvent( Gate $gate, $method, EventInterface $event)
+    public function executeEvent( Gate $gate, $eventListener, $method, EventInterface $event)
     {
         $this->gate = $gate;
-        $this->{$method}($event);
+        $eventListener->{$method}($event);
     }
 
     /**

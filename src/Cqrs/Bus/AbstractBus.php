@@ -111,7 +111,7 @@ abstract class AbstractBus implements BusInterface
                 if( !isset(class_uses($commandHandler)['Cqrs\Adapter\AdapterTrait']) ){
                     throw AdapterException::traitError('Adapter Trait is missing! Use it!');
                 }
-                $commandHandler->executeCommand($this->gate,$method,$command);
+                $commandHandler->executeCommand($this->gate,$commandHandler,$method,$command);
                 //$commandHandler->{$method}($command);
                 //return;
             }
@@ -153,7 +153,7 @@ abstract class AbstractBus implements BusInterface
                 if( !isset(class_uses($eventListener)['Cqrs\Adapter\AdapterTrait']) ){
                     throw AdapterException::traitError('Adapter Trait is missing! Use it!');
                 }
-                $eventListener->executeEvent($this->gate,$method,$event);
+                $eventListener->executeEvent($this->gate,$eventListener,$method,$event);
                 //$eventListener->{$method}($event);
                 //return;
             }
