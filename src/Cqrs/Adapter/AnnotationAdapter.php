@@ -60,11 +60,9 @@ class AnnotationAdapter implements AdapterInterface {
      * public function getBar($command)
      * - - - - - - - - - - - - - - - - - - -
      *
-     * @todo Caching
-     * @todo AbstractBus->mapCommand : remove indexed caching - we should not take the command as key !?
-     *
      * @param BusInterface  $bus
      * @param String        $qualifiedClassname
+     * @throws AdapterException
      */
     public function allow(BusInterface $bus,$qualifiedClassname)
     {
@@ -72,16 +70,27 @@ class AnnotationAdapter implements AdapterInterface {
         $reflMs = $reflClass->getMethods();
 
         foreach($reflMs as $reflM){
+
             // command mapping
             $aCommand = $this->annotationReader->getMethodAnnotation($reflM,'Cqrs\Annotation\Command');
             if($aCommand){
+                if( !class_exists($aCommand->getClass()) ){
+                    throw AdapterException::annotationError(sprintf('Command <%s> does not exists or wrong annotation!',
+                        $aCommand->getClass()));
+                }
                 $bus->mapCommand($aCommand->getClass(),array('alias'=>$reflM->class,'method'=>$reflM->name));
             }
+
             // event registering
             $aEvent = $this->annotationReader->getMethodAnnotation($reflM,'Cqrs\Annotation\Event');
             if($aEvent){
+                if( !class_exists($aEvent->getClass()) ){
+                    throw AdapterException::annotationError(sprintf('Event <%s> does not exist or wrong annotation!',
+                        $aEvent->getClass()));
+                }
                 $bus->registerEventListener($aEvent->getClass(),array('alias'=>$reflM->class,'method'=>$reflM->name));
             }
+
         }
 
     }

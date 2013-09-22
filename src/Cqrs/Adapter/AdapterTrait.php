@@ -8,16 +8,58 @@
  */
 namespace Cqrs\Adapter;
 
+use Cqrs\Command\CommandInterface;
+use Cqrs\Event\EventInterface;
 use Cqrs\Gate;
 
 /**
- * AnnotationAdapter
+ * AdapterTrait
  *
  * @author Manfred Weber <manfred.weber@gmail.com>
  */
 trait AdapterTrait {
-    public function getBus( $name )
+
+    /**
+     * @var $gate Gate
+     *
+     * A reference to the gate
+     */
+    private $gate;
+
+    /**
+     * Execute command
+     *
+     * @param $gate Gate
+     * @param $method Method the handler method to execute
+     * @param $command CommandInterface to pass to the handler method
+     */
+    public function executeCommand( Gate $gate, $method, CommandInterface $command)
     {
-        return Gate::getInstance()->getBus( $name );
+        $this->gate = $gate;
+        $this->{$method}($command);
+    }
+
+    /**
+     * Execute event
+     *
+     * @param $gate Gate
+     * @param $method the handler method to execute
+     * @param $event EventInterface to pass to the handler method
+     */
+    public function executeEvent( Gate $gate, $method, EventInterface $event)
+    {
+        $this->gate = $gate;
+        $this->{$method}($event);
+    }
+
+    /**
+     * Get Bus
+     *
+     * @param $name
+     * @return \Cqrs\Bus\BusInterface
+     */
+    private function getBus( $name )
+    {
+        return $this->gate->getBus( $name );
     }
 }

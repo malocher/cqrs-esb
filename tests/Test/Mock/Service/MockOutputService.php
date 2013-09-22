@@ -8,10 +8,12 @@
  */
 namespace Test\Mock\Service;
 
-use Test\Mock\Command\MockCommand;
+use Cqrs\Adapter\AdapterTrait;
 use Test\Mock\Event\MockEvent;
 
 class MockOutputService {
+
+    use AdapterTrait;
 
     /**
      * @Cqrs\Annotation\Event("Test\Mock\Event\MockEvent")

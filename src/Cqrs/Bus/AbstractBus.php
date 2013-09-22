@@ -8,6 +8,7 @@
  */
 namespace Cqrs\Bus;
 
+use Cqrs\Adapter\AdapterException;
 use Cqrs\Gate;
 use Cqrs\Command\CommandInterface;
 use Cqrs\Command\CommandHandlerLoaderInterface;
@@ -92,15 +93,26 @@ abstract class AbstractBus implements BusInterface
     public function invokeCommand(CommandInterface $command) {
         $commandClass = get_class($command);
         foreach($this->commandHandlerMap[$commandClass] as $i => $callableOrDefinition) {
-            if (is_callable($callableOrDefinition)) {
-                call_user_func($callableOrDefinition, $command, $this->gate);
+
+             // @todo how will this work with traits ?
+
+             if (is_callable($callableOrDefinition)) {
+                call_user_func($callableOrDefinition, $command);
                 //return;
             }
 
             if (is_array($callableOrDefinition)) {
                 $commandHandler = $this->commandHandlerLoader->getCommandHandler($callableOrDefinition['alias']);
                 $method = $callableOrDefinition['method'];
-                $commandHandler->{$method}($command);
+
+                /* instead of invoking the handler method directly
+                 * we call the execute function of the implemented trait and pass along a reference to the gate
+                 */
+                if( !isset(class_uses($commandHandler)['Cqrs\Adapter\AdapterTrait']) ){
+                    throw AdapterException::traitError('Adapter Trait is missing! Use it!');
+                }
+                $commandHandler->executeCommand($this->gate,$method,$command);
+                //$commandHandler->{$method}($command);
                 //return;
             }
         }
@@ -134,7 +146,15 @@ abstract class AbstractBus implements BusInterface
             if (is_array($callableOrDefinition)) {
                 $eventListener = $this->eventListenerLoader->getEventListener($callableOrDefinition['alias']);
                 $method = $callableOrDefinition['method'];
-                $eventListener->{$method}($event);
+
+                /* instead of invoking the handler method directly
+                 * we call the execute function of the implemented trait and pass along a reference to the gate
+                 */
+                if( !isset(class_uses($eventListener)['Cqrs\Adapter\AdapterTrait']) ){
+                    throw AdapterException::traitError('Adapter Trait is missing! Use it!');
+                }
+                $eventListener->executeEvent($this->gate,$method,$event);
+                //$eventListener->{$method}($event);
                 //return;
             }
         }

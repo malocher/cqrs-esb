@@ -35,7 +35,7 @@ class AnnotationAdapterTest extends TestCase
 
         $adapter = new AnnotationAdapter();
         $adapter->allow($bus,'Test\Mock\Service\MockFooService');
-        $adapter->allow($bus,'Test\Mock\Service\MockBarService');
+        //$adapter->allow($bus,'Test\Mock\Service\MockBarService');
         $adapter->allow($bus,'Test\Mock\Service\MockOutputService');
 
         $mockCommand = new MockCommand();
