@@ -6,24 +6,24 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace Cqrs\Adapter;
+namespace Cqrs\Bus;
 
 /**
- * AdapterException
+ * BusException
  *
  * @author Manfred Weber <manfred.weber@gmail.com>
  */
-class AdapterException extends \Exception
+class BusException extends \Exception
 {
     /**
-     * Creates a new AdapterException describing a annotation error.
+     * Creates a new BusException describing a trait error.
      *
      * @param string $message Exception message
-     * @return AdapterException
+     * @return BusException
      */
-    public static function annotationError($message)
+    public static function traitError($message)
     {
-        return new self('[Annotation Error] ' . $message);
+        return new self('[Trait Error] ' . $message);
     }
 
 }

@@ -8,7 +8,7 @@
  */
 namespace Cqrs\Bus;
 
-use Cqrs\Adapter\AdapterException;
+use Cqrs\Bus\BusException;
 use Cqrs\Gate;
 use Cqrs\Command\CommandInterface;
 use Cqrs\Command\CommandHandlerLoaderInterface;
@@ -109,7 +109,7 @@ abstract class AbstractBus implements BusInterface
                  * we call the execute function of the implemented trait and pass along a reference to the gate
                  */
                 if( !isset(class_uses($commandHandler)['Cqrs\Adapter\AdapterTrait']) ){
-                    throw AdapterException::traitError('Adapter Trait is missing! Use it!');
+                    throw BusException::traitError('Adapter Trait is missing! Use it!');
                 }
                 $commandHandler->executeCommand($this->gate,$commandHandler,$method,$command);
                 //$commandHandler->{$method}($command);
@@ -151,7 +151,7 @@ abstract class AbstractBus implements BusInterface
                  * we call the execute function of the implemented trait and pass along a reference to the gate
                  */
                 if( !isset(class_uses($eventListener)['Cqrs\Adapter\AdapterTrait']) ){
-                    throw AdapterException::traitError('Adapter Trait is missing! Use it!');
+                    throw BusException::traitError('Adapter Trait is missing! Use it!');
                 }
                 $eventListener->executeEvent($this->gate,$eventListener,$method,$event);
                 //$eventListener->{$method}($event);
