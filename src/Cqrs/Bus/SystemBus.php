@@ -6,14 +6,14 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace Test\Mock\Bus;
+namespace Cqrs\Bus;
 
 use Cqrs\Bus\AbstractBus;
 
-class BusMock extends AbstractBus
+class SystemBus extends AbstractBus
 {
     public function getName()
     {
-        return 'mock-bus';
-    }    
+        return 'system-bus';
+    }
 }

@@ -8,7 +8,11 @@
  */
 namespace Cqrs;
 
+use Cqrs\Gate\GateException;
 use Cqrs\Bus\BusInterface;
+use Cqrs\Bus\SystemBus;
+use Cqrs\Command\ClassMapCommandHandlerLoader;
+use Cqrs\Event\ClassMapEventListenerLoader;
 
 /**
  * Gate
@@ -25,6 +29,11 @@ class Gate {
      */
     private static $instance;
 
+    /**
+     * Bus systems
+     *
+     * @var array
+     */
     private $busSystems;
     
     /**
@@ -35,6 +44,11 @@ class Gate {
     {
         if (is_null(static::$instance)) {
             static::$instance = new static();
+            $systemBus = new SystemBus(
+                new ClassMapCommandHandlerLoader(),
+                new ClassMapEventListenerLoader()
+            );
+            static::$instance->pipe($systemBus);
         }
         
         return static::$instance;
@@ -54,6 +68,14 @@ class Gate {
 
     public function pipe(BusInterface $bus){
         $bus->setGate($this);
+        if( isset($this->busSystems[$bus->getName()]) ){
+            switch( $bus->getName() ){
+                case 'system-bus':
+                    throw GateException::pipeError(sprintf('Bus <%s> is reserved!',$bus->getName()));
+                default:
+                    throw GateException::pipeError(sprintf('Bus <%s> is already piped!',$bus->getName()));
+            }
+        }
         $this->busSystems[$bus->getName()] = $bus;
     }
 
@@ -65,7 +87,7 @@ class Gate {
      */
     public function getBus($name){
         if(!isset($this->busSystems[$name])){
-            throw new \Exception(sprintf("Bus [%s] does not exists",$name));
+            throw GateException::busError(sprintf("Bus <%s> does not exists",$name));
         }
         return $this->busSystems[$name];
     }

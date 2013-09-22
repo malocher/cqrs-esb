@@ -23,6 +23,6 @@ class MockFooService {
     {
         $mockEvent = new MockEvent();
         $mockEvent->edit();
-        $this->getBus( "mock_bus" )->publishEvent( $mockEvent );
+        $this->getBus( "mock-bus" )->publishEvent( $mockEvent );
     }
 }
