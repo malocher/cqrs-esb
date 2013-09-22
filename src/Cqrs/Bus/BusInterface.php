@@ -57,7 +57,7 @@ interface BusInterface {
      * @example defintion:
      * 
      * $userCommandHandlerDefinition = array(
-     *      'alias'  => 'user_service',        //Alias is passed to CommandHandlerLoader
+     *      'alias'  => 'user_handler',        //Alias is passed to CommandHandlerLoader
      *      'method' => 'handleAddUserCommand' //Method is called after loading CommandHandler  
      * );
      * 

@@ -36,24 +36,24 @@ class AnnotationAdapter implements AdapterInterface {
     /**
      * Allow
      *
-     * Link a Class (probably a service) to a service!
+     * Link a Class (probably a handler) to a handler!
      * Note that we actually __allow__ a class to read/write to a bus.
      *
      * If you want the same class to listen to multiple bussystems then re-call route!!
      *
      * Example:
      *
-     * route( 'system-bus', 'service-1' )
-     * route( 'system-bus', 'service-2' )
-     * route( 'system-err', 'service-1' )
-     * route( 'system-err', 'service-2' )
+     * route( 'system-bus', 'handler-1' )
+     * route( 'system-bus', 'handler-2' )
+     * route( 'system-err', 'handler-1' )
+     * route( 'system-err', 'handler-2' )
      * ...
      *
-     * Have a look into the example Services which use Annotations map commands
+     * Have a look into the example Handlers which use Annotations map commands
      *
      * - - - - - - - - - - - - - - - - - - -
      *
-     + class MockBarService
+     + class MockBarHandler
      * **
      * * @Cqrs\Annotation\Command("Test\Mock\Command\MockCommand")
      * *

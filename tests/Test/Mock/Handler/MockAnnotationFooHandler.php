@@ -6,13 +6,13 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace Test\Mock\Service;
+namespace Test\Mock\Handler;
 
 use Cqrs\Adapter\AdapterTrait;
 use Test\Mock\Command\MockCommand;
 use Test\Mock\Event\MockEvent;
 
-class MockAnnotationFooService {
+class MockAnnotationFooHandler {
 
     use AdapterTrait;
 

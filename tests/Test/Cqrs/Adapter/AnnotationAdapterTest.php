@@ -59,16 +59,16 @@ class AnnotationAdapterTest extends TestCase
     /**
      * @covers Cqrs\Adapter\AnnotationAdapter::allow
      */
-    public function testSendToMultiServices()
+    public function testSendToMultiHandlers()
     {
         try {
             $this->gate->attach($this->bus);
         } catch( GateException $e){
             echo $e->getMessage();
         }
-        $this->adapter->allow($this->bus,'Test\Mock\Service\MockAnnotationFooService');
-        $this->adapter->allow($this->bus,'Test\Mock\Service\MockAnnotationBarService');
-        $this->adapter->allow($this->bus,'Test\Mock\Service\MockAnnotationOutputService');
+        $this->adapter->allow($this->bus,'Test\Mock\Handler\MockAnnotationFooHandler');
+        $this->adapter->allow($this->bus,'Test\Mock\Handler\MockAnnotationBarHandler');
+        $this->adapter->allow($this->bus,'Test\Mock\Handler\MockAnnotationOutputHandler');
         $this->bus->invokeCommand(new MockCommand());
     }
 
@@ -83,9 +83,9 @@ class AnnotationAdapterTest extends TestCase
             echo $e->getMessage();
         }
         $this->gate->enableSystemBus();
-        $this->adapter->allow($this->bus,'Test\Mock\Service\MockAnnotationFooService');
-        $this->adapter->allow($this->bus,'Test\Mock\Service\MockAnnotationOutputService');
-        $this->adapter->allow($this->gate->getBus('system-bus'),'Test\Mock\Service\MockSystemBusHandler');
+        $this->adapter->allow($this->bus,'Test\Mock\Handler\MockAnnotationFooHandler');
+        $this->adapter->allow($this->bus,'Test\Mock\Handler\MockAnnotationOutputHandler');
+        $this->adapter->allow($this->gate->getBus('system-bus'),'Test\Mock\Handler\MockSystemBusHandler');
         $this->bus->invokeCommand(new MockCommand());
     }
 
