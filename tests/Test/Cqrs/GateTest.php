@@ -57,47 +57,48 @@ class GateTest extends TestCase {
 
     /**
      * @depends testGateGetInstance
-     * @covers Cqrs\Gate::pipe
+     * @covers Cqrs\Gate::attach
      */
-    public function testCreatePipe()
+    public function testCreateAttach()
     {
-        $this->gate->pipe($this->busGateTestsMock);
+        $this->gate->attach($this->busGateTestsMock);
         $this->assertEquals( $this->gate->getBus("mock-gate-tests-bus"), $this->busGateTestsMock );
     }
 
     /**
-     * @depends testCreatePipe
-     * @covers Cqrs\Gate::pipe
+     * @depends testCreateAttach
+     * @covers Cqrs\Gate::attach
      */
-    public function testBusAlreadyPiped()
+    public function testBusAlreadyAttachd()
     {
         $this->setExpectedException('Cqrs\Gate\GateException');
         $classMapCommandHandlerLoader = new ClassMapCommandHandlerLoader();
         $classMapEventListenerLoader = new ClassMapEventListenerLoader();
         $anotherBusGateTestsMock = new BusGateTestsMock($classMapCommandHandlerLoader,$classMapEventListenerLoader);
-        $this->gate->pipe($anotherBusGateTestsMock);
+        $this->gate->attach($anotherBusGateTestsMock);
     }
 
     /**
-     * @depends testCreatePipe
-     * @covers Cqrs\Gate::pipe
+     * @depends testCreateAttach
+     * @covers Cqrs\Gate::attach
      */
-    public function testSystemBusPiped()
+    public function testSystemBusAttached()
     {
+        $this->gate->enableSystemBus();
         $this->assertInstanceOf('Cqrs\Bus\SystemBus',$this->gate->getBus('system-bus'));
     }
 
     /**
-     * @depends testCreatePipe
-     * @covers Cqrs\Gate::pipe
+     * @depends testCreateAttach
+     * @covers Cqrs\Gate::attach
      */
-    public function testPipeAnotherSystemBus()
+    public function testattachAnotherSystemBus()
     {
         $this->setExpectedException('Cqrs\Gate\GateException');
         $classMapCommandHandlerLoader = new ClassMapCommandHandlerLoader();
         $classMapEventListenerLoader = new ClassMapEventListenerLoader();
         $anotherSystemBus = new SystemBus($classMapCommandHandlerLoader,$classMapEventListenerLoader);
-        $this->gate->pipe($anotherSystemBus);
+        $this->gate->attach($anotherSystemBus);
     }
 
 }

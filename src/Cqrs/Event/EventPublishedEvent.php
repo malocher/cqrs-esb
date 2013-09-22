@@ -13,11 +13,11 @@ use Cqrs\Event;
 use Cqrs\Message;
 
 /**
- * CommandInvokedEvent
+ * EventPublishedEvent
  *
  * @author Manfred Weber <manfred.weber@gmail.com>
  */
-class CommandInvokedEvent extends Message implements EventInterface
+class EventPublishedEvent extends Message implements EventInterface
 {
     protected $class;
 

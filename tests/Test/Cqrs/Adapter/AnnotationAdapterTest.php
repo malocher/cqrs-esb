@@ -35,6 +35,11 @@ class AnnotationAdapterTest extends TestCase
     protected $adapter;
 
     /**
+     * @var BusInterface
+     */
+    protected $bus;
+
+    /**
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
@@ -54,25 +59,10 @@ class AnnotationAdapterTest extends TestCase
     /**
      * @covers Cqrs\Adapter\AnnotationAdapter::allow
      */
-    public function testWrongOrMissingAnnotationCommand()
-    {
-        $this->setExpectedException('Cqrs\Adapter\AdapterException');
-        try{
-            $this->gate->pipe($this->bus);
-        } catch( GateException $e){
-            echo $e->getMessage();
-        }
-        $this->adapter->allow($this->bus,'Test\Mock\Service\MockWrongCommandAnnotationService');
-        $this->bus->invokeCommand(new MockCommand());
-    }
-
-    /**
-     * @covers Cqrs\Adapter\AnnotationAdapter::allow
-     */
     public function testSendToMultiServices()
     {
-        try{
-            $this->gate->pipe($this->bus);
+        try {
+            $this->gate->attach($this->bus);
         } catch( GateException $e){
             echo $e->getMessage();
         }
@@ -80,7 +70,23 @@ class AnnotationAdapterTest extends TestCase
         $this->adapter->allow($this->bus,'Test\Mock\Service\MockAnnotationBarService');
         $this->adapter->allow($this->bus,'Test\Mock\Service\MockAnnotationOutputService');
         $this->bus->invokeCommand(new MockCommand());
+    }
 
+    /**
+     * @covers Cqrs\Adapter\AnnotationAdapter::allow
+     */
+    public function testSendToMessageBus()
+    {
+        try {
+            $this->gate->attach($this->bus);
+        } catch (\Exception $e) {
+            echo $e->getMessage();
+        }
+        $this->gate->enableSystemBus();
+        $this->adapter->allow($this->bus,'Test\Mock\Service\MockAnnotationFooService');
+        $this->adapter->allow($this->bus,'Test\Mock\Service\MockAnnotationOutputService');
+        $this->adapter->allow($this->gate->getBus('system-bus'),'Test\Mock\Service\MockSystemBusHandler');
+        $this->bus->invokeCommand(new MockCommand());
     }
 
 }

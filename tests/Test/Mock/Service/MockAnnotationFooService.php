@@ -21,6 +21,7 @@ class MockAnnotationFooService {
      */
     public function getFoo(MockCommand $command)
     {
+        var_dump($command);
         $mockEvent = new MockEvent();
         $mockEvent->edit();
         $this->getBus( "mock-annotation-bus" )->publishEvent( $mockEvent );

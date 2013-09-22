@@ -42,7 +42,7 @@ class AbstractBusTest extends \PHPUnit_Framework_TestCase
         $this->mockEventListenerLoader->setMockEventListener(new Mock\Event\MockEventListener());
         $this->bus = new BusMock($classMapCommandHandlerLoader, $this->mockEventListenerLoader);
         try {
-            Gate::getInstance()->pipe($this->bus);
+            Gate::getInstance()->attach($this->bus);
         } catch( GateException $e){
             echo $e->getMessage();
         }

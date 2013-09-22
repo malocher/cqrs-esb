@@ -16,14 +16,14 @@ namespace Cqrs\Gate;
 class GateException extends \Exception
 {
     /**
-     * Creates a new GateException describing a pipe error.
+     * Creates a new GateException describing a attach error.
      *
      * @param string $message Exception message
      * @return GateException
      */
-    public static function pipeError($message)
+    public static function attachError($message)
     {
-        return new self('[Pipe Error] ' . $message . "\n");
+        return new self('[Attach Error] ' . $message . "\n");
     }
 
     /**

@@ -73,8 +73,9 @@ interface BusInterface {
     
     /**
      * Hand over command to registered command handler(s)
-     * 
+     *
      * @param CommandInterface $command
+     * @param int $maxRecursion
      * @return void
      */
     public function invokeCommand(CommandInterface $command);
@@ -103,7 +104,7 @@ interface BusInterface {
      * Publish an event
      * 
      * @param EventInterface $event
-     * 
+     * @param int $maxRecursion
      * @return void
      */
     public function publishEvent(EventInterface $event);

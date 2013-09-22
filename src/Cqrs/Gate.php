@@ -44,11 +44,6 @@ class Gate {
     {
         if (is_null(static::$instance)) {
             static::$instance = new static();
-            $systemBus = new SystemBus(
-                new ClassMapCommandHandlerLoader(),
-                new ClassMapEventListenerLoader()
-            );
-            static::$instance->pipe($systemBus);
         }
         
         return static::$instance;
@@ -57,7 +52,8 @@ class Gate {
     /**
      * Private constructor
      */
-    private function __construct(){
+    private function __construct()
+    {
         $this->busSystems = array();
     }
     
@@ -66,14 +62,44 @@ class Gate {
         //Singleton implementation, so clone is not allowed
     }
 
-    public function pipe(BusInterface $bus){
+    public function enableSystemBus()
+    {
+        if( is_null( $this->getBus('system-bus') ) ){
+            $systemBus = new SystemBus(
+                new ClassMapCommandHandlerLoader(),
+                new ClassMapEventListenerLoader()
+            );
+            try {
+                $this->attach($systemBus);
+            } catch ( GateException $e ){
+                echo $e->getMessage();
+            }
+        }
+    }
+
+    public function disableSystemBus()
+    {
+        $systemBus = $this->getBus('system-bus');
+        $this->detach( $systemBus );
+    }
+
+    public function detach(BusInterface $bus)
+    {
+        if( isset($this->busSystems[$bus->getName()]) ){
+            $this->busSystems[$bus->getName()] = null;
+            unset( $this->busSystems[$bus->getName()] );
+        }
+    }
+
+    public function attach(BusInterface $bus)
+    {
         $bus->setGate($this);
         if( isset($this->busSystems[$bus->getName()]) ){
             switch( $bus->getName() ){
                 case 'system-bus':
-                    throw GateException::pipeError(sprintf('Bus <%s> is reserved!',$bus->getName()));
+                    throw GateException::attachError(sprintf('Bus <%s> is reserved!',$bus->getName()));
                 default:
-                    throw GateException::pipeError(sprintf('Bus <%s> is already piped!',$bus->getName()));
+                    throw GateException::attachError(sprintf('Bus <%s> is already attached!',$bus->getName()));
             }
         }
         $this->busSystems[$bus->getName()] = $bus;
@@ -85,9 +111,10 @@ class Gate {
      * @return BusInterface
      * @throws \Exception
      */
-    public function getBus($name){
+    public function getBus($name)
+    {
         if(!isset($this->busSystems[$name])){
-            throw GateException::busError(sprintf("Bus <%s> does not exists",$name));
+            return null;
         }
         return $this->busSystems[$name];
     }

@@ -9,7 +9,13 @@
 namespace Cqrs\Bus;
 
 use Cqrs\Bus\BusException;
+use Cqrs\Command\CommandInvokedCommand;
+use Cqrs\Command\InvokeCommandCommand;
+use Cqrs\Command\PublishEventCommand;
+use Cqrs\Event\CommandInvokedEvent;
+use Cqrs\Event\EventPublishedEvent;
 use Cqrs\Gate;
+use Cqrs\Gate\GateException;
 use Cqrs\Command\CommandInterface;
 use Cqrs\Command\CommandHandlerLoaderInterface;
 
@@ -39,13 +45,12 @@ abstract class AbstractBus implements BusInterface
      * @var array
      */
     protected $commandHandlerMap = array();
-    
+
     /**
      *
      * @var array
      */
     protected $eventListenerMap  = array();
-
 
     /**
      *
@@ -79,7 +84,8 @@ abstract class AbstractBus implements BusInterface
     /**
      * {@inheritDoc}
      */
-    public function mapCommand($commandClass, $callableOrDefinition) {
+    public function mapCommand($commandClass, $callableOrDefinition)
+    {
         if (!isset($this->commandHandlerMap[$commandClass])) {
             $this->commandHandlerMap[$commandClass] = array();
         }
@@ -90,13 +96,27 @@ abstract class AbstractBus implements BusInterface
     /**
      * {@inheritDoc}
      */
-    public function invokeCommand(CommandInterface $command) {
+    public function invokeCommand(CommandInterface $command)
+    {
         $commandClass = get_class($command);
+
+        if( !is_null($this->gate->getBus('system-bus')) ){
+            $invokeCommandCommand = new InvokeCommandCommand();
+            $invokeCommandCommand->setClass($commandClass);
+            $invokeCommandCommand->setId($command->getId());
+            $invokeCommandCommand->setTimestamp($command->getTimestamp());
+            $invokeCommandCommand->setArguments($command->getArguments());
+            $this->gate->getBus('system-bus')->invokeCommand($invokeCommandCommand);
+        }
+        if( !isset($this->commandHandlerMap[$commandClass]) ){
+            return;
+        }
+
         foreach($this->commandHandlerMap[$commandClass] as $i => $callableOrDefinition) {
 
              // @todo how will this work with traits ?
 
-             if (is_callable($callableOrDefinition)) {
+            if (is_callable($callableOrDefinition)) {
                 call_user_func($callableOrDefinition, $command);
                 //return;
             }
@@ -108,7 +128,8 @@ abstract class AbstractBus implements BusInterface
                 /* instead of invoking the handler method directly
                  * we call the execute function of the implemented trait and pass along a reference to the gate
                  */
-                if( !isset(class_uses($commandHandler)['Cqrs\Adapter\AdapterTrait']) ){
+                $usedTraits = class_uses($commandHandler);
+                if( !isset($usedTraits['Cqrs\Adapter\AdapterTrait']) ){
                     throw BusException::traitError('Adapter Trait is missing! Use it!');
                 }
                 $commandHandler->executeCommand($this->gate,$commandHandler,$method,$command);
@@ -116,12 +137,22 @@ abstract class AbstractBus implements BusInterface
                 //return;
             }
         }
+
+        if( !is_null($this->gate->getBus('system-bus')) ){
+            $commandInvokedEvent = new CommandInvokedEvent();
+            $commandInvokedEvent->setClass($commandClass);
+            $commandInvokedEvent->setId($command->getId());
+            $commandInvokedEvent->setTimestamp($command->getTimestamp());
+            $commandInvokedEvent->setArguments($command->getArguments());
+            $this->gate->getBus('system-bus')->publishEvent($commandInvokedEvent);
+        }
     }
     
     /**
      * {@inheritDoc}
      */
-    public function registerEventListener($eventClass, $callableOrDefinition) {
+    public function registerEventListener($eventClass, $callableOrDefinition)
+    {
         if (!isset($this->eventListenerMap[$eventClass])) {
             $this->eventListenerMap[$eventClass] = array();
         }
@@ -132,11 +163,22 @@ abstract class AbstractBus implements BusInterface
     /**
      * {@inheritDoc}
      */
-    public function publishEvent(EventInterface $event) {
+    public function publishEvent(EventInterface $event)
+    {
         $eventClass = get_class($event);
+
+        if( !is_null($this->gate->getBus('system-bus')) ){
+            $publishEventCommand = new PublishEventCommand();
+            $publishEventCommand->setClass($eventClass);
+            $publishEventCommand->setId($event->getId());
+            $publishEventCommand->setTimestamp($event->getTimestamp());
+            $publishEventCommand->setArguments($event->getArguments());
+            $this->gate->getBus('system-bus')->invokeCommand($publishEventCommand);
+        }
         if(!isset($this->eventListenerMap[$eventClass])){
             return;
         }
+
         foreach($this->eventListenerMap[$eventClass] as $i => $callableOrDefinition) {
             if (is_callable($callableOrDefinition)) {
                 call_user_func($callableOrDefinition, $event);
@@ -150,13 +192,23 @@ abstract class AbstractBus implements BusInterface
                 /* instead of invoking the handler method directly
                  * we call the execute function of the implemented trait and pass along a reference to the gate
                  */
-                if( !isset(class_uses($eventListener)['Cqrs\Adapter\AdapterTrait']) ){
+                $usedTraits = class_uses($eventListener);
+                if( !isset($usedTraits['Cqrs\Adapter\AdapterTrait']) ){
                     throw BusException::traitError('Adapter Trait is missing! Use it!');
                 }
                 $eventListener->executeEvent($this->gate,$eventListener,$method,$event);
                 //$eventListener->{$method}($event);
                 //return;
             }
+        }
+
+        if( !is_null($this->gate->getBus('system-bus')) ){
+            $eventPublishedEvent = new EventPublishedEvent();
+            $eventPublishedEvent->setClass($eventClass);
+            $eventPublishedEvent->setId($event->getId());
+            $eventPublishedEvent->setTimestamp($event->getTimestamp());
+            $eventPublishedEvent->setArguments($event->getArguments());
+            $this->gate->getBus('system-bus')->publishEvent($eventPublishedEvent);
         }
     }
 }
