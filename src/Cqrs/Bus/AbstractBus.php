@@ -93,16 +93,14 @@ abstract class AbstractBus implements BusInterface
         $commandClass = get_class($command);
         foreach($this->commandHandlerMap[$commandClass] as $i => $callableOrDefinition) {
             if (is_callable($callableOrDefinition)) {
-                $event = call_user_func($callableOrDefinition, $command, $this->gate);
-                $this->publishEvent( $event );
+                call_user_func($callableOrDefinition, $command, $this->gate);
                 //return;
             }
 
             if (is_array($callableOrDefinition)) {
                 $commandHandler = $this->commandHandlerLoader->getCommandHandler($callableOrDefinition['alias']);
                 $method = $callableOrDefinition['method'];
-                $event = $commandHandler->{$method}($command);
-                $this->publishEvent( $event );
+                $commandHandler->{$method}($command);
                 //return;
             }
         }

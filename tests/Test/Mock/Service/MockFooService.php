@@ -8,10 +8,13 @@
  */
 namespace Test\Mock\Service;
 
+use Cqrs\Adapter\AdapterTrait;
 use Test\Mock\Command\MockCommand;
 use Test\Mock\Event\MockEvent;
 
 class MockFooService {
+
+    use AdapterTrait;
 
     /**
      * @Cqrs\Annotation\Command("Test\Mock\Command\MockCommand")
@@ -20,7 +23,6 @@ class MockFooService {
     {
         $mockEvent = new MockEvent();
         $mockEvent->edit();
-        $command->edit();
-        return $mockEvent;
+        $this->getBus( "mock_bus" )->publishEvent( $mockEvent );
     }
 }
