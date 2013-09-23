@@ -9,6 +9,7 @@
 namespace Cqrs\Adapter;
 
 use Cqrs\Bus\BusInterface;
+use Cqrs\Gate;
 
 /**
  * AdapterInterface
@@ -21,10 +22,11 @@ interface AdapterInterface {
      * Constructor
      */
     public function __construct();
-
+    
     /**
-     * implement allow
+     * Initialize CommandHandler and EventListener from configuration
+     * 
+     * @return void
      */
-    public function allow(BusInterface $bus,$qualifiedClassname);
-
+    public function initializeBus(BusInterface $bus, array $configuration);
 }

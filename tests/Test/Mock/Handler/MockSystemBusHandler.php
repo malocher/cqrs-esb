@@ -13,6 +13,8 @@ use Cqrs\Command\InvokeCommandCommand;
 use Cqrs\Command\PublishEventCommand;
 use Cqrs\Event\CommandInvokedEvent;
 use Cqrs\Event\EventPublishedEvent;
+use Cqrs\Annotation\Command as Command;
+use Cqrs\Annotation\Event as Event;
 
 
 class MockSystemBusHandler {
@@ -20,7 +22,7 @@ class MockSystemBusHandler {
     use AdapterTrait;
 
     /**
-     * @Cqrs\Annotation\Command("Cqrs\Command\InvokeCommandCommand")
+     * @Command("Cqrs\Command\InvokeCommandCommand")
      */
     public function dumpInvokeCommandCommand(InvokeCommandCommand $command)
     {
@@ -28,7 +30,7 @@ class MockSystemBusHandler {
     }
 
     /**
-     * @Cqrs\Annotation\Command("Cqrs\Command\PublishEventCommand")
+     * @Command("Cqrs\Command\PublishEventCommand")
      */
     public function dumpPublishEventCommand(PublishEventCommand $command)
     {
@@ -36,7 +38,7 @@ class MockSystemBusHandler {
     }
 
     /**
-     * @Cqrs\Annotation\Event("Cqrs\Event\CommandInvokedEvent")
+     * @Event("Cqrs\Event\CommandInvokedEvent")
      */
     public function dumpCommandInvokedEvent(CommandInvokedEvent $event)
     {
@@ -44,7 +46,7 @@ class MockSystemBusHandler {
     }
 
     /**
-     * @Cqrs\Annotation\Event("Cqrs\Event\EventPublishedEvent")
+     * @Event("Cqrs\Event\EventPublishedEvent")
      */
     public function dumpEventPublishedEvent(EventPublishedEvent $event)
     {

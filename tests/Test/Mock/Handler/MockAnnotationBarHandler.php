@@ -9,6 +9,7 @@
 namespace Test\Mock\Handler;
 
 use Cqrs\Adapter\AdapterTrait;
+use Cqrs\Annotation\Command as Command;
 use Test\Mock\Command\MockCommand;
 use Test\Mock\Event\MockEvent;
 
@@ -17,7 +18,7 @@ class MockAnnotationBarHandler {
     use AdapterTrait;
 
     /**
-     * @Cqrs\Annotation\Command("Test\Mock\Command\MockCommand")
+     * @Command("Test\Mock\Command\MockCommand")
      */
     public function getBar(MockCommand $command)
     {
