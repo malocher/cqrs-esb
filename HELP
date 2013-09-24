@@ -1,0 +1,30 @@
+Looks like the problem with missing annotation classes is caused by a wrong phpunit setup.
+This is mine and it works
+
+imac:cqrs-php manfredweber$ vi phpunit.xml
+imac:cqrs-php manfredweber$ git checkout
+M	tests/Test/Cqrs/Bus/AbstractBusTest.php
+M	tests/Test/Mock/Handler/MockAnnotationFooHandler.php
+M	tests/Test/Mock/Handler/MockAnnotationOutputHandler.php
+M	tests/Test/Mock/Handler/MockSystemBusHandler.php
+imac:cqrs-php manfredweber$ vi phpunit.xml
+imac:cqrs-php manfredweber$ php vendor/phpunit/phpunit/phpunit.php tests/
+PHPUnit 3.7.25 by Sebastian Bergmann.
+
+Configuration read from /Users/manfredweber/Documents/cqrs-php/phpunit.xml
+
+..[Attach Error] Bus <mock-annotation-bus> is already attached!
+..[Attach Error] Bus <mock-bus> is already attached!
+.[Attach Error] Bus <mock-bus> is already attached!
+......
+
+Time: 68 ms, Memory: 4.25Mb
+OK (11 tests, 9 assertions)
+
+
+Try this one from command lien:
+
+
+THIS SHOULD WORK!
+
+phpunit --bootstrap tests/bootstrap.php tests/
