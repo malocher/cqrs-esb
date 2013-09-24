@@ -99,11 +99,10 @@ abstract class AbstractBus implements BusInterface
     public function invokeCommand(CommandInterface $command)
     {
         $commandClass = get_class($command);
-        
-        if( !isset($this->commandHandlerMap[$commandClass]) ){
-            return;
-        }
-        
+
+        /*
+         * InvokeCommandCommand first! Because a commandClass _IS_ actually invoked.
+         */
         if( !is_null($this->gate->getBus('system-bus')) ){
             $invokeCommandCommand = new InvokeCommandCommand();
             $invokeCommandCommand->setClass($commandClass);
@@ -111,6 +110,16 @@ abstract class AbstractBus implements BusInterface
             $invokeCommandCommand->setTimestamp($command->getTimestamp());
             $invokeCommandCommand->setArguments($command->getArguments());
             $this->gate->getBus('system-bus')->invokeCommand($invokeCommandCommand);
+        }
+
+        /*
+         * Check if command exists after invoking the InvokeCommandCommand because
+         * the InvokeCommandCommand tells that a command is invoked but does not care
+         * if it succeeded. Later the CommandInvokedEvent can be used to check if a
+         * command succeeded.
+         */
+        if( !isset($this->commandHandlerMap[$commandClass]) ){
+            return;
         }
 
         foreach($this->commandHandlerMap[$commandClass] as $i => $callableOrDefinition) {
@@ -134,6 +143,11 @@ abstract class AbstractBus implements BusInterface
             }
         }
 
+        /*
+         * Dispatch the CommandInvokedEvent here! If for example a command could not be invoked
+         * because it does not exist in the commandHandlerMap[<empty>] this Event would never
+         * be dispatched!
+         */
         if( !is_null($this->gate->getBus('system-bus')) ){
             $commandInvokedEvent = new CommandInvokedEvent();
             $commandInvokedEvent->setClass($commandClass);
@@ -162,11 +176,13 @@ abstract class AbstractBus implements BusInterface
     public function publishEvent(EventInterface $event)
     {
         $eventClass = get_class($event);
-        
-        if(!isset($this->eventListenerMap[$eventClass])){
-            return;
-        }
-        
+
+        /*
+         * Check if event exists after invoking the PublishEventCommand because
+         * the PublishEventCommand tells that a event is dispatched but does not care
+         * if it succeeded. Later the EventPublishedEvent can be used to check if a
+         * event succeeded.
+         */
         if( !is_null($this->gate->getBus('system-bus')) ){
             $publishEventCommand = new PublishEventCommand();
             $publishEventCommand->setClass($eventClass);
@@ -174,6 +190,10 @@ abstract class AbstractBus implements BusInterface
             $publishEventCommand->setTimestamp($event->getTimestamp());
             $publishEventCommand->setArguments($event->getArguments());
             $this->gate->getBus('system-bus')->invokeCommand($publishEventCommand);
+        }
+
+        if(!isset($this->eventListenerMap[$eventClass])){
+            return;
         }
 
         foreach($this->eventListenerMap[$eventClass] as $i => $callableOrDefinition) {
@@ -196,6 +216,11 @@ abstract class AbstractBus implements BusInterface
             }
         }
 
+        /*
+         * Dispatch the EventPublishedEvent here! If for example a event could not be dispatched
+         * because it does not exist in the eventListenerMap[<empty>] this Event would never
+         * be dispatched!
+         */
         if( !is_null($this->gate->getBus('system-bus')) ){
             $eventPublishedEvent = new EventPublishedEvent();
             $eventPublishedEvent->setClass($eventClass);
