@@ -6,15 +6,13 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace Test\Cqrs;
+namespace Test\Coverage\Cqrs;
 
-use Cqrs\Bus\BusInterface;
-use Cqrs\Bus\SystemBus;
+use Test\TestCase;
+
 use Cqrs\Command\ClassMapCommandHandlerLoader;
 use Cqrs\Event\ClassMapEventListenerLoader;
 use Cqrs\Gate;
-use Test\Mock\Bus\BusGateTestsMock;
-use Test\TestCase;
 
 class GateTest extends TestCase {
 

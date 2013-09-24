@@ -8,10 +8,12 @@
  */
 namespace Cqrs\Configuration;
 
+use Test\TestCase;
+use Test\Coverage\Mock\Command\MockCommand;
+
 use Cqrs\Gate;
 use Cqrs\Command\ClassMapCommandHandlerLoader;
 use Cqrs\Event\ClassMapEventListenerLoader;
-use Test\TestCase;
 
 /**
  * Description of SetupTest
@@ -40,10 +42,10 @@ class SetupTest extends TestCase
                 'class' => 'Cqrs\Adapter\ArrayMapAdapter'
             ),
             'buses' => array(
-                'Test\Mock\Bus\BusMock' => array(
+                'Test\Coverage\Mock\Bus\BusMock' => array(
                     'command_map' => array(
-                        'Test\Mock\Command\MockCommand' => array(
-                            'alias' => 'Test\Mock\Command\MockCommandHandler',
+                        'Test\Coverage\Mock\Command\MockCommand' => array(
+                            'alias' => 'Test\Coverage\Mock\Command\MockCommandHandler',
                             'method' => 'handleCommand'
                         )
                     )
@@ -53,7 +55,7 @@ class SetupTest extends TestCase
         
         $this->object->initialize($configuration);
         
-        $mockCommand = new \Test\Mock\Command\MockCommand();
+        $mockCommand = new MockCommand();
         
         Gate::getInstance()->getBus('mock-bus')->invokeCommand($mockCommand);
         

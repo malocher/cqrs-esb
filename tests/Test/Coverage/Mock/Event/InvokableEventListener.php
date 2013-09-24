@@ -6,17 +6,19 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace Test\Mock\Event;
+namespace Test\Coverage\Mock\Event;
 
-use Cqrs\Adapter\AdapterTrait;
-
-class MockEventListener
+class InvokableEventListener
 {
-    use AdapterTrait;
+    protected $mockEventMessage;
 
-    protected $mockEventMessage = null;
-    
-    public function onMock(MockEvent $event) {
+    /**
+     * Listen on MockEvents
+     *
+     * @param \Test\Mock\Event\MockEvent $event
+     */
+    public function __invoke(MockEvent $event)
+    {
         $arguments = $event->getArguments();
         $this->mockEventMessage = $arguments['message'];
     }

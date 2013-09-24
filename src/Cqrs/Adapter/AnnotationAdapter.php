@@ -32,7 +32,10 @@ class AnnotationAdapter implements AdapterInterface {
         AnnotationRegistry::registerAutoloadNamespace('Cqrs\\Annotation\\');
         $this->annotationReader = new AnnotationReader();
     }
-    
+
+    /**
+     * Initialize a bus via Configuration file!
+     */
     public function initializeBus(BusInterface $bus, array $configuration)
     {
         foreach ($configuration as $qualifiedClassnameOfHandlerOrListener) {
@@ -99,6 +102,5 @@ class AnnotationAdapter implements AdapterInterface {
             }
 
         }
-
     }
 }

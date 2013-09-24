@@ -6,19 +6,20 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace Test\Mock\Command;
+namespace Test\Coverage\Mock\Command;
 
-use Cqrs\Adapter\AdapterTrait;
+use Cqrs\Message;
 use Cqrs\Command\CommandInterface;
 
-class MockCommandHandler
+class MockCommand extends Message implements CommandInterface
 {
-    use AdapterTrait;
+    protected $edited = false;
+    
+    public function edit() {
+        $this->edited = true;
+    }
 
-    public function handleCommand(CommandInterface $command)
-    {
-        if ($command instanceof MockCommand) {
-            $command->edit();
-        }
-    }  
+    public function isEdited() {
+        return $this->edited;
+    }
 }
