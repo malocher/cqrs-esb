@@ -56,7 +56,19 @@ class Gate {
     {
         $this->busSystems = array();
     }
-    
+
+    /**
+     * reset singleton
+     */
+    public function reset()
+    {
+        foreach($this->busSystems as $bus){
+            $this->detach($bus);
+        }
+        $this->busSystems = array();
+        return self::getInstance();
+    }
+
     private function __clone()
     {
         //Singleton implementation, so clone is not allowed

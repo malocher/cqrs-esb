@@ -89,7 +89,6 @@ abstract class AbstractBus implements BusInterface
         if (!isset($this->commandHandlerMap[$commandClass])) {
             $this->commandHandlerMap[$commandClass] = array();
         }
-
         $this->commandHandlerMap[$commandClass][] = $callableOrDefinition;
     }
     
@@ -166,7 +165,6 @@ abstract class AbstractBus implements BusInterface
         if (!isset($this->eventListenerMap[$eventClass])) {
             $this->eventListenerMap[$eventClass] = array();
         }
-
         $this->eventListenerMap[$eventClass][] = $callableOrDefinition;
     }
     
