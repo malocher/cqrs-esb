@@ -1,13 +1,6 @@
 Looks like the problem with missing annotation classes is caused by a wrong phpunit setup.
-This is mine and it works
 
-imac:cqrs-php manfredweber$ vi phpunit.xml
-imac:cqrs-php manfredweber$ git checkout
-M	tests/Test/Cqrs/Bus/AbstractBusTest.php
-M	tests/Test/Mock/Handler/MockAnnotationFooHandler.php
-M	tests/Test/Mock/Handler/MockAnnotationOutputHandler.php
-M	tests/Test/Mock/Handler/MockSystemBusHandler.php
-imac:cqrs-php manfredweber$ vi phpunit.xml
+
 imac:cqrs-php manfredweber$ php vendor/phpunit/phpunit/phpunit.php tests/
 PHPUnit 3.7.25 by Sebastian Bergmann.
 
@@ -22,8 +15,9 @@ Time: 68 ms, Memory: 4.25Mb
 OK (11 tests, 9 assertions)
 
 
-Try this one from command lien:
+Problem is that we require bootstrap to register the annottation classes!
 
+Try this one from command line:
 
 THIS SHOULD WORK!
 
