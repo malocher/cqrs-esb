@@ -19,6 +19,4 @@ Problem is that we require bootstrap to register the annottation classes!
 
 Try this one from command line:
 
-THIS SHOULD WORK!
-
 phpunit --bootstrap tests/bootstrap.php tests/

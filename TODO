@@ -1,0 +1,68 @@
+
+AdapterTrait
+------------
+
+1)
+"allow" becomes private since we can always easily use "initializeBus" like so:
+$this->adapter->initializeBus(
+    $this->bus,
+    array('Test\Integration\Test2\Test2Handler')
+);
+
+
+2)
+"initializeBus" will be renamed to "pipe".
+"pipe" could be __THE__ adapter main integration function cia configuration
+
+
+3)
+Full coverage!!!
+
+
+4)
+Integration tests for:
+- all exceptions which we should redesign from scratch probably(?)
+- many pipes and piping commands and events in every possible direction
+- monitoring systembus with 1 pipe
+- monitoring systembus with man pipes
+- handler methods with multiple annotations (could be use as input or output handler)
+- handler methods with namespace annotations (?possible)
+- testing closures
+- Gate not static (?)
+- configuration testing
+
+
+5)
+maybe adapter implementation for closures possible?
+
+function simple_printer($name) {
+    return function () use ($name) {
+        print $name;
+    };
+}
+
+
+6)
+do we need "command_map" key in configuration
+-> 'command_map' => array(
+Can't we use "interface_exists('CommandInterface')" or "interface_exists('EventInterface')" ???
+
+
+7)
+configuration looks like this right now:
+'adapter' => array(
+    'class' => 'Cqrs\Adapter\ArrayMapAdapter'
+),
+'buses' => array(
+    'Test\Coverage\Mock\Bus\BusMock' => array(
+        'command_map' => array(
+            'Test\Coverage\Mock\Command\MockCommand' => array(
+                'alias' => 'Test\Coverage\Mock\Command\MockCommandHandler',
+                'method' => 'handleCommand'
+            )
+        )
+    )
+)
+does it make sense to put the adapter->class into the handler?
+Imagine there're different developers for every handler. we should give them the freedom
+to decide which handler they implement.
