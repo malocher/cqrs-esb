@@ -9,7 +9,7 @@
 namespace Test\Mock\Handler;
 
 use Cqrs\Adapter\AdapterTrait;
-use Cqrs\Annotation\Command as Command;
+use Cqrs\Annotation\Command;
 use Test\Mock\Command\MockCommand;
 use Test\Mock\Event\MockEvent;
 
@@ -18,7 +18,7 @@ class MockAnnotationFooHandler {
     use AdapterTrait;
 
     /**
-     * @Command("Test\Mock\Command\MockCommand")
+     * @Cqrs\Annotation\Command("Test\Mock\Command\MockCommand")
      */
     public function getFoo(MockCommand $command)
     {

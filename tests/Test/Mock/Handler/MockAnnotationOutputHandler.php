@@ -9,7 +9,7 @@
 namespace Test\Mock\Handler;
 
 use Cqrs\Adapter\AdapterTrait;
-use Cqrs\Annotation\Event as Event;
+use Cqrs\Annotation\Event;
 use Test\Mock\Event\MockEvent;
 
 class MockAnnotationOutputHandler {
@@ -17,7 +17,7 @@ class MockAnnotationOutputHandler {
     use AdapterTrait;
 
     /**
-     * @Event("Test\Mock\Event\MockEvent")
+     * @Cqrs\Annotation\Event("Test\Mock\Event\MockEvent")
      */
     public function getXml(MockEvent $event)
     {

@@ -20,8 +20,10 @@ interface AdapterInterface {
 
     /**
      * Constructor
+     * 
+     * @param array $configuration
      */
-    public function __construct();
+    public function __construct(array $configuration = null);
     
     /**
      * Initialize CommandHandler and EventListener from configuration

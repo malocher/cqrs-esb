@@ -21,7 +21,7 @@ class ArrayMapAdapter implements AdapterInterface
      * 
      * {@inheritDoc}
      */
-    public function __construct()
+    public function __construct(array $configuration = null)
     {
         //empty constructor, just here to implement the interface
     }

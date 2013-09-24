@@ -36,7 +36,9 @@ class SetupTest extends TestCase
     
     public function testInitialize() {
         $configuration = array(
-            'adapter' => 'Cqrs\Adapter\ArrayMapAdapter',
+            'adapter' => array(
+                'class' => 'Cqrs\Adapter\ArrayMapAdapter'
+            ),
             'buses' => array(
                 'Test\Mock\Bus\BusMock' => array(
                     'command_map' => array(

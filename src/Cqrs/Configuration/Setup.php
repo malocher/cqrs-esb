@@ -88,9 +88,10 @@ class Setup
      * @return AdapterInterface
      */
     protected function loadAdapter(array $configuration) {
-        $adapterClass = $configuration['adapter'];
+        $adapterClass = $configuration['adapter']['class'];
+        $config = isset($configuration['adapter']['options'])? $configuration['adapter']['options'] : null;
         
-        return new $adapterClass();
+        return new $adapterClass($config);
     }
     
     /**

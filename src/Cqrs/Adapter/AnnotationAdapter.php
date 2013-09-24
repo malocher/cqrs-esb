@@ -27,7 +27,7 @@ class AnnotationAdapter implements AdapterInterface {
     /**
      * Constructor
      */
-    public function __construct()
+    public function __construct(array $configuration = null)
     {
         AnnotationRegistry::registerAutoloadNamespace('Cqrs\\Annotation\\');
         $this->annotationReader = new AnnotationReader();
