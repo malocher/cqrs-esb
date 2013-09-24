@@ -66,3 +66,7 @@ configuration looks like this right now:
 does it make sense to put the adapter->class into the handler?
 Imagine there're different developers for every handler. we should give them the freedom
 to decide which handler they implement.
+
+8)
+$this->getBus() <- without parameter returns the currents bus!
+$this->getBus($name) <- returns any bus
