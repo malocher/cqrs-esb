@@ -24,7 +24,7 @@ class MockSystemBusHandler {
      */
     public function dumpInvokeCommandCommand(InvokeCommandCommand $command)
     {
-        var_dump( $command );
+        //var_dump( $command );
     }
 
     /**
@@ -32,7 +32,7 @@ class MockSystemBusHandler {
      */
     public function dumpPublishEventCommand(PublishEventCommand $command)
     {
-        var_dump( $command );
+        //var_dump( $command );
     }
 
     /**
@@ -40,7 +40,7 @@ class MockSystemBusHandler {
      */
     public function dumpCommandInvokedEvent(CommandInvokedEvent $event)
     {
-        var_dump( $event );
+        //var_dump( $event );
     }
 
     /**
@@ -48,6 +48,6 @@ class MockSystemBusHandler {
      */
     public function dumpEventPublishedEvent(EventPublishedEvent $event)
     {
-        var_dump( $event );
+        //var_dump( $event );
     }
 }

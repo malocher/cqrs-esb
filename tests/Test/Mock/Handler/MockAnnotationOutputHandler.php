@@ -20,8 +20,8 @@ class MockAnnotationOutputHandler {
      */
     public function getXml(MockEvent $event)
     {
-        var_dump(__METHOD__);
-        var_dump($event);
+        //var_dump(__METHOD__);
+        //var_dump($event);
     }
 
     /**
@@ -29,8 +29,8 @@ class MockAnnotationOutputHandler {
      */
     public function getJson(MockEvent $event)
     {
-        var_dump(__METHOD__);
-        var_dump($event);
+        //var_dump(__METHOD__);
+        //var_dump($event);
     }
 
 }
