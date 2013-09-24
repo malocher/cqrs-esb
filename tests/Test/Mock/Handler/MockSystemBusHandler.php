@@ -13,6 +13,8 @@ use Cqrs\Command\InvokeCommandCommand;
 use Cqrs\Command\PublishEventCommand;
 use Cqrs\Event\CommandInvokedEvent;
 use Cqrs\Event\EventPublishedEvent;
+use Cqrs\Annotation\Command;
+use Cqrs\Annotation\Event;
 
 
 class MockSystemBusHandler {

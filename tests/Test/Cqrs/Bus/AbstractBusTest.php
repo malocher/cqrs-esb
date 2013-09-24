@@ -73,7 +73,7 @@ class AbstractBusTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers Cqrs\Bus\AbstractBus::invokeCommand
      */
-    /*public function testInvokeCommand__withCallableCommandHandler()
+    public function testInvokeCommand__withCallableCommandHandler()
     {
         $this->bus->mapCommand(
             'Test\Mock\Command\MockCommand', 
@@ -89,7 +89,7 @@ class AbstractBusTest extends \PHPUnit_Framework_TestCase
         //The MockCommandHandler should call $mockCommand->edit(), otherwise
         //$mockCommand->isEdited() returns false
         $this->assertTrue($mockCommand->isEdited());
-    }*/
+    }
 
     /**
      * @covers Cqrs\Bus\AbstractBus::dispatchEvent

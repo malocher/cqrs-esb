@@ -99,7 +99,11 @@ abstract class AbstractBus implements BusInterface
     public function invokeCommand(CommandInterface $command)
     {
         $commandClass = get_class($command);
-
+        
+        if( !isset($this->commandHandlerMap[$commandClass]) ){
+            return;
+        }
+        
         if( !is_null($this->gate->getBus('system-bus')) ){
             $invokeCommandCommand = new InvokeCommandCommand();
             $invokeCommandCommand->setClass($commandClass);
@@ -108,17 +112,11 @@ abstract class AbstractBus implements BusInterface
             $invokeCommandCommand->setArguments($command->getArguments());
             $this->gate->getBus('system-bus')->invokeCommand($invokeCommandCommand);
         }
-        if( !isset($this->commandHandlerMap[$commandClass]) ){
-            return;
-        }
 
         foreach($this->commandHandlerMap[$commandClass] as $i => $callableOrDefinition) {
-
-             // @todo how will this work with traits ?
-
+            
             if (is_callable($callableOrDefinition)) {
-                call_user_func($callableOrDefinition, $command);
-                //return;
+                call_user_func($callableOrDefinition, $command, $this->gate);
             }
 
             if (is_array($callableOrDefinition)) {
@@ -132,9 +130,7 @@ abstract class AbstractBus implements BusInterface
                 if( !isset($usedTraits['Cqrs\Adapter\AdapterTrait']) ){
                     throw BusException::traitError('Adapter Trait is missing! Use it!');
                 }
-                $commandHandler->executeCommand($this->gate,$commandHandler,$method,$command);
-                //$commandHandler->{$method}($command);
-                //return;
+                $commandHandler->executeCommand($this->gate,$commandHandler,$method,$command);                
             }
         }
 
@@ -166,7 +162,11 @@ abstract class AbstractBus implements BusInterface
     public function publishEvent(EventInterface $event)
     {
         $eventClass = get_class($event);
-
+        
+        if(!isset($this->eventListenerMap[$eventClass])){
+            return;
+        }
+        
         if( !is_null($this->gate->getBus('system-bus')) ){
             $publishEventCommand = new PublishEventCommand();
             $publishEventCommand->setClass($eventClass);
@@ -175,14 +175,10 @@ abstract class AbstractBus implements BusInterface
             $publishEventCommand->setArguments($event->getArguments());
             $this->gate->getBus('system-bus')->invokeCommand($publishEventCommand);
         }
-        if(!isset($this->eventListenerMap[$eventClass])){
-            return;
-        }
 
         foreach($this->eventListenerMap[$eventClass] as $i => $callableOrDefinition) {
             if (is_callable($callableOrDefinition)) {
                 call_user_func($callableOrDefinition, $event);
-                //return;
             }
 
             if (is_array($callableOrDefinition)) {
@@ -197,8 +193,6 @@ abstract class AbstractBus implements BusInterface
                     throw BusException::traitError('Adapter Trait is missing! Use it!');
                 }
                 $eventListener->executeEvent($this->gate,$eventListener,$method,$event);
-                //$eventListener->{$method}($event);
-                //return;
             }
         }
 

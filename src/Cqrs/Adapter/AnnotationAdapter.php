@@ -27,10 +27,17 @@ class AnnotationAdapter implements AdapterInterface {
     /**
      * Constructor
      */
-    public function __construct()
+    public function __construct(array $configuration = null)
     {
         AnnotationRegistry::registerAutoloadNamespace('Cqrs\\Annotation\\');
         $this->annotationReader = new AnnotationReader();
+    }
+    
+    public function initializeBus(BusInterface $bus, array $configuration)
+    {
+        foreach ($configuration as $qualifiedClassnameOfHandlerOrListener) {
+            $this->allow($bus, $qualifiedClassnameOfHandlerOrListener);
+        }
     }
 
     /**

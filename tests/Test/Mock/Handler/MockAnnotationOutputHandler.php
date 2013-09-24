@@ -9,6 +9,7 @@
 namespace Test\Mock\Handler;
 
 use Cqrs\Adapter\AdapterTrait;
+use Cqrs\Annotation\Event;
 use Test\Mock\Event\MockEvent;
 
 class MockAnnotationOutputHandler {
@@ -25,7 +26,7 @@ class MockAnnotationOutputHandler {
     }
 
     /**
-     * @Cqrs\Annotation\Event("Test\Mock\Event\MockEvent")
+     * @Event("Test\Mock\Event\MockEvent")
      */
     public function getJson(MockEvent $event)
     {
