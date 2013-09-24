@@ -6,12 +6,12 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace Test\Integration\Test2;
+namespace Test\Integration\Test1;
 
 use Cqrs\Message;
 use Cqrs\Event\EventInterface;
 
-class Test2Event extends Message implements EventInterface
+class Test1Event extends Message implements EventInterface
 {
     public $callback;
     protected $edited = false;

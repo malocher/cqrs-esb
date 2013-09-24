@@ -11,6 +11,7 @@ namespace Test\Integration;
 use Test\TestCase;
 use Test\Integration\Test1\Test1Bus;
 use Test\Integration\Test1\Test1Command;
+use Test\Integration\Test1\Test1Event;
 use Test\Integration\Test1\Test1Handler;
 
 use Cqrs\Gate;
@@ -33,7 +34,14 @@ class Test1 extends TestCase {
             'Test\Integration\Test1\Test1Command',
             array(
                 'alias' => 'Test\Integration\Test1\Test1Handler',
-                'method' => 'edit'
+                'method' => 'editCommand'
+            )
+        );
+        $this->bus->registerEventListener(
+            'Test\Integration\Test1\Test1Event',
+            array(
+                'alias' => 'Test\Integration\Test1\Test1Handler',
+                'method' => 'editEvent'
             )
         );
         $this->gate->attach($this->bus);
@@ -48,5 +56,16 @@ class Test1 extends TestCase {
             $this->assertTrue(true);
         };
         $this->bus->invokeCommand($command);
+    }
+
+    public function test2(){
+        $event = new Test1Event();
+        $event->callback = function(Test1Handler $returnedHandler,Test1Event $returnedEvent, $returnedEventIsEdited){
+            $this->assertInstanceOf('Test\Integration\Test1\Test1Handler',$returnedHandler);
+            $this->assertInstanceOf('Test\Integration\Test1\Test1Event',$returnedEvent);
+            $this->assertTrue($returnedEventIsEdited);
+            $this->assertTrue(true);
+        };
+        $this->bus->publishEvent($event);
     }
 }

@@ -14,13 +14,23 @@ class Test1Handler
 {
     use AdapterTrait;
 
-    public function edit(Test1Command $command)
+    public function editCommand(Test1Command $command)
     {
         if ($command instanceof Test1Command) {
             $command->edit();
         }
         if (is_callable($command->callback)) {
             call_user_func($command->callback,$this,$command,$command->isEdited());
+        }
+    }
+
+    public function editEvent(Test1Event $event)
+    {
+        if ($event instanceof Test1Event) {
+            $event->edit();
+        }
+        if (is_callable($event->callback)) {
+            call_user_func($event->callback,$this,$event,$event->isEdited());
         }
     }
 }

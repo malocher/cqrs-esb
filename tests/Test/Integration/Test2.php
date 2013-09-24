@@ -12,6 +12,7 @@ use Cqrs\Adapter\AnnotationAdapter;
 use Test\TestCase;
 use Test\Integration\Test2\Test2Bus;
 use Test\Integration\Test2\Test2Command;
+use Test\Integration\Test2\Test2Event;
 use Test\Integration\Test2\Test2Handler;
 
 use Cqrs\Gate;
@@ -36,7 +37,7 @@ class Test2 extends TestCase {
     }
 
     /*
-     * allow
+     * allow command
      */
     public function test1(){
         $this->adapter->allow($this->bus,'Test\Integration\Test2\Test2Handler');
@@ -51,9 +52,24 @@ class Test2 extends TestCase {
     }
 
     /*
-     * initializeBus
+     * allow event
      */
     public function test2(){
+        $this->adapter->allow($this->bus,'Test\Integration\Test2\Test2Handler');
+        $event = new Test2Event();
+        $event->callback = function(Test2Handler $returnedHandler,Test2Event $returnedEvent, $returnedEventIsEdited){
+            $this->assertInstanceOf('Test\Integration\Test2\Test2Handler',$returnedHandler);
+            $this->assertInstanceOf('Test\Integration\Test2\Test2Event',$returnedEvent);
+            $this->assertTrue($returnedEventIsEdited);
+            $this->assertTrue(true);
+        };
+        $this->bus->publishEvent($event);
+    }
+
+    /*
+     * initializeBus with command
+     */
+    public function test3(){
         $this->adapter->initializeBus($this->bus,array('Test\Integration\Test2\Test2Handler'));
         $command = new Test2Command();
         $command->callback = function(Test2Handler $returnedHandler,Test2Command $returnedCommand, $returnedCommandIsEdited){
@@ -63,5 +79,20 @@ class Test2 extends TestCase {
             $this->assertTrue(true);
         };
         $this->bus->invokeCommand($command);
+    }
+
+    /*
+     * initializeBus with event
+     */
+    public function test4(){
+        $this->adapter->initializeBus($this->bus,array('Test\Integration\Test2\Test2Handler'));
+        $event = new Test2Event();
+        $event->callback = function(Test2Handler $returnedHandler,Test2Event $returnedEvent, $returnedEventIsEdited){
+            $this->assertInstanceOf('Test\Integration\Test2\Test2Handler',$returnedHandler);
+            $this->assertInstanceOf('Test\Integration\Test2\Test2Event',$returnedEvent);
+            $this->assertTrue($returnedEventIsEdited);
+            $this->assertTrue(true);
+        };
+        $this->bus->publishEvent($event);
     }
 }
