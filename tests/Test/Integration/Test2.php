@@ -22,6 +22,7 @@ class Test2 extends TestCase {
 
     private $gate;
     private $bus;
+    private $adapter;
 
     protected function setUp()
     {
@@ -30,12 +31,30 @@ class Test2 extends TestCase {
             new ClassMapCommandHandlerLoader(),
             new ClassMapEventListenerLoader()
         );
-        $annotationAdapter = new AnnotationAdapter();
-        $annotationAdapter->allow($this->bus,'Test\Integration\Test2\Test2Handler');
         $this->gate->attach($this->bus);
+        $this->adapter = new AnnotationAdapter();
     }
 
+    /*
+     * allow
+     */
     public function test1(){
+        $this->adapter->allow($this->bus,'Test\Integration\Test2\Test2Handler');
+        $command = new Test2Command();
+        $command->callback = function(Test2Handler $returnedHandler,Test2Command $returnedCommand, $returnedCommandIsEdited){
+            $this->assertInstanceOf('Test\Integration\Test2\Test2Handler',$returnedHandler);
+            $this->assertInstanceOf('Test\Integration\Test2\Test2Command',$returnedCommand);
+            $this->assertTrue($returnedCommandIsEdited);
+            $this->assertTrue(true);
+        };
+        $this->bus->invokeCommand($command);
+    }
+
+    /*
+     * initializeBus
+     */
+    public function test2(){
+        $this->adapter->initializeBus($this->bus,array('Test\Integration\Test2\Test2Handler'));
         $command = new Test2Command();
         $command->callback = function(Test2Handler $returnedHandler,Test2Command $returnedCommand, $returnedCommandIsEdited){
             $this->assertInstanceOf('Test\Integration\Test2\Test2Handler',$returnedHandler);
