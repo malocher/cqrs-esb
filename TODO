@@ -67,6 +67,16 @@ does it make sense to put the adapter->class into the handler?
 Imagine there're different developers for every handler. we should give them the freedom
 to decide which handler they implement.
 
+
 8)
 $this->getBus() <- without parameter returns the currents bus!
 $this->getBus($name) <- returns any bus
+
+
+9)
+command/event mapping (?)
+\                           <- allows every handler (which is default)
+\namespace                  <- only namespace
+\namespace\namespace        <- only namespace/namespace
+\namespace\class            <- only class
+\namespace\class\method     <- only method
