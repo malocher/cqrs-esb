@@ -9,6 +9,7 @@
 namespace Test\Mock\Handler;
 
 use Cqrs\Adapter\AdapterTrait;
+use Cqrs\Annotation\Command;
 use Test\Mock\Command\MockCommand;
 use Test\Mock\Event\MockEvent;
 
