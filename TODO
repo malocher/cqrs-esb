@@ -42,11 +42,12 @@ function simple_printer($name) {
 }
 
 
-6)
+6) - DONE
 do we need "command_map" key in configuration
 -> 'command_map' => array(
 Can't we use "interface_exists('CommandInterface')" or "interface_exists('EventInterface')" ???
 
+AM: Good point, I've implemented it.
 
 7)
 configuration looks like this right now:

@@ -32,16 +32,53 @@ class ArrayMapAdapter implements AdapterInterface
      */
     public function pipe(BusInterface $bus, array $configuration)
     {
-        if (isset($configuration['command_map'])) {
-            foreach ($configuration['command_map'] as $commandClass => $callableOrDefinition) {
-                $bus->mapCommand($commandClass, $callableOrDefinition);
+        foreach ($configuration as $messageClass => $callableOrDefinition) {
+            if ($this->isCommand($messageClass)) {
+                $bus->mapCommand($messageClass, $callableOrDefinition);
+            } else if ($this->isEvent($messageClass)) {
+                $bus->registerEventListener($messageClass, $callableOrDefinition);
+            } else {
+                throw new \Exception(
+                    sprintf(
+                        'Message <%s> must implement %s or %s',
+                        $messageClass,
+                        'Cqrs\Command\CommandInterface',
+                        'Cqrs\Event\EventInterface'
+                    )
+                );
             }
+        }
+    }
+    
+    /**
+     * Check if message implements Cqrs\Command\CommandInterface
+     * 
+     * @param string $messageClass
+     * @return boolean
+     */
+    private function isCommand($messageClass) {
+        $interfaces = class_implements($messageClass);
+        
+        if (!$interfaces) {
+            return false;
         }
         
-        if (isset($configuration['event_map'])) {
-            foreach ($configuration['event_map'] as $eventClass => $callableOrDefinition) {
-                $bus->registerEventListener($eventClass, $callableOrDefinition);
-            }
+        return in_array('Cqrs\Command\CommandInterface', $interfaces);
+    }
+    
+    /**
+     * Check if message implements Cqrs\Command\CommandInterface
+     * 
+     * @param string $messageClass
+     * @return boolean
+     */
+    private function isEvent($messageClass) {
+        $interfaces = class_implements($messageClass);
+        
+        if (!$interfaces) {
+            return false;
         }
-    }    
+        
+        return in_array('Cqrs\Event\EventInterface', $interfaces);
+    }
 }

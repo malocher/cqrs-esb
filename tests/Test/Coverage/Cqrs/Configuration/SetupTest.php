@@ -10,6 +10,7 @@ namespace Cqrs\Configuration;
 
 use Test\TestCase;
 use Test\Coverage\Mock\Command\MockCommand;
+use Test\Coverage\Mock\Event\MockEvent;
 
 use Cqrs\Gate;
 use Cqrs\Command\ClassMapCommandHandlerLoader;
@@ -36,18 +37,16 @@ class SetupTest extends TestCase
         $this->object->setEventListenerLoader(new ClassMapEventListenerLoader());
     }
     
-    public function testInitialize() {
+    public function testInitializeCommand() {
         $configuration = array(
             'adapter' => array(
                 'class' => 'Cqrs\Adapter\ArrayMapAdapter'
             ),
             'buses' => array(
                 'Test\Coverage\Mock\Bus\BusMock' => array(
-                    'command_map' => array(
-                        'Test\Coverage\Mock\Command\MockCommand' => array(
-                            'alias' => 'Test\Coverage\Mock\Command\MockCommandHandler',
-                            'method' => 'handleCommand'
-                        )
+                    'Test\Coverage\Mock\Command\MockCommand' => array(
+                        'alias' => 'Test\Coverage\Mock\Command\MockCommandHandler',
+                        'method' => 'handleCommand'
                     )
                 )
             )
@@ -62,5 +61,30 @@ class SetupTest extends TestCase
         //The MockCommandHandler should call $mockCommand->edit(), otherwise
         //$mockCommand->isEdited() returns false
         $this->assertTrue($mockCommand->isEdited());
+    }
+    
+    public function testInitializeEvent() {
+        $configuration = array(
+            'adapter' => array(
+                'class' => 'Cqrs\Adapter\ArrayMapAdapter'
+            ),
+            'buses' => array(
+                'Test\Coverage\Mock\Bus\BusMock' => array(
+                    'Test\Coverage\Mock\Event\MockEvent' => function($event) {
+                        $event->edit();
+                    }
+                )
+            )
+        );
+        
+        $this->object->initialize($configuration);
+        
+        $mockEvent = new MockEvent();
+        
+        Gate::getInstance()->getBus('mock-bus')->publishEvent($mockEvent);
+        
+        //The EventListenerCallback should call $mockEvent->edit(), otherwise
+        //$mockEvent->isEdited() returns false
+        $this->assertTrue($mockEvent->isEdited());
     }
 }
