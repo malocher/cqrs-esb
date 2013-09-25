@@ -73,13 +73,13 @@ class Setup
             $this->gate->enableSystemBus();
         }
         
-        $adapter = $this->loadAdapter($configuration);
+        foreach ($configuration['adapters'] as $adapterConfiguration) {
+            $adapter = $this->loadAdapter($adapterConfiguration);
         
-        
-        
-        foreach($configuration['buses'] as $busClass => $busAdapterConfiguration) {
-            $bus = $this->loadBus($busClass);
-            $adapter->pipe($bus, $busAdapterConfiguration);
+            foreach($adapterConfiguration['buses'] as $busClass => $busAdapterConfiguration) {
+                $bus = $this->loadBus($busClass);
+                $adapter->pipe($bus, $busAdapterConfiguration);
+            }
         }
     }
     
@@ -90,8 +90,8 @@ class Setup
      * @return AdapterInterface
      */
     protected function loadAdapter(array $configuration) {
-        $adapterClass = $configuration['adapter']['class'];
-        $config = isset($configuration['adapter']['options'])? $configuration['adapter']['options'] : null;
+        $adapterClass = $configuration['class'];
+        $config = isset($configuration['options'])? $configuration['options'] : null;
         
         return new $adapterClass($config);
     }

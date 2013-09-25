@@ -68,6 +68,39 @@ does it make sense to put the adapter->class into the handler?
 Imagine there're different developers for every handler. we should give them the freedom
 to decide which handler they implement.
 
+AM: What about this version?
+
+        $configuration = array(
+            'adapters' => array(
+                array(
+                    'class' => 'Cqrs\Adapter\ArrayMapAdapter',
+                    'buses' => array(
+                        'Test\Coverage\Mock\Bus\BusMock' => array(
+                            'Test\Coverage\Mock\Command\MockCommand' => array(
+                                'alias' => 'Test\Coverage\Mock\Command\MockCommandHandler',
+                                'method' => 'handleCommand'
+                            )
+                        )
+                    )
+                ),
+                array(
+                    'class' => 'Cqrs\Adapter\AnnotationAdapter',
+                    'buses' => array(
+                        'Test\Coverage\Mock\Bus\BusMock' => array(
+                            'Test\Coverage\Mock\Command\AnnotationCommandHandler'
+                        )
+                    )
+                ),
+            ),
+        );
+
+- You can configure many adapters and each adapter gets it's own bus-configuration
+- we have two advantages with this version:
+    - we can use different adapters for different types of handlers
+    - it is easier to understand, that each adapter type defines it's own bus-configuration format:
+        - AnnotationAdapter only needs the FQCN
+        - ArrayMapAdapter gets a message to handler mapping
+
 
 8)
 $this->getBus() <- without parameter returns the currents bus!

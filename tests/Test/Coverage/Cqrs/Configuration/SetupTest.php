@@ -39,17 +39,19 @@ class SetupTest extends TestCase
     
     public function testInitializeCommand() {
         $configuration = array(
-            'adapter' => array(
-                'class' => 'Cqrs\Adapter\ArrayMapAdapter'
-            ),
-            'buses' => array(
-                'Test\Coverage\Mock\Bus\BusMock' => array(
-                    'Test\Coverage\Mock\Command\MockCommand' => array(
-                        'alias' => 'Test\Coverage\Mock\Command\MockCommandHandler',
-                        'method' => 'handleCommand'
+            'adapters' => array(
+                array(
+                    'class' => 'Cqrs\Adapter\ArrayMapAdapter',
+                    'buses' => array(
+                        'Test\Coverage\Mock\Bus\BusMock' => array(
+                            'Test\Coverage\Mock\Command\MockCommand' => array(
+                                'alias' => 'Test\Coverage\Mock\Command\MockCommandHandler',
+                                'method' => 'handleCommand'
+                            )
+                        )
                     )
-                )
-            )
+                ),
+            ),
         );
         
         $this->object->initialize($configuration);
@@ -65,16 +67,19 @@ class SetupTest extends TestCase
     
     public function testInitializeEvent() {
         $configuration = array(
-            'adapter' => array(
-                'class' => 'Cqrs\Adapter\ArrayMapAdapter'
+            'adapters' => array(
+                array(
+                    'class' => 'Cqrs\Adapter\ArrayMapAdapter',
+                    'buses' => array(
+                        'Test\Coverage\Mock\Bus\BusMock' => array(
+                            'Test\Coverage\Mock\Event\MockEvent' => function($event) {
+                                $event->edit();
+                            }
+                        )
+                    )
+                ),
             ),
-            'buses' => array(
-                'Test\Coverage\Mock\Bus\BusMock' => array(
-                    'Test\Coverage\Mock\Event\MockEvent' => function($event) {
-                        $event->edit();
-                    }
-                )
-            )
+            
         );
         
         $this->object->initialize($configuration);
