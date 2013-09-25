@@ -30,5 +30,5 @@ interface AdapterInterface {
      * 
      * @return void
      */
-    public function initializeBus(BusInterface $bus, array $configuration);
+    public function pipe(BusInterface $bus, array $configuration);
 }

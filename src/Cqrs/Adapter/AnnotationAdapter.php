@@ -36,7 +36,7 @@ class AnnotationAdapter implements AdapterInterface {
     /**
      * Initialize a bus via Configuration file!
      */
-    public function initializeBus(BusInterface $bus, array $configuration)
+    public function pipe(BusInterface $bus, array $configuration)
     {
         foreach ($configuration as $qualifiedClassnameOfHandlerOrListener) {
             $this->allow($bus, $qualifiedClassnameOfHandlerOrListener);

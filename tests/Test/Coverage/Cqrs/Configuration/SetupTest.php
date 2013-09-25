@@ -31,7 +31,7 @@ class SetupTest extends TestCase
 
     protected function setUp() {
         $this->object = new Setup();
-        $this->object->setGate(Gate::getInstance());
+        $this->object->setGate(Gate::getInstance()->reset());
         $this->object->setCommandHandlerLoader(new ClassMapCommandHandlerLoader());
         $this->object->setEventListenerLoader(new ClassMapEventListenerLoader());
     }

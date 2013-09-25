@@ -75,9 +75,11 @@ class Setup
         
         $adapter = $this->loadAdapter($configuration);
         
+        
+        
         foreach($configuration['buses'] as $busClass => $busAdapterConfiguration) {
             $bus = $this->loadBus($busClass);
-            $adapter->initializeBus($bus, $busAdapterConfiguration);
+            $adapter->pipe($bus, $busAdapterConfiguration);
         }
     }
     

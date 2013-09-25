@@ -10,7 +10,7 @@ $this->adapter->initializeBus(
 );
 
 
-2)
+2) - DONE
 "initializeBus" will be renamed to "pipe".
 "pipe" could be __THE__ adapter main integration function cia configuration
 

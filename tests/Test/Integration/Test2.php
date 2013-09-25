@@ -67,10 +67,10 @@ class Test2 extends TestCase {
     }
 
     /*
-     * initializeBus with command
+     * pipe with command
      */
     public function test3(){
-        $this->adapter->initializeBus($this->bus,array('Test\Integration\Test2\Test2Handler'));
+        $this->adapter->pipe($this->bus,array('Test\Integration\Test2\Test2Handler'));
         $command = new Test2Command();
         $command->callback = function(Test2Handler $returnedHandler,Test2Command $returnedCommand, $returnedCommandIsEdited){
             $this->assertInstanceOf('Test\Integration\Test2\Test2Handler',$returnedHandler);
@@ -82,10 +82,10 @@ class Test2 extends TestCase {
     }
 
     /*
-     * initializeBus with event
+     * pipe with event
      */
     public function test4(){
-        $this->adapter->initializeBus($this->bus,array('Test\Integration\Test2\Test2Handler'));
+        $this->adapter->pipe($this->bus,array('Test\Integration\Test2\Test2Handler'));
         $event = new Test2Event();
         $event->callback = function(Test2Handler $returnedHandler,Test2Event $returnedEvent, $returnedEventIsEdited){
             $this->assertInstanceOf('Test\Integration\Test2\Test2Handler',$returnedHandler);

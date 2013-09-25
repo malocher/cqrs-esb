@@ -35,7 +35,7 @@ class GateTest extends TestCase {
         $this->gate = Gate::getInstance();
         $classMapCommandHandlerLoader = new ClassMapCommandHandlerLoader();
         $classMapEventListenerLoader = new ClassMapEventListenerLoader();
-        $this->busGateTestsMock = new BusGateTestsMock($classMapCommandHandlerLoader,$classMapEventListenerLoader);
+        //$this->busGateTestsMock = new BusGateTestsMock($classMapCommandHandlerLoader,$classMapEventListenerLoader);
     }
 
     /**

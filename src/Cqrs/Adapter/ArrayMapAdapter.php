@@ -30,7 +30,7 @@ class ArrayMapAdapter implements AdapterInterface
      * 
      * {@inheritDoc}
      */
-    public function initializeBus(BusInterface $bus, array $configuration)
+    public function pipe(BusInterface $bus, array $configuration)
     {
         if (isset($configuration['command_map'])) {
             foreach ($configuration['command_map'] as $commandClass => $callableOrDefinition) {
