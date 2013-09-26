@@ -6,13 +6,14 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace Test\Coverage\Mock\Event;
+namespace Test\Integration\Test4;
 
 use Cqrs\Message;
 use Cqrs\Event\EventInterface;
 
-class MockEvent extends Message implements EventInterface
+class Test4Event extends Message implements EventInterface
 {
+    public $callback;
     protected $edited = false;
 
     public function edit() {

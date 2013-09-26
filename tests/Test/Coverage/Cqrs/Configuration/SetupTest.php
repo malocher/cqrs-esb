@@ -6,18 +6,15 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace Cqrs\Configuration;
+namespace Test\Coverage\Cqrs\Configuration;
 
+use Test\Coverage\Cqrs\Command\CommandHandlerLoaderInterfaceTest;
+use Test\Coverage\Cqrs\Event\EventListenerLoaderInterfaceTest;
+use Test\Coverage\Cqrs\GateTest;
 use Test\TestCase;
-use Test\Coverage\Mock\Command\MockCommand;
-use Test\Coverage\Mock\Event\MockEvent;
-
-use Cqrs\Gate;
-use Cqrs\Command\ClassMapCommandHandlerLoader;
-use Cqrs\Event\ClassMapEventListenerLoader;
 
 /**
- * Description of SetupTest
+ * Description of CQRS Setup class
  * 
  * @author Alexander Miertsch <kontakt@codeliner.ws>
  */
@@ -25,101 +22,89 @@ class SetupTest extends TestCase
 {
     /**
      *
-     * @var Setup
+     * @var Gate 
      */
-    protected $object;
-
-
+    protected $gate;
+    
     /**
-     * Looks like an integration test ?
-     * Doesn't it make more sense just to do method coverage first and then move these tests to Integration Test3 ?
      *
-     * Maybe the coverage tests could look like this:
-     * ------------------------------------------------
-     * setGate(Gate $gate)
-     *      assertInstanceof Gate
-     * setCommandHandlerLoader(CommandHandlerLoaderInterface $commandHandlerLoader)
-     *      assertInstanceof CommandHandlerLoaderInterface
-     * getCommandHandlerLoader()
-     *      assertInstanceof CommandHandlerLoaderInterface
-     *      is_not_null
-     * setEventListenerLoader(EventListenerLoaderInterface $eventListenerLoader)
-     *      assertInstanceof EventListenerLoaderInterface
-     * getEventListenerLoader()
-     *      assertInstanceof EventListenerLoaderInterface
-     *      is_not_null
-     * loadAdapter(array $configuration)
-     *      something smart
-     * loadBus($busClass)
-     *      something smart
-     * ------------------------------------------------
+     * @var CommandHandlerLoaderInterface
      */
-    protected function setUp() {
-        $this->object = new Setup();
-        $this->object->setGate(Gate::getInstance()->reset());
-        $this->object->setCommandHandlerLoader(new ClassMapCommandHandlerLoader());
-        $this->object->setEventListenerLoader(new ClassMapEventListenerLoader());
+    protected $commandHandlerLoader;
+    
+    /**
+     *
+     * @var EventListenerLoaderInterface
+     */
+    protected $eventListenerLoader;
+
+
+    public function setGate(GateTest $gate) {
+        //$this->gate = $gate;
+    }
+    
+    public function setCommandHandlerLoader(CommandHandlerLoaderInterfaceTest $commandHandlerLoader) {
+        //$this->commandHandlerLoader = $commandHandlerLoader;
+    }
+    
+    /**
+     * 
+     * @return CommandHandlerLoaderInterface
+     */
+    public function getCommandHandlerLoader() {
+        //return $this->commandHandlerLoader;
+    }
+    
+    public function setEventListenerLoader(EventListenerLoaderInterfaceTest $eventListenerLoader) {
+        //$this->eventListenerLoader = $eventListenerLoader;
     }
 
     /**
-     * Looks like an integration test ?
+     * 
+     * @return EventListenerLoaderInterface
      */
-    public function testInitializeCommand() {
-        $configuration = array(
-            'adapters' => array(
-                array(
-                    'class' => 'Cqrs\Adapter\ArrayMapAdapter',
-                    'buses' => array(
-                        'Test\Coverage\Mock\Bus\BusMock' => array(
-                            'Test\Coverage\Mock\Command\MockCommand' => array(
-                                'alias' => 'Test\Coverage\Mock\Command\MockCommandHandler',
-                                'method' => 'handleCommand'
-                            )
-                        )
-                    )
-                ),
-            ),
-        );
-        
-        $this->object->initialize($configuration);
-        
-        $mockCommand = new MockCommand();
-        
-        Gate::getInstance()->getBus('mock-bus')->invokeCommand($mockCommand);
-        
-        //The MockCommandHandler should call $mockCommand->edit(), otherwise
-        //$mockCommand->isEdited() returns false
-        $this->assertTrue($mockCommand->isEdited());
+    public function getEventListenerLoader() {
+        //return $this->eventListenerLoader;
     }
 
+    public function initialize(array $configuration) {
+        
+        /*if (isset($configuration['enable_system_bus']) && $configuration['enable_system_bus']) {
+            $this->gate->enableSystemBus();
+        }
+        
+        foreach ($configuration['adapters'] as $adapterConfiguration) {
+            $adapter = $this->loadAdapter($adapterConfiguration);
+        
+            foreach($adapterConfiguration['buses'] as $busClass => $busAdapterConfiguration) {
+                $bus = $this->loadBus($busClass);
+                $adapter->pipe($bus, $busAdapterConfiguration);
+            }
+        }*/
+    }
+    
     /**
-     * Looks like an integration test ?
+     * 
+     * @param array $configuration
+     * 
+     * @return AdapterInterface
      */
-    public function testInitializeEvent() {
-        $configuration = array(
-            'adapters' => array(
-                array(
-                    'class' => 'Cqrs\Adapter\ArrayMapAdapter',
-                    'buses' => array(
-                        'Test\Coverage\Mock\Bus\BusMock' => array(
-                            'Test\Coverage\Mock\Event\MockEvent' => function($event) {
-                                $event->edit();
-                            }
-                        )
-                    )
-                ),
-            ),
-            
-        );
+    protected function loadAdapter(array $configuration) {
+        /*$adapterClass = $configuration['class'];
+        $config = isset($configuration['options'])? $configuration['options'] : null;
         
-        $this->object->initialize($configuration);
-        
-        $mockEvent = new MockEvent();
-        
-        Gate::getInstance()->getBus('mock-bus')->publishEvent($mockEvent);
-        
-        //The EventListenerCallback should call $mockEvent->edit(), otherwise
-        //$mockEvent->isEdited() returns false
-        $this->assertTrue($mockEvent->isEdited());
+        return new $adapterClass($config);*/
+    }
+    
+    /**
+     * 
+     * @param string $busClass
+     * 
+     * @return BusInterface
+     */
+    protected function loadBus($busClass) {
+        /*$bus = new $busClass($this->getCommandHandlerLoader(), $this->getEventListenerLoader());
+        $this->gate->attach($bus);
+        return $bus;*/
     }
 }

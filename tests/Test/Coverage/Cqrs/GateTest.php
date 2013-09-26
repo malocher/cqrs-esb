@@ -8,93 +8,123 @@
  */
 namespace Test\Coverage\Cqrs;
 
+use Test\Coverage\Cqrs\Bus\BusInterfaceTest;
 use Test\TestCase;
 
-use Cqrs\Command\ClassMapCommandHandlerLoader;
-use Cqrs\Event\ClassMapEventListenerLoader;
-use Cqrs\Gate;
-
+/**
+ * Gate
+ *
+ * @author Manfred Weber <manfred.weber@gmail.com>
+ * @author Alexander Miertsch <kontakt@codeliner.ws>
+ */
 class GateTest extends TestCase {
 
     /**
+     * Singleton instance
+     *
      * @var Gate
      */
-    private $gate;
+    private static $instance;
 
     /**
-     * @var BusGateTestsMock
+     * Bus systems
+     *
+     * @var array
      */
-    private $busGateTestsMock;
+    private $busSystems;
 
     /**
-     * Sets up the fixture, for example, opens a network connection.
-     * This method is called before a test is executed.
+     *
+     * @return Gate
      */
-    protected function setUp()
+    static public function getInstance()
     {
-        $this->gate = Gate::getInstance();
-        $classMapCommandHandlerLoader = new ClassMapCommandHandlerLoader();
-        $classMapEventListenerLoader = new ClassMapEventListenerLoader();
-        //$this->busGateTestsMock = new BusGateTestsMock($classMapCommandHandlerLoader,$classMapEventListenerLoader);
+        /*if (is_null(static::$instance)) {
+            static::$instance = new static();
+        }
+        return static::$instance;*/
     }
 
     /**
-     * @covers Cqrs\Gate::getInstance
+     * Private constructor
      */
-    public function testGateGetInstance(){
-        $this->assertInstanceOf("Cqrs\\Gate",$this->gate);
-    }
-
-    /**
-     * @depends testGateGetInstance
-     * @covers Cqrs\Gate::getInstance
-     */
-    public function testGateIsSingleton(){
-        $this->assertEquals($this->gate,Gate::getInstance());
-    }
-
-    /**
-     * @depends testGateGetInstance
-     * @covers Cqrs\Gate::attach
-     */
-    public function testCreateAttach()
+    private function __construct()
     {
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        //$this->busSystems = array();
     }
 
     /**
-     * @depends testCreateAttach
-     * @covers Cqrs\Gate::attach
+     * reset singleton
      */
-    public function testBusAlreadyAttachd()
+    public function reset()
     {
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        /*foreach($this->busSystems as $bus){
+            $this->detach($bus);
+        }
+        $this->busSystems = array();
+        return self::getInstance();*/
+    }
+
+    private function __clone()
+    {
+        //Singleton implementation, so clone is not allowed
+    }
+
+    public function enableSystemBus()
+    {
+        /*if( is_null( $this->getBus('system-bus') ) ){
+            $systemBus = new SystemBus(
+                new ClassMapCommandHandlerLoader(),
+                new ClassMapEventListenerLoader()
+            );
+            try {
+                $this->attach($systemBus);
+            } catch ( GateException $e ){
+                echo $e->getMessage();
+            }
+        }*/
+    }
+
+    public function disableSystemBus()
+    {
+        //$systemBus = $this->getBus('system-bus');
+        //$this->detach( $systemBus );
+    }
+
+    public function detach(BusInterfaceTest $bus)
+    {
+        /*if( isset($this->busSystems[$bus->getName()]) ){
+            $this->busSystems[$bus->getName()] = null;
+            unset( $this->busSystems[$bus->getName()] );
+        }*/
+    }
+
+    public function attach(BusInterfaceTest $bus)
+    {
+        /*$bus->setGate($this);
+        if( isset($this->busSystems[$bus->getName()]) ){
+            switch( $bus->getName() ){
+                case 'system-bus':
+                    throw GateException::attachError(sprintf('Bus <%s> is reserved!',$bus->getName()));
+                default:
+                    throw GateException::attachError(sprintf('Bus <%s> is already attached!',$bus->getName()));
+            }
+        }
+        $this->busSystems[$bus->getName()] = $bus;*/
     }
 
     /**
-     * @depends testCreateAttach
-     * @covers Cqrs\Gate::attach
+     *
+     * @param string $name
+     * @return BusInterface
+     * @throws \Exception
      */
-    public function testSystemBusAttached()
+    public function getBus($name)
     {
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @depends testCreateAttach
-     * @covers Cqrs\Gate::attach
-     */
-    public function testAttachAnotherSystemBus()
-    {
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        /*if(!isset($this->busSystems[$name])){
+            return null;
+        }
+        return $this->busSystems[$name];*/
     }
 
 }

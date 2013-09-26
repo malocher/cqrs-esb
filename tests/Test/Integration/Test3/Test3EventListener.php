@@ -6,22 +6,22 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace Test\Coverage\Mock\Event;
+namespace Test\Integration\Test3;
 
 use Cqrs\Adapter\AdapterTrait;
 
-class MockEventListener
+class Test3EventListener
 {
     use AdapterTrait;
 
-    protected $mockEventMessage = null;
+    protected $test3EventMessage = null;
     
-    public function onMock(MockEvent $event) {
+    public function onTest3(Test3Event $event) {
         $arguments = $event->getArguments();
-        $this->mockEventMessage = $arguments['message'];
+        $this->test3EventMessage = $arguments['message'];
     }
     
-    public function getMockEventMessage() {
-        return $this->mockEventMessage;
+    public function getTest3EventMessage() {
+        return $this->test3EventMessage;
     }
 }

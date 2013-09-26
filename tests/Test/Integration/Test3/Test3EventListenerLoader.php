@@ -6,23 +6,23 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace Test\Coverage\Mock\Event;
+namespace Test\Integration\Test3;
 
 use Cqrs\Event\EventListenerLoaderInterface;
 
-class MockEventListenerLoader implements EventListenerLoaderInterface
+class Test3EventListenerLoader implements EventListenerLoaderInterface
 {
-    protected $mockEventListener;
+    protected $test3EventListener;
     
-    public function setMockEventListener(MockEventListener $mockEventListener) {
-        $this->mockEventListener = $mockEventListener;
+    public function setTest3EventListener(Test3EventListener $test3EventListener) {
+        $this->test3EventListener = $test3EventListener;
     }
 
 
     public function getEventListener($alias)
     {
-        if ($alias == 'mock_event_listener') {
-            return $this->mockEventListener;
+        if ($alias == 'test3_event_listener') {
+            return $this->test3EventListener;
         }
     }    
 }
