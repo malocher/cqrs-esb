@@ -9,42 +9,14 @@
 namespace Test\Coverage\Cqrs\Annotation;
 use Test\TestCase;
 
-/**
- * @Annotation
- */
 class CommandTest extends TestCase {
 
-    /**
-     * @var string name of the command
-     */
     private $class;
 
-    /**
-     * Constructor
-     *
-     * @param array $options
-     */
-    public function __construct($options)
+    /*public function __construct($options)
     {
-        /*if (isset($options['value'])) {
-            $options['class'] = $options['value'];
-            unset($options['value']);
-        }
+    }*/
 
-        foreach ($options as $key => $value) {
-            if (!property_exists($this, $key)) {
-                throw new \InvalidArgumentException(sprintf('Property "%s" does not exist', $key));
-            }
-            $this->$key = $value;
-        }*/
-    }
-
-    /**
-     * getClass
-     *
-     * @return string
-     */
-    public function getClass(){
-        //return $this->class;
+    public function testGetClass(){
     }
 }

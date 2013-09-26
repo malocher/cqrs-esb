@@ -7,22 +7,22 @@
  * file that was distributed with this source code.
  */
 namespace Test\Coverage\Cqrs\Command;
+use Cqrs\Command\ClassMapCommandHandlerLoader;
 use Test\TestCase;
 
-/**
- * Simple classmap CommandHandlerLoaderTest
- * 
- * Can be used as default, if command-handler-aliases are passed as full qualified classnames
- * 
- * @author Alexander Miertsch <kontakt@codeliner.ws>
- */
 class ClassMapCommandHandlerLoaderTest extends TestCase implements CommandHandlerLoaderInterfaceTest
 {
-    /**
-     * {@inheritDoc}
-     */
-    public function getCommandHandler($alias)
+    protected $loader;
+
+    public function setUp()
     {
-        //return new $alias();
-    }    
+        $this->loader = new ClassMapCommandHandlerLoader();
+    }
+
+    public function testGetCommandHandler()
+    {
+        $alias = 'TestAlias';
+        //$this->loader->getCommandHandler($alias);
+        $this->assertTrue(true);
+    }
 }

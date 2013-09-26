@@ -7,60 +7,22 @@
  * file that was distributed with this source code.
  */
 namespace Test\Coverage\Cqrs\Adapter;
-use Test\Coverage\Cqrs\Command\CommandInterfaceTest;
-use Test\Coverage\Cqrs\Event\EventInterfaceTest;
-use Test\Coverage\Cqrs\GateTest;
 
-/**
- * AdapterTraitTest
- *
- * @author Manfred Weber <manfred.weber@gmail.com>
- */
+use Cqrs\Gate;
+
 trait AdapterTraitTest {
 
-    /**
-     * @var $gate Gate
-     *
-     * A reference to the gate
-     */
     private $gate;
 
-    /**
-     * Execute command
-     *
-     * @param $gate Gate
-     * @param $commandHandler object
-     * @param $method Method the handler method to execute
-     * @param $command CommandInterface to pass to the handler method
-     */
-    public function executeCommand( GateTest $gate, $commandHandler, $method, CommandInterfaceTest $command)
+    /*public function testExecuteCommand( Gate $gate, $commandHandler, $method, CommandInterface $command)
     {
-        //$this->gate = $gate;
-        //$commandHandler->{$method}($command);
-    }
+    }*/
 
-    /**
-     * Execute event
-     *
-     * @param $gate Gate
-     * @param $eventListener object
-     * @param $method the handler method to execute
-     * @param $event EventInterface to pass to the handler method
-     */
-    public function executeEvent( GateTest $gate, $eventListener, $method, EventInterfaceTest $event)
+    /*public function testExecuteEvent( GateTest $gate, $eventListener, $method, EventInterfaceTest $event)
     {
-        //$this->gate = $gate;
-        //$eventListener->{$method}($event);
-    }
+    }*/
 
-    /**
-     * Get Bus
-     *
-     * @param $name
-     * @return \Cqrs\Bus\BusInterface
-     */
-    private function getBus( $name )
+    /*private function testGetBus( $name )
     {
-        //return $this->gate->getBus( $name );
-    }
+    }*/
 }

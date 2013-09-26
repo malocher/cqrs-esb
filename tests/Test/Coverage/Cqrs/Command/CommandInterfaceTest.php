@@ -9,41 +9,14 @@
 
 namespace Test\Coverage\Cqrs\Command;
 
-/**
- * CommandInterfaceTest
- *
- * @author Manfred Weber <manfred.weber@gmail.com>
- * @author Alexander Miertsch <kontakt@codeliner.ws>
- */
 interface CommandInterfaceTest {
     
-    /**
-     * Constructor
-     * 
-     * @param array $arguments
-     */
-    public function __construct(array $arguments = null);
+    //public function __construct(array $arguments = null);
 
-    /**
-     * Get arguments of the command as array
-     *
-     * @return array List of arguments
-     */
-    public function getArguments();
+    //public function testGetArguments();
 
-    /**
-     * Get id of the command
-     * Id is a unique identifier of this command
-     *
-     * @return string id
-     */
-    public function getId();
+    //public function testGetId();
 
-    /**
-     * Get timestamp of the command
-     *
-     * @return string id
-     */
-    public function getTimestamp();
+    //public function testGetTimestamp();
 
 }

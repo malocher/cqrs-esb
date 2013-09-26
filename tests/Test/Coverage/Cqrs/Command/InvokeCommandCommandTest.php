@@ -11,35 +11,25 @@ namespace Test\Coverage\Cqrs\Command;
 
 use Test\Coverage\Cqrs\MessageTest;
 
-/**
- * InvokeCommandCommandTest
- *
- * @author Manfred Weber <manfred.weber@gmail.com>
- */
 class InvokeCommandCommandTest extends MessageTest implements CommandInterfaceTest
 {
     protected $class;
 
-    public function setClass($class) {
-        //$this->class = $class;
+    /*public function testSetClass($class) {
     }
 
-    public function getClass() {
-        //return $this->class;
+    public function testGetClass() {
     }
 
-    public function setId($id)
+    public function testSetId($id)
     {
-        //$this->id = $id;
     }
 
-    public function setTimestamp($ts)
+    public function testSetTimestamp($ts)
     {
-        //$this->timestamp = $ts;
     }
 
-    public function setArguments($args)
+    public function testSetArguments($args)
     {
-        //$this->arguments = $args;
-    }
+    }*/
 }

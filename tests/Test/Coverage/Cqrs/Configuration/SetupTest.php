@@ -8,103 +8,45 @@
  */
 namespace Test\Coverage\Cqrs\Configuration;
 
-use Test\Coverage\Cqrs\Command\CommandHandlerLoaderInterfaceTest;
-use Test\Coverage\Cqrs\Event\EventListenerLoaderInterfaceTest;
+use Cqrs\Command\CommandHandlerLoaderInterface;
+use Cqrs\Configuration\Setup;
+use Cqrs\Event\EventListenerLoaderInterface;
 use Test\Coverage\Cqrs\GateTest;
 use Test\TestCase;
 
-/**
- * Description of CQRS Setup class
- * 
- * @author Alexander Miertsch <kontakt@codeliner.ws>
- */
 class SetupTest extends TestCase
 {
-    /**
-     *
-     * @var Gate 
-     */
-    protected $gate;
-    
-    /**
-     *
-     * @var CommandHandlerLoaderInterface
-     */
-    protected $commandHandlerLoader;
-    
-    /**
-     *
-     * @var EventListenerLoaderInterface
-     */
-    protected $eventListenerLoader;
+    private $setup;
 
-
-    public function setGate(GateTest $gate) {
-        //$this->gate = $gate;
-    }
-    
-    public function setCommandHandlerLoader(CommandHandlerLoaderInterfaceTest $commandHandlerLoader) {
-        //$this->commandHandlerLoader = $commandHandlerLoader;
-    }
-    
-    /**
-     * 
-     * @return CommandHandlerLoaderInterface
-     */
-    public function getCommandHandlerLoader() {
-        //return $this->commandHandlerLoader;
-    }
-    
-    public function setEventListenerLoader(EventListenerLoaderInterfaceTest $eventListenerLoader) {
-        //$this->eventListenerLoader = $eventListenerLoader;
+    public function setUp()
+    {
+        $this->setup = new Setup();
     }
 
-    /**
-     * 
-     * @return EventListenerLoaderInterface
-     */
-    public function getEventListenerLoader() {
-        //return $this->eventListenerLoader;
+    public function testSetGate() {
+        //$this->setup->setGate($gate);
+        $this->assertTrue(true);
+    }
+    /*
+    public function testSetCommandHandlerLoader(CommandHandlerLoaderInterface $commandHandlerLoader) {
+    }
+    
+    public function testGetCommandHandlerLoader() {
+    }
+    
+    public function testSetEventListenerLoader(EventListenerLoaderInterface $eventListenerLoader) {
     }
 
-    public function initialize(array $configuration) {
-        
-        /*if (isset($configuration['enable_system_bus']) && $configuration['enable_system_bus']) {
-            $this->gate->enableSystemBus();
-        }
-        
-        foreach ($configuration['adapters'] as $adapterConfiguration) {
-            $adapter = $this->loadAdapter($adapterConfiguration);
-        
-            foreach($adapterConfiguration['buses'] as $busClass => $busAdapterConfiguration) {
-                $bus = $this->loadBus($busClass);
-                $adapter->pipe($bus, $busAdapterConfiguration);
-            }
-        }*/
+    public function testGetEventListenerLoader() {
+    }
+
+    public function testInitialize(array $configuration) {
     }
     
-    /**
-     * 
-     * @param array $configuration
-     * 
-     * @return AdapterInterface
-     */
-    protected function loadAdapter(array $configuration) {
-        /*$adapterClass = $configuration['class'];
-        $config = isset($configuration['options'])? $configuration['options'] : null;
-        
-        return new $adapterClass($config);*/
+    protected function testLoadAdapter(array $configuration) {
     }
     
-    /**
-     * 
-     * @param string $busClass
-     * 
-     * @return BusInterface
-     */
-    protected function loadBus($busClass) {
-        /*$bus = new $busClass($this->getCommandHandlerLoader(), $this->getEventListenerLoader());
-        $this->gate->attach($bus);
-        return $bus;*/
+    protected function testLoadBus($busClass) {
     }
+    */
 }

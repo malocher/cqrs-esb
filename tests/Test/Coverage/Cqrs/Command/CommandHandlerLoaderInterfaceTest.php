@@ -8,18 +8,7 @@
  */
 namespace Test\Coverage\Cqrs\Command;
 
-/**
- * Interface for a CommandHandlerLoaderTest
- * 
- * @author Alexander Miertsch <kontakt@codeliner.ws>
- */
 interface CommandHandlerLoaderInterfaceTest
 {
-    /**
-     * Take an alias and get/create an instance of CommandHandlerInterface
-     * 
-     * @param string $alias Alias that is known by the command handler loader
-     * @return CommandHandlerInterface
-     */
-    public function getCommandHandler($alias);
+    //public function testGetCommandHandler($alias);
 }

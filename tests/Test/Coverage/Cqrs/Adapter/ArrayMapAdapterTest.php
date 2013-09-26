@@ -8,78 +8,28 @@
  */
 namespace Test\Coverage\Cqrs\Adapter;
 
-use Test\Coverage\Cqrs\Bus\BusInterfaceTest;
+use Cqrs\Adapter\ArrayMapAdapter;
 use Test\TestCase;
 
-/**
- * Description of ArrayMapAdapterTest
- * 
- * @author Alexander Miertsch <kontakt@codeliner.ws>
- */
 class ArrayMapAdapterTest extends TestCase implements AdapterInterfaceTest
 {
-    /**
-     * 
-     * {@inheritDoc}
-     */
-    public function __construct(array $configuration = null)
+    public $arrayMapAdapter;
+
+    public function setUp()
     {
-        //empty constructor, just here to implement the interface
+        $this->arrayMapAdapter = new ArrayMapAdapter();
     }
 
-    /**
-     * 
-     * {@inheritDoc}
-     */
-    public function pipe(BusInterfaceTest $bus, array $configuration)
+    public function testPipe()
     {
-        /*foreach ($configuration as $messageClass => $callableOrDefinition) {
-            if ($this->isCommand($messageClass)) {
-                $bus->mapCommand($messageClass, $callableOrDefinition);
-            } else if ($this->isEvent($messageClass)) {
-                $bus->registerEventListener($messageClass, $callableOrDefinition);
-            } else {
-                throw new \Exception(
-                    sprintf(
-                        'Message <%s> must implement %s or %s',
-                        $messageClass,
-                        'Cqrs\Command\CommandInterface',
-                        'Cqrs\Event\EventInterface'
-                    )
-                );
-            }
-        }*/
+        //$this->arrayMapAdapter->pipe( $bus, $configuration );
     }
     
-    /**
-     * Check if message implements Cqrs\Command\CommandInterface
-     * 
-     * @param string $messageClass
-     * @return boolean
-     */
-    private function isCommand($messageClass) {
-        /*$interfaces = class_implements($messageClass);
-        
-        if (!$interfaces) {
-            return false;
-        }
-        
-        return in_array('Cqrs\Command\CommandInterface', $interfaces);*/
+    public function testIsCommand() {
+        //$this->arrayMapAdapter->isCommand( $messageClass );
     }
-    
-    /**
-     * Check if message implements Cqrs\Command\CommandInterface
-     * 
-     * @param string $messageClass
-     * @return boolean
-     */
-    private function isEvent($messageClass) {
-        /*$interfaces = class_implements($messageClass);
-        
-        if (!$interfaces) {
-            return false;
-        }
-        
-        return in_array('Cqrs\Event\EventInterface', $interfaces);*/
+
+    public function testIsEvent() {
+        //$this->arrayMapAdapter->isEvent( $messageClass );
     }
 }

@@ -7,26 +7,10 @@
  * file that was distributed with this source code.
  */
 namespace Test\Coverage\Cqrs\Adapter;
-use Test\Coverage\Cqrs\Bus\BusInterfaceTest;
 
-/**
- * AdapterInterface
- *
- * @author Manfred Weber <manfred.weber@gmail.com>
- */
 interface AdapterInterfaceTest {
 
-    /**
-     * Constructor
-     * 
-     * @param array $configuration
-     */
-    public function __construct(array $configuration = null);
+    //public function __construct(array $configuration = null);
     
-    /**
-     * Initialize CommandHandler and EventListener from configuration
-     * 
-     * @return void
-     */
-    public function pipe(BusInterfaceTest $bus, array $configuration);
+    //public function testPipe(BusInterfaceTest $bus, array $configuration);
 }

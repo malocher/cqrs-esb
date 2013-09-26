@@ -8,22 +8,10 @@
  */
 namespace Test\Coverage\Cqrs\Adapter;
 
-/**
- * AdapterExceptionTest
- *
- * @author Manfred Weber <manfred.weber@gmail.com>
- */
 class AdapterExceptionTest extends \Exception
 {
-    /**
-     * Creates a new AdapterException describing a annotation error.
-     *
-     * @param string $message Exception message
-     * @return AdapterException
-     */
-    public static function annotationError($message)
+    /*public static function testAnnotationError($message)
     {
-        //return new self('[Annotation Error] ' . $message . "\n");
-    }
+    }*/
 
 }

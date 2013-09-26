@@ -8,6 +8,7 @@
  */
 namespace Test\Coverage\Cqrs;
 
+use Cqrs\Message;
 use Test\TestCase;
 
 /**
@@ -17,39 +18,29 @@ use Test\TestCase;
  */
 class MessageTest extends TestCase {
 
-    protected $id;
-    protected $timestamp;
-    protected $arguments = array();
+    protected $message;
 
-    public function __construct(array $arguments = null)
+    public function setUp()
     {
-        /*
-        if (!is_null($arguments)) {
-            $this->arguments = $arguments;
+        $this->message = new Message();
+    }
+
+    public function testGetId()
+    {
+        $this->assertNotNull($this->message->getId());
+    }
+
+    public function testGetTimestamp()
+    {
+        $this->assertNotNull($this->message->getTimestamp());
+    }
+
+    public function testGetArguments()
+    {
+        if(is_null($this->message->getArguments())){
+            $this->assertNull($this->message->getArguments());
+        } else {
+            $this->assertNotNull($this->message->getArguments());
         }
-        $this->id = uniqid();
-        $this->timestamp = date_timestamp_get(date_create());
-        */
-    }
-
-    public function getId()
-    {
-        /*
-        return $this->id;
-        */
-    }
-
-    public function getTimestamp()
-    {
-        /*
-        return $this->timestamp;
-        */
-    }
-
-    public function getArguments()
-    {
-        /*
-        return $this->arguments;
-        */
     }
 }

@@ -14,96 +14,21 @@ use Test\Coverage\Cqrs\Event\EventInterfaceTest;
 use Test\Coverage\Cqrs\Event\EventListenerLoaderInterfaceTest;
 use Test\Coverage\Cqrs\GateTest;
 
-/**
- * BusInterfaces
- *
- * @author Manfred Weber <manfred.weber@gmail.com>
- * @author Alexander Miertsch <kontakt@codeliner.ws>
- */
 interface BusInterfaceTest {
     
-    /**
-     * Constructor
-     * 
-     * @param CommandHandlerLoaderInterface $commandHandlerLoader
-     * @param EventListenerLoaderInterface $eventListenerLoader
-     */
-    public function __construct(
+    /*public function __construct(
         CommandHandlerLoaderInterfaceTest $commandHandlerLoader,
-        EventListenerLoaderInterfaceTest $eventListenerLoader);
+        EventListenerLoaderInterfaceTest $eventListenerLoader);*/
     
-    /**
-     * Get the name of the bus
-     * 
-     * @return string
-     */
-    public function getName();
+    /*public function testGetName();
     
-    /**
-     * Set the gate where the bus is registered on
-     * 
-     * @param Gate $gate
-     */
-    public function setGate(GateTest $gate);
+    public function testSetGate(GateTest $gate);
     
-    /**
-     * Map a command to a command handler
-     * 
-     * You can provide every callable as command handler or a definition array,
-     * that contains the keys alias and method.
-     * 
-     * @example defintion:
-     * 
-     * $userCommandHandlerDefinition = array(
-     *      'alias'  => 'user_handler',        //Alias is passed to CommandHandlerLoader
-     *      'method' => 'handleAddUserCommand' //Method is called after loading CommandHandler  
-     * );
-     * 
-     * The method that handles a command gets two arguments.
-     * The first one is the command and the second is the gate.
-     * 
-     * @param string         $commandClass
-     * @param callable|array $callableOrDefinition
-     * 
-     * @return void
-     */
-    public function mapCommand($commandClass, $callableOrDefinition);
+    public function testMapCommand($commandClass, $callableOrDefinition);
     
-    /**
-     * Hand over command to registered command handler(s)
-     *
-     * @param CommandInterface $command
-     * @param int $maxRecursion
-     * @return void
-     */
-    public function invokeCommand(CommandInterfaceTest $command);
+    public function testInvokeCommand(CommandInterfaceTest $command);
     
-    /**
-     * Register a listener for an event
-     * 
-     * You can provide every callable as event listener or a definition array,
-     * that contains the keys alias and method.
-     * 
-     * @example defintion:
-     * 
-     * $userAddedEventListenerDefinition = array(
-     *      'alias'  => 'password_generator', //Alias is passed to EventListenerLoader
-     *      'method' => 'onUserAdded'         //Method is called after loading the EventListener  
-     * );
-     * 
-     * @param string         $eventClass
-     * @param callable|array $callableOrDefinition
-     * 
-     * @return void
-     */
-    public function registerEventListener($eventClass, $callableOrDefinition);
+    public function testRegisterEventListener($eventClass, $callableOrDefinition);
     
-    /**
-     * Publish an event
-     * 
-     * @param EventInterface $event
-     * @param int $maxRecursion
-     * @return void
-     */
-    public function publishEvent(EventInterfaceTest $event);
+    public function testPublishEvent(EventInterfaceTest $event);*/
 }

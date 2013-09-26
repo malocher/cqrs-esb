@@ -8,7 +8,7 @@
  */
 namespace Test\Coverage\Cqrs;
 
-use Test\Coverage\Cqrs\Bus\BusInterfaceTest;
+use Cqrs\Gate;
 use Test\TestCase;
 
 /**
@@ -19,112 +19,43 @@ use Test\TestCase;
  */
 class GateTest extends TestCase {
 
-    /**
-     * Singleton instance
-     *
-     * @var Gate
-     */
-    private static $instance;
+    private $gate;
 
-    /**
-     * Bus systems
-     *
-     * @var array
-     */
-    private $busSystems;
-
-    /**
-     *
-     * @return Gate
-     */
-    static public function getInstance()
+    public function setUp()
     {
-        /*if (is_null(static::$instance)) {
-            static::$instance = new static();
-        }
-        return static::$instance;*/
+        $this->gate = Gate::getInstance();
     }
 
-    /**
-     * Private constructor
-     */
-    private function __construct()
+    public function testReset()
     {
-        //$this->busSystems = array();
+        $this->gate->reset();
+        //@todo check if bus systems is empty array
+        $this->assertTrue(true);
     }
 
-    /**
-     * reset singleton
-     */
-    public function reset()
+    public function testEnableSystemBus()
     {
-        /*foreach($this->busSystems as $bus){
-            $this->detach($bus);
-        }
-        $this->busSystems = array();
-        return self::getInstance();*/
+        //$this->gate->enableBus();
     }
 
-    private function __clone()
+    public function testDisableSystemBus()
     {
-        //Singleton implementation, so clone is not allowed
+        //$this->gate->disableBus();
     }
 
-    public function enableSystemBus()
+    public function testDetach()
     {
-        /*if( is_null( $this->getBus('system-bus') ) ){
-            $systemBus = new SystemBus(
-                new ClassMapCommandHandlerLoader(),
-                new ClassMapEventListenerLoader()
-            );
-            try {
-                $this->attach($systemBus);
-            } catch ( GateException $e ){
-                echo $e->getMessage();
-            }
-        }*/
+        //$this->gate->detach();
     }
 
-    public function disableSystemBus()
+    public function testAttach()
     {
-        //$systemBus = $this->getBus('system-bus');
-        //$this->detach( $systemBus );
+        //$this->gate->attach($bus);
     }
 
-    public function detach(BusInterfaceTest $bus)
+    public function testGetBus()
     {
-        /*if( isset($this->busSystems[$bus->getName()]) ){
-            $this->busSystems[$bus->getName()] = null;
-            unset( $this->busSystems[$bus->getName()] );
-        }*/
-    }
-
-    public function attach(BusInterfaceTest $bus)
-    {
-        /*$bus->setGate($this);
-        if( isset($this->busSystems[$bus->getName()]) ){
-            switch( $bus->getName() ){
-                case 'system-bus':
-                    throw GateException::attachError(sprintf('Bus <%s> is reserved!',$bus->getName()));
-                default:
-                    throw GateException::attachError(sprintf('Bus <%s> is already attached!',$bus->getName()));
-            }
-        }
-        $this->busSystems[$bus->getName()] = $bus;*/
-    }
-
-    /**
-     *
-     * @param string $name
-     * @return BusInterface
-     * @throws \Exception
-     */
-    public function getBus($name)
-    {
-        /*if(!isset($this->busSystems[$name])){
-            return null;
-        }
-        return $this->busSystems[$name];*/
+        //$this->gate->getBus($name);
     }
 
 }

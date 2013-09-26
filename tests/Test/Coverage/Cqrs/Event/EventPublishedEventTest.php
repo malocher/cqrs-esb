@@ -11,35 +11,25 @@ namespace Test\Coverage\Cqrs\Event;
 
 use Test\Coverage\Cqrs\MessageTest;
 
-/**
- * EventPublishedEventTest
- *
- * @author Manfred Weber <manfred.weber@gmail.com>
- */
 class EventPublishedEventTest extends MessageTest implements EventInterfaceTest
 {
-    protected $class;
 
-    public function setClass($class) {
-        //$this->class = $class;
+    /*public function testSetClass($class) {
+    }*/
+
+    public function testGetClass() {
+        $this->assertTrue(true);
     }
 
-    public function getClass() {
-        //return $this->class;
-    }
-
-    public function setId($id)
+    /*public function testSetId($id)
     {
-        //$this->id = $id;
     }
 
-    public function setTimestamp($ts)
+    public function testSetTimestamp($ts)
     {
-        //$this->timestamp = $ts;
     }
 
-    public function setArguments($args)
+    public function testSetArguments($args)
     {
-        //$this->arguments = $args;
-    }
+    }*/
 }

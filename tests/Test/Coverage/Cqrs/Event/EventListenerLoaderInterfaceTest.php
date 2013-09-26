@@ -8,18 +8,7 @@
  */
 namespace Test\Coverage\Cqrs\Event;
 
-/**
- * Interface for a EventListenerLoaderTest
- * 
- * @author Alexander Miertsch <kontakt@codeliner.ws>
- */
 interface EventListenerLoaderInterfaceTest
 {
-    /**
-     * Take an alias and get/create an instance of EventListenerInterface
-     * 
-     * @param string $alias
-     * @return EventListenerInterface
-     */
-    public function getEventListener($alias);
+    //public function testGetEventListener($alias);
 }

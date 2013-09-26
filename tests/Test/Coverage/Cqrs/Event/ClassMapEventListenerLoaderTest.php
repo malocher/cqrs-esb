@@ -7,16 +7,22 @@
  * file that was distributed with this source code.
  */
 namespace Test\Coverage\Cqrs\Event;
+use Cqrs\Event\ClassMapEventListenerLoader;
 use Test\TestCase;
 
-/**
- * Simple classmap EventListenerLoader
- * 
- * @author Alexander Miertsch <kontakt@codeliner.ws>
- */
 class ClassMapEventListenerLoaderTest extends TestCase implements EventListenerLoaderInterfaceTest
 {
-    public function getEventListener($alias) {
-        //return new $alias();
+    protected $loader;
+
+    public function setUp()
+    {
+        $this->loader = new ClassMapEventListenerLoader();
+    }
+
+    public function testGetEventListener()
+    {
+        $alias = 'TestAlias';
+        //$this->loader->getEventListener($alias);
+        $this->assertTrue(true);
     }
 }

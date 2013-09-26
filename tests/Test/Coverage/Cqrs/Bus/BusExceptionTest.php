@@ -8,22 +8,11 @@
  */
 namespace Test\Coverage\Cqrs\Bus;
 
-/**
- * BusException
- *
- * @author Manfred Weber <manfred.weber@gmail.com>
- */
 class BusExceptionTest extends \Exception
 {
-    /**
-     * Creates a new BusException describing a trait error.
-     *
-     * @param string $message Exception message
-     * @return BusException
-     */
-    public static function traitError($message)
+    /*public static function testTraitError($message)
     {
         //return new self('[Trait Error] ' . $message . "\n");
-    }
+    }*/
 
 }

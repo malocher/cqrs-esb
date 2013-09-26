@@ -8,100 +8,28 @@
  */
 namespace Test\Coverage\Cqrs\Adapter;
 
-use Doctrine\Common\Annotations\AnnotationReader;
-use Test\Coverage\Cqrs\Bus\BusInterfaceTest;
+use Cqrs\Adapter\AnnotationAdapter;
 use Test\TestCase;
 
-/**
- * AnnotationAdapterTest
- *
- * @author Manfred Weber <manfred.weber@gmail.com>
- */
 class AnnotationAdapterTest extends TestCase implements AdapterInterfaceTest {
 
-    /**
-     * @var AnnotationReader
-     */
-    public $annotationReader;
+    public $annotationAdapter;
 
-    /**
-     * Constructor
-     */
-    public function __construct(array $configuration = null)
+    public function setUp()
     {
-        //AnnotationRegistry::registerAutoloadNamespace('Cqrs\\Annotation\\');
-        //$this->annotationReader = new AnnotationReader();
+        $this->annotationAdapter = new AnnotationAdapter();
+    }
+    /*public function __construct(array $configuration = null)
+    {
+    }*/
+
+    public function testPipe()
+    {
+        $this->assertTrue(true);
     }
 
-    /**
-     * Initialize a bus via Configuration file!
-     */
-    public function pipe(BusInterfaceTest $bus, array $configuration)
+    public function testAllow()
     {
-        /*foreach ($configuration as $qualifiedClassnameOfHandlerOrListener) {
-            $this->allow($bus, $qualifiedClassnameOfHandlerOrListener);
-        }*/
-    }
-
-    /**
-     * Allow
-     *
-     * Link a Class (probably a handler) to a handler!
-     * Note that we actually __allow__ a class to read/write to a bus.
-     *
-     * If you want the same class to listen to multiple bussystems then re-call route!!
-     *
-     * Example:
-     *
-     * route( 'system-bus', 'handler-1' )
-     * route( 'system-bus', 'handler-2' )
-     * route( 'system-err', 'handler-1' )
-     * route( 'system-err', 'handler-2' )
-     * ...
-     *
-     * Have a look into the example Handlers which use Annotations map commands
-     *
-     * - - - - - - - - - - - - - - - - - - -
-     *
-     + class MockBarHandler
-     * **
-     * * @Cqrs\Annotation\Command("Test\Mock\Command\MockCommand")
-     * *
-     * public function getBar($command)
-     * - - - - - - - - - - - - - - - - - - -
-     *
-     * @param BusInterface  $bus
-     * @param String        $qualifiedClassname
-     * @throws AdapterException
-     */
-    public function allow(BusInterfaceTest $bus,$qualifiedClassname)
-    {
-        /*$reflClass = new \ReflectionClass($qualifiedClassname);
-        $reflMs = $reflClass->getMethods();
-
-        foreach($reflMs as $reflM){
-
-            // command mapping
-            $aCommand = $this->annotationReader->getMethodAnnotation($reflM,'Cqrs\Annotation\Command');
-            if($aCommand){
-                if( !class_exists($aCommand->getClass()) ){
-                    throw AdapterException::annotationError(sprintf('Command <%s> does not exists or wrong annotation!',
-                        $aCommand->getClass()));
-                }
-                $bus->mapCommand($aCommand->getClass(),array('alias'=>$reflM->class,'method'=>$reflM->name));
-            }
-
-            // event registering
-            $aEvent = $this->annotationReader->getMethodAnnotation($reflM,'Cqrs\Annotation\Event');
-            if($aEvent){
-                if( !class_exists($aEvent->getClass()) ){
-                    throw AdapterException::annotationError(sprintf('Event <%s> does not exist or wrong annotation!',
-                        $aEvent->getClass()));
-                }
-                $bus->registerEventListener($aEvent->getClass(),array('alias'=>$reflM->class,'method'=>$reflM->name));
-            }
-
-        }
-        */
+        $this->assertTrue(true);
     }
 }
