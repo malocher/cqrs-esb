@@ -121,3 +121,10 @@ command/event mapping (?)
 10)
 Add Vagrantfile
 
+11)
+Should we rename "Setup" to "Cqrs"
+- $cqrs = new Cqrs();
+- $cqrs->setGate(Gate::getInstance()->reset());
+- $cqrs->setCommandHandlerLoader(new ClassMapCommandHandlerLoader());
+- $cqrs->setEventListenerLoader(new ClassMapEventListenerLoader());
+What do you think?

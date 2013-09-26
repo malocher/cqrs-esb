@@ -39,6 +39,26 @@ class AbstractBusTest extends TestCase
     protected $mockEventListenerLoader;
 
     /**
+     * Looks like an integration test ?
+     * Doesn't it make more sense just to do method coverage first and then move these tests to Integration Test4 ?
+     *
+     * Maybe the coverage tests could look like this:
+     * ------------------------------------------------
+     * __construct( CommandHandlerLoaderInterface $commandHandlerLoader, EventListenerLoaderInterface $eventListenerLoader)
+     *      assertInstanceof CommandHandlerLoaderInterface
+     *      assertInstanceof EventListenerLoaderInterface
+     * setGate(Gate $gate)
+     *      assertInstanceof Gate
+     * mapCommand($commandClass, $callableOrDefinition)
+     *      something smart
+     * invokeCommand(CommandInterface $command)
+     *      assertInstanceof CommandInterface
+     * registerEventListener($eventClass, $callableOrDefinition)
+     *      something smart
+     * publishEvent(EventInterface $event)
+     *      assertInstanceof EventInterface
+     * ------------------------------------------------
+     *
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */

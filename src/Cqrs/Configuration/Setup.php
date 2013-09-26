@@ -43,8 +43,8 @@ class Setup
         $this->gate = $gate;
     }
     
-    public function setCommandHandlerLoader(CommandHandlerLoaderInterface $commandHandlerLaoder) {
-        $this->commandHandlerLoader = $commandHandlerLaoder;
+    public function setCommandHandlerLoader(CommandHandlerLoaderInterface $commandHandlerLoader) {
+        $this->commandHandlerLoader = $commandHandlerLoader;
     }
     
     /**

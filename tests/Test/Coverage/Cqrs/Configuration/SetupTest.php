@@ -30,13 +30,40 @@ class SetupTest extends TestCase
     protected $object;
 
 
+    /**
+     * Looks like an integration test ?
+     * Doesn't it make more sense just to do method coverage first and then move these tests to Integration Test3 ?
+     *
+     * Maybe the coverage tests could look like this:
+     * ------------------------------------------------
+     * setGate(Gate $gate)
+     *      assertInstanceof Gate
+     * setCommandHandlerLoader(CommandHandlerLoaderInterface $commandHandlerLoader)
+     *      assertInstanceof CommandHandlerLoaderInterface
+     * getCommandHandlerLoader()
+     *      assertInstanceof CommandHandlerLoaderInterface
+     *      is_not_null
+     * setEventListenerLoader(EventListenerLoaderInterface $eventListenerLoader)
+     *      assertInstanceof EventListenerLoaderInterface
+     * getEventListenerLoader()
+     *      assertInstanceof EventListenerLoaderInterface
+     *      is_not_null
+     * loadAdapter(array $configuration)
+     *      something smart
+     * loadBus($busClass)
+     *      something smart
+     * ------------------------------------------------
+     */
     protected function setUp() {
         $this->object = new Setup();
         $this->object->setGate(Gate::getInstance()->reset());
         $this->object->setCommandHandlerLoader(new ClassMapCommandHandlerLoader());
         $this->object->setEventListenerLoader(new ClassMapEventListenerLoader());
     }
-    
+
+    /**
+     * Looks like an integration test ?
+     */
     public function testInitializeCommand() {
         $configuration = array(
             'adapters' => array(
@@ -64,7 +91,10 @@ class SetupTest extends TestCase
         //$mockCommand->isEdited() returns false
         $this->assertTrue($mockCommand->isEdited());
     }
-    
+
+    /**
+     * Looks like an integration test ?
+     */
     public function testInitializeEvent() {
         $configuration = array(
             'adapters' => array(
