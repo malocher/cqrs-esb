@@ -47,6 +47,7 @@ do we need "command_map" key in configuration
 Can't we use "interface_exists('CommandInterface')" or "interface_exists('EventInterface')" ???
 
 AM: Good point, I've implemented it.
+AM: +1 (Manfred)
 
 7)
 configuration looks like this right now:
@@ -99,6 +100,8 @@ AM: What about this version?
     - it is easier to understand, that each adapter type defines it's own bus-configuration format:
         - AnnotationAdapter only needs the FQCN
         - ArrayMapAdapter gets a message to handler mapping
+
+AM: +1 (Manfred) Really like this
 
 
 8)
