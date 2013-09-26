@@ -80,7 +80,6 @@ class AnnotationAdapter implements AdapterInterface {
         $reflMs = $reflClass->getMethods();
 
         foreach($reflMs as $reflM){
-
             // command mapping
             $aCommand = $this->annotationReader->getMethodAnnotation($reflM,'Cqrs\Annotation\Command');
             if($aCommand){
@@ -88,7 +87,7 @@ class AnnotationAdapter implements AdapterInterface {
                     throw AdapterException::annotationError(sprintf('Command <%s> does not exists or wrong annotation!',
                         $aCommand->getClass()));
                 }
-                $bus->mapCommand($aCommand->getClass(),array('alias'=>$reflM->class,'method'=>$reflM->name));
+               $bus->mapCommand($aCommand->getClass(),array('alias'=>$reflM->class,'method'=>$reflM->name));
             }
 
             // event registering

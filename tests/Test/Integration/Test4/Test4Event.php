@@ -13,7 +13,6 @@ use Cqrs\Event\EventInterface;
 
 class Test4Event extends Message implements EventInterface
 {
-    public $callback;
     protected $edited = false;
 
     public function edit() {

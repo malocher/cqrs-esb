@@ -6,13 +6,14 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace Test\Integration\Test4;
+namespace Test\Integration\Test5;
 
 use Cqrs\Message;
 use Cqrs\Command\CommandInterface;
 
-class Test4Command extends Message implements CommandInterface
+class Test5Command extends Message implements CommandInterface
 {
+    public $callback;
     protected $edited = false;
 
     public function edit() {
