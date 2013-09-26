@@ -19,7 +19,7 @@ use Cqrs\Event\ClassMapEventListenerLoader;
 /**
  * Description of Test5
  * 
- * @author Alexander Miertsch <kontakt@codeliner.ws>
+ * @author Manfred Weber <manfred.weber@gmail.com>
  */
 class Test5 extends TestCase
 {
