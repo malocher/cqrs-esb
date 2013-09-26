@@ -1,4 +1,3 @@
-
 AdapterTrait
 ------------
 
@@ -114,3 +113,8 @@ command/event mapping (?)
 \namespace\namespace        <- only namespace/namespace
 \namespace\class            <- only class
 \namespace\class\method     <- only method
+
+
+10)
+Add Vagrantfile
+
