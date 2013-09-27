@@ -39,16 +39,18 @@ class Setup
     protected $eventListenerLoader;
 
 
-    public function setGate(Gate $gate) {
+    public function setGate(Gate $gate)
+    {
         $this->gate = $gate;
     }
 
-
-    public function getGate() {
+    public function getGate()
+    {
         return $this->gate;
     }
-    
-    public function setCommandHandlerLoader(CommandHandlerLoaderInterface $commandHandlerLoader) {
+
+    public function setCommandHandlerLoader(CommandHandlerLoaderInterface $commandHandlerLoader)
+    {
         $this->commandHandlerLoader = $commandHandlerLoader;
     }
     
@@ -56,11 +58,13 @@ class Setup
      * 
      * @return CommandHandlerLoaderInterface
      */
-    public function getCommandHandlerLoader() {
+    public function getCommandHandlerLoader()
+    {
         return $this->commandHandlerLoader;
     }
     
-    public function setEventListenerLoader(EventListenerLoaderInterface $eventListenerLoader) {
+    public function setEventListenerLoader(EventListenerLoaderInterface $eventListenerLoader)
+    {
         $this->eventListenerLoader = $eventListenerLoader;
     }
 
@@ -68,12 +72,18 @@ class Setup
      * 
      * @return EventListenerLoaderInterface
      */
-    public function getEventListenerLoader() {
+    public function getEventListenerLoader()
+    {
         return $this->eventListenerLoader;
     }
 
-    public function initialize(array $configuration) {
-        
+    public function initialize(array $configuration)
+    {
+
+        if(is_null($this->gate)){
+            throw ConfigurationException::initializeError('Gate not initialized. Create a new Gate() and pass it to setGate()');
+        }
+
         if (isset($configuration['enable_system_bus']) && $configuration['enable_system_bus']) {
             $this->gate->enableSystemBus();
         }
@@ -94,7 +104,8 @@ class Setup
      * 
      * @return AdapterInterface
      */
-    protected function loadAdapter(array $configuration) {
+    protected function loadAdapter(array $configuration)
+    {
         $adapterClass = $configuration['class'];
         $config = isset($configuration['options'])? $configuration['options'] : null;
         
@@ -107,7 +118,15 @@ class Setup
      * 
      * @return BusInterface
      */
-    protected function loadBus($busClass) {
+    protected function loadBus($busClass)
+    {
+        if(is_null($this->getCommandHandlerLoader())){
+            throw ConfigurationException::initializeError('CommandHandlerLoaderInterface not initialized. Create a new CommandHandlerLoader() and pass it to setCommandHandlerLoader()');
+        }
+        if(is_null($this->getEventListenerLoader())){
+            throw ConfigurationException::initializeError('EventListenerLoaderInterface not initialized. Create a new EventListenerLoader() and pass it to setEventListenerLoader()');
+        }
+
         $bus = new $busClass($this->getCommandHandlerLoader(), $this->getEventListenerLoader());
         $this->gate->attach($bus);
         return $bus;

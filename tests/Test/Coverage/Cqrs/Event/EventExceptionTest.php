@@ -6,17 +6,20 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace Test\Coverage\Cqrs\Gate;
+namespace Test\Coverage\Cqrs\Event;
 
-class GateExceptionTest extends \Exception
+/**
+ * EventExceptionTest
+ *
+ * @author Manfred Weber <manfred.weber@gmail.com>
+ */
+class EventExceptionTest extends \Exception
 {
     /*
-    public static function testAttachError($message)
+    public static function listenerError($message)
     {
+        return new self('[Listener Error] ' . $message . "\n");
     }
-
-    public static function testBusError($message)
-    {
-    }*/
+    */
 
 }

@@ -6,17 +6,18 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace Test\Coverage\Cqrs\Gate;
+namespace Test\Coverage\Cqrs\Command;
 
-class GateExceptionTest extends \Exception
+/**
+ * CommandExceptionTest
+ *
+ * @author Manfred Weber <manfred.weber@gmail.com>
+ */
+class CommandExceptionTest extends \Exception
 {
-    /*
-    public static function testAttachError($message)
+    /*public static function handlerError($message)
     {
-    }
-
-    public static function testBusError($message)
-    {
+        return new self('[Handler Error] ' . $message . "\n");
     }*/
 
 }
