@@ -70,12 +70,17 @@ interface BusInterface {
      * @return void
      */
     public function mapCommand($commandClass, $callableOrDefinition);
-    
+
+    /**
+     * Get all mapped commands
+     * @return array
+     */
+    public function getCommandHandlerMap();
+
     /**
      * Hand over command to registered command handler(s)
      *
-     * @param CommandInterface $command
-     * @param int $maxRecursion
+     * @param $command CommandInterface
      * @return void
      */
     public function invokeCommand(CommandInterface $command);
@@ -99,12 +104,17 @@ interface BusInterface {
      * @return void
      */
     public function registerEventListener($eventClass, $callableOrDefinition);
+
+    /**
+     * Get all mapped events
+     * @return array
+     */
+    public function getEventListenerMap();
     
     /**
      * Publish an event
      * 
      * @param EventInterface $event
-     * @param int $maxRecursion
      * @return void
      */
     public function publishEvent(EventInterface $event);

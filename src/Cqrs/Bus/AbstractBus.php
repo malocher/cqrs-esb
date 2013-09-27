@@ -80,7 +80,7 @@ abstract class AbstractBus implements BusInterface
     public function setGate(Gate $gate) {
         $this->gate = $gate;
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -91,7 +91,15 @@ abstract class AbstractBus implements BusInterface
         }
         $this->commandHandlerMap[$commandClass][] = $callableOrDefinition;
     }
-    
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getCommandHandlerMap()
+    {
+        return $this->commandHandlerMap;
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -166,6 +174,14 @@ abstract class AbstractBus implements BusInterface
             $this->eventListenerMap[$eventClass] = array();
         }
         $this->eventListenerMap[$eventClass][] = $callableOrDefinition;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getEventListenerMap()
+    {
+        return $this->eventListenerMap;
     }
     
     /**

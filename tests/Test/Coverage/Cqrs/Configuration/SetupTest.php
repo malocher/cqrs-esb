@@ -34,7 +34,7 @@ class SetupTest extends TestCase
     public function testSetGate()
     {
         $gate = new Gate();
-        $this->setup->setGate(new Gate());
+        $this->setup->setGate($gate);
         $this->assertEquals($gate,$this->setup->getGate());
         $this->assertInstanceOf('Cqrs\Gate',$this->setup->getGate());
     }
