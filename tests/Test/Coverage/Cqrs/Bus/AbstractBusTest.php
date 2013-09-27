@@ -8,6 +8,7 @@
  */
 namespace Test\Coverage\Cqrs\Bus;
 
+use Cqrs\Adapter\AnnotationAdapter;
 use Cqrs\Bus\AbstractBus;
 use Cqrs\Command\ClassMapCommandHandlerLoader;
 use Cqrs\Command\CommandInterface;
@@ -18,7 +19,7 @@ use Test\Coverage\Mock\Command\MockCommand;
 use Test\Coverage\Mock\Event\MockEvent;
 use Test\TestCase;
 
-abstract class AbstractBusTest extends TestCase implements BusInterfaceTest
+class AbstractBusTest extends TestCase implements BusInterfaceTest
 {
     /**
      * @var AbstractBus
@@ -60,7 +61,7 @@ abstract class AbstractBusTest extends TestCase implements BusInterfaceTest
         $this->bus->mapCommand('Test\Coverage\Mock\Command\MockCommand',function(CommandInterface $command){});
         $this->assertEquals(1,count($this->bus->getCommandHandlerMap()));
     }
-    
+
     public function testInvokeCommand()
     {
         $gate = new Gate();
@@ -71,6 +72,28 @@ abstract class AbstractBusTest extends TestCase implements BusInterfaceTest
         $mockCommand = new MockCommand();
         $this->bus->invokeCommand($mockCommand);
         $this->assertEquals(true,$mockCommand->isEdited());
+    }
+
+    public function testInvokeCommandHandlerAnnotationAdapter()
+    {
+        $this->bus->setGate(new Gate());
+        $adapter = new AnnotationAdapter();
+        $adapter->pipe( $this->bus, array('Test\Coverage\Mock\Command\MockCallbackCommandHandler') );
+        $mockCommand = new MockCommand();
+        $mockCommand->callback = function($isEdited){};
+        $this->bus->invokeCommand($mockCommand);
+        $this->assertEquals(true,$mockCommand->isEdited());
+    }
+
+    public function testInvokeCommandHandlerNoAdapter()
+    {
+        $this->setExpectedException('Cqrs\Bus\BusException');
+        $this->bus->setGate(new Gate());
+        $adapter = new AnnotationAdapter();
+        $adapter->pipe( $this->bus, array('Test\Coverage\Mock\Command\MockCommandHandlerNoAdapter') );
+        $mockCommand = new MockCommand();
+        $mockCommand->callback = function($isEdited){};
+        $this->bus->invokeCommand($mockCommand);
     }
     
     public function testRegisterEventListener()
@@ -93,6 +116,29 @@ abstract class AbstractBusTest extends TestCase implements BusInterfaceTest
             $event->edit();
         });
         $mockEvent = new MockEvent();
+        $this->bus->publishEvent($mockEvent);
+        $this->assertEquals(true,$mockEvent->isEdited());
+    }
+
+    public function testPublishEventHandlerAnnotationAdapter()
+    {
+        $this->bus->setGate(new Gate());
+        $adapter = new AnnotationAdapter();
+        $adapter->pipe( $this->bus, array('Test\Coverage\Mock\Event\MockCallbackEventHandler') );
+        $mockEvent = new MockEvent();
+        $mockEvent->callback = function($isEdited){};
+        $this->bus->publishEvent($mockEvent);
+        $this->assertEquals(true,$mockEvent->isEdited());
+    }
+
+    public function testPublishEventHandlerNoAdapter()
+    {
+        $this->setExpectedException('Cqrs\Bus\BusException');
+        $this->bus->setGate(new Gate());
+        $adapter = new AnnotationAdapter();
+        $adapter->pipe( $this->bus, array('Test\Coverage\Mock\Event\MockEventHandlerNoAdapter') );
+        $mockEvent = new MockEvent();
+        $mockEvent->callback = function($isEdited){};
         $this->bus->publishEvent($mockEvent);
         $this->assertEquals(true,$mockEvent->isEdited());
     }

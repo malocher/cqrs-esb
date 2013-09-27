@@ -104,6 +104,12 @@ class SetupTest extends TestCase
 
     }
 
+    public function testInitializeWithoutGate()
+    {
+        $this->setExpectedException('Cqrs\Configuration\ConfigurationException');
+        $this->setup->initialize(array());
+    }
+
     /*
     protected function testLoadAdapter(array $configuration)
     {
