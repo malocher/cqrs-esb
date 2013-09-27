@@ -71,14 +71,23 @@ abstract class AbstractBus implements BusInterface
         $this->commandHandlerLoader = $commandHandlerLoader;
         $this->eventListenerLoader  = $eventListenerLoader;
     }
-    
+
     /**
      * Set the gate where the bus is registered on
-     * 
+     *
      * @param Gate $gate
      */
     public function setGate(Gate $gate) {
         $this->gate = $gate;
+    }
+
+    /**
+     * Get the gate where the bus is registered on
+     *
+     * @return Gate $gate
+     */
+    public function getGate() {
+        return $this->gate;
     }
 
     /**

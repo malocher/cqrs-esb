@@ -13,6 +13,7 @@ use Cqrs\Command\ClassMapCommandHandlerLoader;
 use Cqrs\Command\CommandInterface;
 use Cqrs\Event\ClassMapEventListenerLoader;
 use Cqrs\Gate;
+use Test\Coverage\Mock\Bus\MockBus;
 use Test\Coverage\Mock\Command\MockCommand;
 use Test\Coverage\Mock\Event\MockEvent;
 use Test\TestCase;
@@ -22,10 +23,13 @@ abstract class AbstractBusTest extends TestCase implements BusInterfaceTest
     /**
      * @var AbstractBus
      */
-    private $bus;
+    public $bus;
 
     public function setUp()
     {
+        /*$this->bus = new MockBus(
+            new ClassMapCommandHandlerLoader(), new ClassMapEventListenerLoader()
+        );*/
         $this->bus = $this->getMockForAbstractClass('Cqrs\Bus\AbstractBus',array(
             new ClassMapCommandHandlerLoader(), new ClassMapEventListenerLoader()
         ));
@@ -36,8 +40,16 @@ abstract class AbstractBusTest extends TestCase implements BusInterfaceTest
         $this->assertInstanceOf('Cqrs\Bus\AbstractBus',$this->bus);
     }
     
-    public function testSetGate() {
+    public function testSetGate()
+    {
         $this->bus->setGate(new Gate());
+    }
+
+    public function testGetGate() {
+        if(is_null($this->bus->getGate())){
+            $this->bus->setGate(new Gate());
+        }
+        $this->assertInstanceOf('Cqrs\Gate',$this->bus->getGate());
     }
 
     public function testMapCommand()
