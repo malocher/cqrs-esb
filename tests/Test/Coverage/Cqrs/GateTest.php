@@ -72,6 +72,18 @@ class GateTest extends TestCase {
         $this->assertNull( $this->gate->getBus('test-coverage-mock-bus') );
     }
 
+    public function testAttachedBuses()
+    {
+        $this->gate->reset();
+        $this->assertEquals(0,count($this->gate->attachedBuses()));
+        $mockBus = new MockBus(
+            new ClassMapCommandHandlerLoader(),
+            new ClassMapEventListenerLoader()
+        );
+        $this->gate->attach($mockBus);
+        $this->assertEquals(1,count($this->gate->attachedBuses()));
+    }
+
     public function testAttach()
     {
         $mockBus = new MockBus(

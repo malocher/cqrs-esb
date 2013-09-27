@@ -9,27 +9,48 @@
 
 namespace Test\Coverage\Cqrs\Command;
 
+use Cqrs\Command\PublishEventCommand;
 use Test\Coverage\Cqrs\MessageTest;
 
 class PublishEventCommandTest extends MessageTest implements CommandInterfaceTest
 {
-    protected $class;
+    public function setUp()
+    {
+        $this->message = new PublishEventCommand();
+    }
 
-    /*public function testSetClass($class) {
+    public function testSetClass()
+    {
+        $class = get_class($this->message);
+        $this->message->setClass($class);
+        $this->assertEquals($class,$this->message->getClass());
     }
 
     public function testGetClass() {
+        if(is_null($this->message->getClass())){
+            $this->message->setClass(get_class($this->message));
+        }
+        $this->assertEquals(get_class($this->message),$this->message->getClass());
     }
 
-    public function testSetId($id)
+    public function testSetId()
     {
+        $id = uniqid();
+        $this->message->setId($id);
+        $this->assertEquals($id,$this->message->getId());
     }
 
-    public function testSetTimestamp($ts)
+    public function testSetTimestamp()
     {
+        $ts = date_timestamp_get(date_create());
+        $this->message->setTimestamp($ts);
+        $this->assertEquals($ts,$this->message->getTimestamp());
     }
 
-    public function testSetArguments($args)
+    public function testSetArguments()
     {
-    }*/
+        $args = array(1,2,3,4,5);
+        $this->message->setArguments($args);
+        $this->assertEquals($args,$this->message->getArguments());
+    }
 }
