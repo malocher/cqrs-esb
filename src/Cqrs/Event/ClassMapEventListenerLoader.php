@@ -16,6 +16,9 @@ namespace Cqrs\Event;
 class ClassMapEventListenerLoader implements EventListenerLoaderInterface
 {
     public function getEventListener($alias) {
-        return new $alias();
+        if( class_exists($alias) ){
+            return new $alias;
+        }
+        throw EventException::listenerError(sprintf('alias <%s> does not exist',$alias));
     }
 }

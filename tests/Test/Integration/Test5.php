@@ -27,7 +27,7 @@ class Test5 extends TestCase
 
     protected function setUp() {
         $this->object = new Setup();
-        $this->object->setGate(Gate::getInstance()->reset());
+        $this->object->setGate(new Gate());
         $this->object->setCommandHandlerLoader(new ClassMapCommandHandlerLoader());
         $this->object->setEventListenerLoader(new ClassMapEventListenerLoader());
     }
@@ -46,7 +46,7 @@ class Test5 extends TestCase
             ),
         );
         $this->object->initialize($configuration);
-        $bus = Gate::getInstance()->getBus('test-integration-test5-bus');
+        $bus = $this->object->getGate()->getBus('test-integration-test5-bus');
 
         $mockCommand = new Test5Command();
         $mockCommand->callback = function($isEdited){

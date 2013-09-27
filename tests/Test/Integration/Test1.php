@@ -25,7 +25,7 @@ class Test1 extends TestCase {
 
     protected function setUp()
     {
-        $this->gate = Gate::getInstance()->reset();
+        $this->gate = new Gate();
         $this->bus = new Test1Bus(
             new ClassMapCommandHandlerLoader(),
             new ClassMapEventListenerLoader()

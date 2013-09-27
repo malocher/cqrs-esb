@@ -26,6 +26,11 @@ class Test3 extends TestCase
 {
 
     /**
+     * @var Gate
+     */
+    protected $gate;
+
+    /**
      * @var AbstractBus
      */
     protected $bus;
@@ -46,8 +51,9 @@ class Test3 extends TestCase
         $this->test3EventListenerLoader = new Test3EventListenerLoader();
         $this->test3EventListenerLoader->setTest3EventListener(new Test3EventListener());
         $this->bus = new Test3Bus($classMapCommandHandlerLoader, $this->test3EventListenerLoader);
+        $this->gate = new Gate();
         try {
-            Gate::getInstance()->reset()->attach($this->bus);
+            $this->gate->attach($this->bus);
         } catch( GateException $e){
             echo $e->getMessage();
         }
@@ -63,7 +69,7 @@ class Test3 extends TestCase
             )
         );
         $test3Command = new Test3Command();
-        Gate::getInstance()->getBus('test-integration-test3-bus')->invokeCommand($test3Command);
+        $this->gate->getBus('test-integration-test3-bus')->invokeCommand($test3Command);
         $this->assertTrue($test3Command->isEdited());
     }
     
@@ -76,7 +82,7 @@ class Test3 extends TestCase
             }
         );
         $test3Command = new Test3Command();
-        Gate::getInstance()->getBus('test-integration-test3-bus')->invokeCommand($test3Command);
+        $this->gate->getBus('test-integration-test3-bus')->invokeCommand($test3Command);
         $this->assertTrue($test3Command->isEdited());
     }
 

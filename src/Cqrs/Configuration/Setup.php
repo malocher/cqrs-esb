@@ -42,6 +42,11 @@ class Setup
     public function setGate(Gate $gate) {
         $this->gate = $gate;
     }
+
+
+    public function getGate() {
+        return $this->gate;
+    }
     
     public function setCommandHandlerLoader(CommandHandlerLoaderInterface $commandHandlerLoader) {
         $this->commandHandlerLoader = $commandHandlerLoader;

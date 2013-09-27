@@ -22,6 +22,9 @@ class ClassMapCommandHandlerLoader implements CommandHandlerLoaderInterface
      */
     public function getCommandHandler($alias)
     {
-        return new $alias();
+        if( class_exists($alias) ){
+            return new $alias;
+        }
+        throw CommandException::handlerError(sprintf('alias <%s> does not exist',$alias));
     }    
 }

@@ -29,7 +29,7 @@ class Test4 extends TestCase
 
     protected function setUp() {
         $this->object = new Setup();
-        $this->object->setGate(Gate::getInstance()->reset());
+        $this->object->setGate(new Gate());
         $this->object->setCommandHandlerLoader(new ClassMapCommandHandlerLoader());
         $this->object->setEventListenerLoader(new ClassMapEventListenerLoader());
     }
@@ -52,7 +52,7 @@ class Test4 extends TestCase
         );
         $this->object->initialize($configuration);
         $mockCommand = new Test4Command();
-        Gate::getInstance()->getBus('test-integration-test4-bus')->invokeCommand($mockCommand);
+        $this->object->getGate()->getBus('test-integration-test4-bus')->invokeCommand($mockCommand);
         $this->assertTrue($mockCommand->isEdited());
     }
 
@@ -74,7 +74,7 @@ class Test4 extends TestCase
         );
         $this->object->initialize($configuration);
         $mockEvent = new Test4Event();
-        Gate::getInstance()->getBus('test-integration-test4-bus')->publishEvent($mockEvent);
+        $this->object->getGate()->getBus('test-integration-test4-bus')->publishEvent($mockEvent);
         //The EventListenerCallback should call $mockEvent->edit(), otherwise
         //$mockEvent->isEdited() returns false
         $this->assertTrue($mockEvent->isEdited());

@@ -7,8 +7,9 @@
  * file that was distributed with this source code.
  */
 namespace Test\Coverage\Cqrs\Event;
-use Cqrs\Event\ClassMapEventListenerLoader;
+
 use Test\TestCase;
+use Cqrs\Event\ClassMapEventListenerLoader;
 
 class ClassMapEventListenerLoaderTest extends TestCase implements EventListenerLoaderInterfaceTest
 {
@@ -19,10 +20,22 @@ class ClassMapEventListenerLoaderTest extends TestCase implements EventListenerL
         $this->loader = new ClassMapEventListenerLoader();
     }
 
-    public function testGetEventListener()
+    public function testConstructed()
     {
-        $alias = 'TestAlias';
-        //$this->loader->getEventListener($alias);
-        $this->assertTrue(true);
+        $this->assertInstanceOf('Cqrs\Event\ClassMapEventListenerLoader',$this->loader);
+    }
+
+    public function testGetExistingEventListener()
+    {
+        $alias = 'Test\Coverage\Mock\Event\MockEvent';
+        $listener = $this->loader->getEventListener($alias);
+        $this->assertInstanceOf('Test\Coverage\Mock\Event\MockEvent',$listener);
+    }
+
+    public function testGetNonExistingEventListener()
+    {
+        $this->setExpectedException('Cqrs\Event\EventException');
+        $alias = 'Test\Coverage\Mock\Event\NotExisting_MockEvent';
+        $this->loader->getEventListener($alias);
     }
 }

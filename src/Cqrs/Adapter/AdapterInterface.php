@@ -24,10 +24,14 @@ interface AdapterInterface {
      * @param array $configuration
      */
     public function __construct(array $configuration = null);
-    
+
     /**
+     * pipe
+     *
      * Initialize CommandHandler and EventListener from configuration
-     * 
+     *
+     * @param \Cqrs\Bus\BusInterface $bus
+     * @param array $configuration
      * @return void
      */
     public function pipe(BusInterface $bus, array $configuration);

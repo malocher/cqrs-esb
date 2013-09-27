@@ -21,40 +21,20 @@ use Cqrs\Event\ClassMapEventListenerLoader;
  * @author Alexander Miertsch <kontakt@codeliner.ws>
  */
 class Gate {
-    
-    /**
-     * Singleton instance
-     * 
-     * @var Gate
-     */
-    private static $instance;
 
     /**
      * Bus systems
      *
      * @var array
      */
-    private $busSystems;
-    
-    /**
-     * 
-     * @return Gate
-     */
-    static public function getInstance()
-    {
-        if (is_null(static::$instance)) {
-            static::$instance = new static();
-        }
-        
-        return static::$instance;
-    }
+    private $buses;
 
     /**
      * Private constructor
      */
-    private function __construct()
+    public function __construct()
     {
-        $this->busSystems = array();
+        $this->buses = array();
     }
 
     /**
@@ -62,11 +42,12 @@ class Gate {
      */
     public function reset()
     {
-        foreach($this->busSystems as $bus){
+        foreach($this->buses as $bus){
             $this->detach($bus);
         }
-        $this->busSystems = array();
-        return self::getInstance();
+        $this->buses = array();
+        //return self::getInstance();
+        return $this; //self::getInstance();
     }
 
     private function __clone()
@@ -92,21 +73,28 @@ class Gate {
     public function disableSystemBus()
     {
         $systemBus = $this->getBus('system-bus');
-        $this->detach( $systemBus );
+        if( isset($systemBus)){
+            $this->detach( $systemBus );
+        };
     }
 
     public function detach(BusInterface $bus)
     {
-        if( isset($this->busSystems[$bus->getName()]) ){
-            $this->busSystems[$bus->getName()] = null;
-            unset( $this->busSystems[$bus->getName()] );
+        if( isset($this->buses[$bus->getName()]) ){
+            $this->buses[$bus->getName()] = null;
+            unset( $this->buses[$bus->getName()] );
         }
+    }
+
+    public function attachedBuses()
+    {
+        return $this->buses;
     }
 
     public function attach(BusInterface $bus)
     {
         $bus->setGate($this);
-        if( isset($this->busSystems[$bus->getName()]) ){
+        if( isset($this->buses[$bus->getName()]) ){
             switch( $bus->getName() ){
                 case 'system-bus':
                     throw GateException::attachError(sprintf('Bus <%s> is reserved!',$bus->getName()));
@@ -114,7 +102,7 @@ class Gate {
                     throw GateException::attachError(sprintf('Bus <%s> is already attached!',$bus->getName()));
             }
         }
-        $this->busSystems[$bus->getName()] = $bus;
+        $this->buses[$bus->getName()] = $bus;
     }
 
     /**
@@ -125,10 +113,10 @@ class Gate {
      */
     public function getBus($name)
     {
-        if(!isset($this->busSystems[$name])){
+        if(!isset($this->buses[$name])){
             return null;
         }
-        return $this->busSystems[$name];
+        return $this->buses[$name];
     }
 
 }

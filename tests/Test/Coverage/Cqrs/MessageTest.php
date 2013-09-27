@@ -25,6 +25,11 @@ class MessageTest extends TestCase {
         $this->message = new Message();
     }
 
+    public function testConstructed()
+    {
+        $this->assertInstanceOf('Cqrs\Message',$this->message);
+    }
+
     public function testGetId()
     {
         $this->assertNotNull($this->message->getId());
