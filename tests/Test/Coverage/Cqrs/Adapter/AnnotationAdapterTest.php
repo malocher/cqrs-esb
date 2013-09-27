@@ -37,14 +37,14 @@ class AnnotationAdapterTest extends TestCase implements AdapterInterfaceTest
         );
     }
 
-    public function testPipeWrongCommand()
+    public function testPipeWrongCommandHandler()
     {
         $this->setExpectedException('Cqrs\Adapter\AdapterException');
         $configuration = array('Test\Coverage\Mock\Command\NonExistingMockCommandHandler');
         $this->adapter->pipe( $this->bus, $configuration );
     }
 
-    public function testPipeProperCommand()
+    public function testPipeProperCommandHandler()
     {
         $configuration = array('Test\Coverage\Mock\Command\MockCommandHandler');
         $this->adapter->pipe( $this->bus, $configuration );
@@ -53,20 +53,34 @@ class AnnotationAdapterTest extends TestCase implements AdapterInterfaceTest
         $this->assertEquals('Test\Coverage\Mock\Command\MockCommandHandler',$map[0]['alias']);
     }
 
-    public function testPipeWrongEvent()
+    public function testPipeWrongAnnotationsCommandHandler()
+    {
+        $this->setExpectedException('Cqrs\Adapter\AdapterException');
+        $configuration = array('Test\Coverage\Mock\Command\MockCommandHandlerWrongAnnotations');
+        $this->adapter->pipe( $this->bus, $configuration );
+    }
+
+    public function testPipeWrongEventHandler()
     {
         $this->setExpectedException('Cqrs\Adapter\AdapterException');
         $configuration = array('Test\Coverage\Mock\Event\NonExistingMockEventHandler');
         $this->adapter->pipe( $this->bus, $configuration );
     }
 
-    public function testPipeProperEvent()
+    public function testPipeProperEventHandler()
     {
         $configuration = array('Test\Coverage\Mock\Event\MockEventHandler');
         $this->adapter->pipe( $this->bus, $configuration );
         $map = $this->bus->getEventListenerMap()['Test\Coverage\Mock\Event\MockEvent'];
         $this->assertNotNull($map);
         $this->assertEquals('Test\Coverage\Mock\Event\MockEventHandler',$map[0]['alias']);
+    }
+
+    public function testPipeWrongAnnotationsEventHandler()
+    {
+        $this->setExpectedException('Cqrs\Adapter\AdapterException');
+        $configuration = array('Test\Coverage\Mock\Event\MockEventHandlerWrongAnnotations');
+        $this->adapter->pipe( $this->bus, $configuration );
     }
 
 }

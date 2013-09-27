@@ -26,15 +26,4 @@ class GateException extends \Exception
         return new self('[Attach Error] ' . $message . "\n");
     }
 
-    /**
-     * Creates a new GateException describing a bus error.
-     *
-     * @param string $message Exception message
-     * @return GateException
-     */
-    public static function busError($message)
-    {
-        return new self('[Bus Error] ' . $message . "\n");
-    }
-
 }
