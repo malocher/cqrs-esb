@@ -7,16 +7,33 @@
  * file that was distributed with this source code.
  */
 namespace Test\Coverage\Cqrs\Annotation;
+
 use Test\TestCase;
+use Doctrine\Common\Annotations\AnnotationReader;
 
-class CommandTest extends TestCase {
+class CommandTest extends TestCase
+{
+    /**
+     * @var AnnotationAdapter
+     */
+    private $reader;
 
-    private $class;
+    /**
+     * @var MockBus
+     */
+    private $bus;
 
-    /*public function __construct($options)
+    public function setUp()
     {
-    }*/
+        $this->reader = new AnnotationReader();
+    }
 
-    public function testGetClass(){
+    public function testGetClass()
+    {
+        $reflClass = new \ReflectionClass('Test\Coverage\Mock\Command\MockCommandHandler');
+        $reflM = $reflClass->getMethod('handleAnnotationCommand');
+        $aCommand = $this->reader->getMethodAnnotation($reflM,'Cqrs\Annotation\Command');
+        $this->assertEquals('Test\Coverage\Mock\Command\MockCommand',$aCommand->getClass());
+        $this->assertTrue(class_exists($aCommand->getClass()));
     }
 }

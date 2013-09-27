@@ -20,5 +20,16 @@ class MockCommandHandler
         if ($command instanceof MockCommand) {
             $command->edit();
         }
-    }  
+    }
+
+    /**
+     * @Cqrs\Annotation\Command("Test\Coverage\Mock\Command\MockCommand")
+     */
+    public function handleAnnotationCommand(CommandInterface $command)
+    {
+        if ($command instanceof MockCommand) {
+            $command->edit();
+        }
+    }
+
 }

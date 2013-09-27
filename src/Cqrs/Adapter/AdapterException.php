@@ -16,6 +16,17 @@ namespace Cqrs\Adapter;
 class AdapterException extends \Exception
 {
     /**
+     * Creates a new AdapterException describing a initialize error.
+     *
+     * @param string $message Exception message
+     * @return AdapterException
+     */
+    public static function initializeError($message)
+    {
+        return new self('[Initialize Error] ' . $message . "\n");
+    }
+
+    /**
      * Creates a new AdapterException describing a annotation error.
      *
      * @param string $message Exception message
@@ -24,6 +35,17 @@ class AdapterException extends \Exception
     public static function annotationError($message)
     {
         return new self('[Annotation Error] ' . $message . "\n");
+    }
+
+    /**
+     * Creates a new AdapterException describing a pipe error.
+     *
+     * @param string $message Exception message
+     * @return AdapterException
+     */
+    public static function pipeError($message)
+    {
+        return new self('[Pipe Error] ' . $message . "\n");
     }
 
 }

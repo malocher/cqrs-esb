@@ -10,8 +10,14 @@ namespace Test\Coverage\Cqrs\Adapter;
 
 class AdapterExceptionTest extends \Exception
 {
-    /*public static function testAnnotationError($message)
+    /*
+    public static function testAnnotationError($message)
     {
-    }*/
+    }
+
+    public static function pipeError($message)
+    {
+    }
+    */
 
 }

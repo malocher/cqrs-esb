@@ -76,6 +76,9 @@ class AnnotationAdapter implements AdapterInterface {
      */
     public function allow(BusInterface $bus,$qualifiedClassname)
     {
+        if(!class_exists($qualifiedClassname)){
+            throw AdapterException::initializeError(sprintf('Class <%s> does not exist',$qualifiedClassname));
+        }
         $reflClass = new \ReflectionClass($qualifiedClassname);
         $reflMs = $reflClass->getMethods();
 

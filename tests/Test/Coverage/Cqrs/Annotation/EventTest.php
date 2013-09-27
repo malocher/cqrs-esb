@@ -7,16 +7,33 @@
  * file that was distributed with this source code.
  */
 namespace Test\Coverage\Cqrs\Annotation;
+
 use Test\TestCase;
+use Doctrine\Common\Annotations\AnnotationReader;
 
-class EventTest extends TestCase {
+class EventTest extends TestCase
+{
+    /**
+     * @var AnnotationAdapter
+     */
+    private $reader;
 
-    private $class;
+    /**
+     * @var MockBus
+     */
+    private $bus;
 
-    /*public function __construct($options)
+    public function setUp()
     {
-    }*/
+        $this->reader = new AnnotationReader();
+    }
 
-    public function testGetClass(){
+    public function testGetClass()
+    {
+        $reflClass = new \ReflectionClass('Test\Coverage\Mock\Event\MockEventHandler');
+        $reflM = $reflClass->getMethod('handleAnnotationEvent');
+        $aEvent = $this->reader->getMethodAnnotation($reflM,'Cqrs\Annotation\Event');
+        $this->assertEquals('Test\Coverage\Mock\Event\MockEvent',$aEvent->getClass());
+        $this->assertTrue(class_exists($aEvent->getClass()));
     }
 }

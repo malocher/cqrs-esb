@@ -9,27 +9,84 @@
 namespace Test\Coverage\Cqrs\Adapter;
 
 use Cqrs\Adapter\ArrayMapAdapter;
+use Cqrs\Command\ClassMapCommandHandlerLoader;
+use Cqrs\Event\ClassMapEventListenerLoader;
+use Test\Coverage\Mock\Bus\MockBus;
+use Test\Coverage\Mock\Command\MockCommand;
 use Test\TestCase;
 
 class ArrayMapAdapterTest extends TestCase implements AdapterInterfaceTest
 {
-    public $arrayMapAdapter;
+    use AdapterTraitTest;
+
+    /**
+     * @var ArrayMapAdapter
+     */
+    private $adapter;
+
+    /**
+     * @var MockBus
+     */
+    private $bus;
 
     public function setUp()
     {
-        $this->arrayMapAdapter = new ArrayMapAdapter();
+        $this->adapter = new ArrayMapAdapter();
+        $this->bus = new MockBus(
+            new ClassMapCommandHandlerLoader(),
+            new ClassMapEventListenerLoader()
+        );
     }
 
-    public function testPipe()
+    public function testPipeWrongCommand()
     {
-        //$this->arrayMapAdapter->pipe( $bus, $configuration );
-    }
-    
-    public function testIsCommand() {
-        //$this->arrayMapAdapter->isCommand( $messageClass );
+        $this->setExpectedException('Cqrs\Adapter\AdapterException');
+        $configuration = array(
+            'Test\Coverage\Mock\Command\NonExistentMockCommand' => array(
+                'alias' => 'Test\Coverage\Mock\Command\MockCommandHandler',
+                'method' => 'handleCommand'
+            )
+        );
+        $this->adapter->pipe( $this->bus, $configuration );
     }
 
-    public function testIsEvent() {
-        //$this->arrayMapAdapter->isEvent( $messageClass );
+    public function testPipeProperCommand()
+    {
+        $configuration = array(
+            'Test\Coverage\Mock\Command\MockCommand' => array(
+                'alias' => 'Test\Coverage\Mock\Command\MockCommandHandler',
+                'method' => 'handleCommand'
+            )
+        );
+        $this->adapter->pipe( $this->bus, $configuration );
+        $map = $this->bus->getCommandHandlerMap()['Test\Coverage\Mock\Command\MockCommand'];
+        $this->assertNotNull($map);
+        $this->assertEquals($configuration['Test\Coverage\Mock\Command\MockCommand']['alias'],$map[0]['alias']);
+    }
+
+    public function testPipeWrongEvent()
+    {
+        $this->setExpectedException('Cqrs\Adapter\AdapterException');
+        $configuration = array(
+            'Test\Coverage\Mock\Event\NonExistentMockEvent' => array(
+                'alias' => 'Test\Coverage\Mock\Event\MockEventHandler',
+                'method' => 'handleEvent'
+            )
+        );
+        $this->adapter->pipe( $this->bus, $configuration );
+    }
+
+    public function testPipeProperEvent()
+    {
+        $configuration = array(
+            'Test\Coverage\Mock\Event\MockEvent' => array(
+                'alias' => 'Test\Coverage\Mock\Event\MockEventHandler',
+                'method' => 'handleEvent'
+            )
+        );
+        $this->adapter->pipe( $this->bus, $configuration );
+        $map = $this->bus->getEventListenerMap()['Test\Coverage\Mock\Event\MockEvent'];
+        $this->assertNotNull($map);
+        $this->assertEquals($configuration['Test\Coverage\Mock\Event\MockEvent']['alias'],$map[0]['alias']);
     }
 }

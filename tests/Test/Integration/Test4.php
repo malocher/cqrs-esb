@@ -70,7 +70,6 @@ class Test4 extends TestCase
                     )
                 ),
             ),
-            
         );
         $this->object->initialize($configuration);
         $mockEvent = new Test4Event();

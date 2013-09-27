@@ -12,15 +12,15 @@ use Cqrs\Gate;
 
 trait AdapterTraitTest {
 
-    private $gate;
-
-    /*public function testExecuteCommand( Gate $gate, $commandHandler, $method, CommandInterface $command)
+    /*
+    public function testExecuteCommand()
     {
-    }*/
+        //$this->bus->executeCommand( Gate $gate, $commandHandler, $method, CommandInterface $command )
+    }
 
     /*public function testExecuteEvent( GateTest $gate, $eventListener, $method, EventInterfaceTest $event)
     {
-    }*/
+    }
 
     /*private function testGetBus( $name )
     {
