@@ -1,7 +1,7 @@
 <?php
 /*
  * This file is part of the Cqrs package.
- * (c) Manfred Weber <manfred.weber@gmail.com> and Alexander Miertsch <kontakt@codeliner.ws>
+ * (c) Manfred Weber <crafics@php.net> and Alexander Miertsch <kontakt@codeliner.ws>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -9,23 +9,23 @@
 namespace Cqrs\Event;
 
 /**
- * Simple classmap EventListenerLoader
- * 
+ * Class ClassMapEventListenerLoader
+ *
  * @author Alexander Miertsch <kontakt@codeliner.ws>
+ * @package Cqrs\Event
  */
 class ClassMapEventListenerLoader implements EventListenerLoaderInterface
 {
     /**
-     * Get event listener
-     *
      * @param string $alias
-     * @return EventListenerInterface
+     * @return mixed
      * @throws EventException
      */
-    public function getEventListener($alias) {
-        if( class_exists($alias) ){
+    public function getEventListener($alias)
+    {
+        if (class_exists($alias)) {
             return new $alias;
         }
-        throw EventException::listenerError(sprintf('alias <%s> does not exist',$alias));
+        throw EventException::listenerError(sprintf('alias <%s> does not exist', $alias));
     }
 }

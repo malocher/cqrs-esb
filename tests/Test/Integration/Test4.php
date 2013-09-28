@@ -1,40 +1,44 @@
 <?php
 /*
  * This file is part of the Cqrs package.
- * (c) Manfred Weber <manfred.weber@gmail.com> and Alexander Miertsch <kontakt@codeliner.ws>
+ * (c) Manfred Weber <crafics@php.net> and Alexander Miertsch <kontakt@codeliner.ws>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 namespace Cqrs\Configuration;
 
-use Test\Integration\Test4\Test4Command;
-use Test\Integration\Test4\Test4Event;
-use Test\TestCase;
-use Test\Coverage\Mock\Command\MockCommand;
-use Test\Coverage\Mock\Event\MockEvent;
-
-use Cqrs\Gate;
 use Cqrs\Command\ClassMapCommandHandlerLoader;
 use Cqrs\Event\ClassMapEventListenerLoader;
+use Cqrs\Gate;
+use Test\Integration\Test4\Test4Command;
+
+use Test\Integration\Test4\Test4Event;
+use Test\TestCase;
 
 /**
- * Description of Test4
- * 
+ * Class Test4
+ *
  * @author Alexander Miertsch <kontakt@codeliner.ws>
+ * @package Cqrs\Configuration
  */
 class Test4 extends TestCase
 {
+    /**
+     * @var Setup
+     */
     protected $object;
 
-    protected function setUp() {
+    protected function setUp()
+    {
         $this->object = new Setup();
         $this->object->setGate(new Gate());
         $this->object->setCommandHandlerLoader(new ClassMapCommandHandlerLoader());
         $this->object->setEventListenerLoader(new ClassMapEventListenerLoader());
     }
 
-    public function testInitializeCommand() {
+    public function testInitializeCommand()
+    {
         $configuration = array(
             'adapters' => array(
                 array(
@@ -56,14 +60,15 @@ class Test4 extends TestCase
         $this->assertTrue($mockCommand->isEdited());
     }
 
-    public function testInitializeEvent() {
+    public function testInitializeEvent()
+    {
         $configuration = array(
             'adapters' => array(
                 array(
                     'class' => 'Cqrs\Adapter\ArrayMapAdapter',
                     'buses' => array(
                         'Test\Integration\Test4\Test4Bus' => array(
-                            'Test\Integration\Test4\Test4Event' => function($event) {
+                            'Test\Integration\Test4\Test4Event' => function ($event) {
                                 $event->edit();
                             }
                         )

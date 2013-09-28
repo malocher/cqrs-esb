@@ -1,7 +1,7 @@
 <?php
 /*
  * This file is part of the Cqrs package.
- * (c) Manfred Weber <manfred.weber@gmail.com> and Alexander Miertsch <kontakt@codeliner.ws>
+ * (c) Manfred Weber <crafics@php.net> and Alexander Miertsch <kontakt@codeliner.ws>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -16,13 +16,17 @@ use Test\Coverage\Mock\Bus\MockFakeSystemBus;
 use Test\TestCase;
 
 /**
- * Gate
+ * Class GateTest
  *
- * @author Manfred Weber <manfred.weber@gmail.com>
+ * @author Manfred Weber <crafics@php.net>
  * @author Alexander Miertsch <kontakt@codeliner.ws>
+ * @package Test\Coverage\Cqrs
  */
-class GateTest extends TestCase {
-
+class GateTest extends TestCase
+{
+    /**
+     * @var Gate
+     */
     private $gate;
 
     public function setUp()
@@ -32,7 +36,7 @@ class GateTest extends TestCase {
 
     public function testConstructed()
     {
-        $this->assertInstanceOf('Cqrs\Gate',$this->gate);
+        $this->assertInstanceOf('Cqrs\Gate', $this->gate);
     }
 
     public function testReset()
@@ -44,7 +48,7 @@ class GateTest extends TestCase {
         $this->gate->attach($mockBus);
         $this->gate->reset();
         $attachedBuses = $this->gate->attachedBuses();
-        $this->assertEquals(0,count($attachedBuses));
+        $this->assertEquals(0, count($attachedBuses));
     }
 
     public function testResetSystemBus()
@@ -52,18 +56,18 @@ class GateTest extends TestCase {
         $this->gate->enableSystemBus();
         $this->gate->reset();
         $attachedBuses = $this->gate->attachedBuses();
-        $this->assertEquals(1,count($attachedBuses));
+        $this->assertEquals(1, count($attachedBuses));
         $this->gate->disableSystemBus();
         $this->gate->reset();
         $attachedBuses = $this->gate->attachedBuses();
-        $this->assertEquals(0,count($attachedBuses));
+        $this->assertEquals(0, count($attachedBuses));
     }
 
     public function testEnableSystemBus()
     {
         $this->gate->enableSystemBus();
         $systemBus = $this->gate->getBus('system-bus');
-        $this->assertInstanceOf('Cqrs\Bus\SystemBus',$systemBus);
+        $this->assertInstanceOf('Cqrs\Bus\SystemBus', $systemBus);
     }
 
     public function testAttachFakeSystemBus()
@@ -79,18 +83,18 @@ class GateTest extends TestCase {
 
     public function testDisableSystemBus()
     {
-        if(is_null($this->gate->getBus('system-bus'))){
+        if (is_null($this->gate->getBus('system-bus'))) {
             $this->gate->enableSystemBus();
         }
         $this->gate->disableSystemBus();
         $systemBus = $this->gate->getBus('system-bus');
-        $this->assertNull( $systemBus );
+        $this->assertNull($systemBus);
     }
 
     public function testDetach()
     {
         $mockBus = $this->gate->getBus('test-coverage-mock-bus');
-        if(is_null($mockBus)){
+        if (is_null($mockBus)) {
             $mockBus = new MockBus(
                 new ClassMapCommandHandlerLoader(),
                 new ClassMapEventListenerLoader()
@@ -98,19 +102,19 @@ class GateTest extends TestCase {
             $this->gate->attach($mockBus);
         }
         $this->gate->detach($mockBus);
-        $this->assertNull( $this->gate->getBus('test-coverage-mock-bus') );
+        $this->assertNull($this->gate->getBus('test-coverage-mock-bus'));
     }
 
     public function testAttachedBuses()
     {
         $this->gate->reset();
-        $this->assertEquals(0,count($this->gate->attachedBuses()));
+        $this->assertEquals(0, count($this->gate->attachedBuses()));
         $mockBus = new MockBus(
             new ClassMapCommandHandlerLoader(),
             new ClassMapEventListenerLoader()
         );
         $this->gate->attach($mockBus);
-        $this->assertEquals(1,count($this->gate->attachedBuses()));
+        $this->assertEquals(1, count($this->gate->attachedBuses()));
     }
 
     public function testAttach()
@@ -140,7 +144,7 @@ class GateTest extends TestCase {
     public function testGetBus()
     {
         $mockBus = $this->gate->getBus('test-coverage-mock-bus');
-        if(is_null($mockBus)){
+        if (is_null($mockBus)) {
             $mockBus = new MockBus(
                 new ClassMapCommandHandlerLoader(),
                 new ClassMapEventListenerLoader()

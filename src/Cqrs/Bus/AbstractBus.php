@@ -1,100 +1,90 @@
 <?php
 /*
  * This file is part of the Cqrs package.
- * (c) Manfred Weber <manfred.weber@gmail.com> and Alexander Miertsch <kontakt@codeliner.ws>
+ * (c) Manfred Weber <crafics@php.net> and Alexander Miertsch <kontakt@codeliner.ws>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 namespace Cqrs\Bus;
 
-use Cqrs\Bus\BusException;
-use Cqrs\Command\CommandInvokedCommand;
+use Cqrs\Command\CommandHandlerLoaderInterface;
+use Cqrs\Command\CommandInterface;
 use Cqrs\Command\InvokeCommandCommand;
+
 use Cqrs\Command\PublishEventCommand;
 use Cqrs\Event\CommandInvokedEvent;
-use Cqrs\Event\EventPublishedEvent;
-use Cqrs\Gate;
-use Cqrs\Gate\GateException;
-use Cqrs\Command\CommandInterface;
-use Cqrs\Command\CommandHandlerLoaderInterface;
-
 use Cqrs\Event\EventInterface;
 use Cqrs\Event\EventListenerLoaderInterface;
+use Cqrs\Event\EventPublishedEvent;
+use Cqrs\Gate;
+
 /**
- * AbstractBus
- * 
+ * Class AbstractBus
+ *
  * @author Alexander Miertsch <kontakt@codeliner.ws>
+ * @package Cqrs\Bus
  */
 abstract class AbstractBus implements BusInterface
 {
     /**
-     *
-     * @var CommandHandlerLoaderInterface 
+     * @var \Cqrs\Command\CommandHandlerLoaderInterface
      */
     protected $commandHandlerLoader;
-    
+
     /**
-     *
-     * @var EventListenerLoaderInterface 
+     * @var \Cqrs\Event\EventListenerLoaderInterface
      */
     protected $eventListenerLoader;
-    
+
     /**
-     *
      * @var array
      */
     protected $commandHandlerMap = array();
 
     /**
-     *
      * @var array
      */
-    protected $eventListenerMap  = array();
+    protected $eventListenerMap = array();
 
     /**
-     *
      * @var Gate
      */
     protected $gate;
-    
+
     /**
-     * Constructor
-     * 
      * @param CommandHandlerLoaderInterface $commandHandlerLoader
      * @param EventListenerLoaderInterface $eventListenerLoader
      */
     public function __construct(
         CommandHandlerLoaderInterface $commandHandlerLoader,
-        EventListenerLoaderInterface $eventListenerLoader) {
-        
+        EventListenerLoaderInterface $eventListenerLoader)
+    {
+
         $this->commandHandlerLoader = $commandHandlerLoader;
-        $this->eventListenerLoader  = $eventListenerLoader;
+        $this->eventListenerLoader = $eventListenerLoader;
     }
 
     /**
-     * Set the gate where the bus is registered on
-     *
      * @param Gate $gate
      */
-    public function setGate(Gate $gate) {
+    public function setGate(Gate $gate)
+    {
         $this->gate = $gate;
     }
 
     /**
-     * Get the gate where the bus is registered on
-     *
-     * @return Gate $gate
+     * @return Gate
      */
-    public function getGate() {
+    public function getGate()
+    {
         return $this->gate;
     }
 
     /**
-     * map a command to a callable
-     *
-     * @param CommandInterface $commandClass
-     * @param array|callable $callableOrDefinition
+     * @param $commandClass
+     * @param $callableOrDefinition
+     * @return bool|mixed
      */
     public function mapCommand($commandClass, $callableOrDefinition)
     {
@@ -102,11 +92,10 @@ abstract class AbstractBus implements BusInterface
             $this->commandHandlerMap[$commandClass] = array();
         }
         $this->commandHandlerMap[$commandClass][] = $callableOrDefinition;
+        return true;
     }
 
     /**
-     * get the command handler map
-     *
      * @return array
      */
     public function getCommandHandlerMap()
@@ -115,9 +104,8 @@ abstract class AbstractBus implements BusInterface
     }
 
     /**
-     * invoke a command
-     *
-     * @param \Cqrs\Command\CommandInterface $command
+     * @param CommandInterface $command
+     * @return bool|void
      * @throws BusException
      */
     public function invokeCommand(CommandInterface $command)
@@ -125,7 +113,7 @@ abstract class AbstractBus implements BusInterface
         $commandClass = get_class($command);
 
         // InvokeCommandCommand first! Because a commandClass _IS_ actually invoked.
-        if( !is_null($this->gate->getBus('system-bus')) ){
+        if (!is_null($this->gate->getBus('system-bus'))) {
             $invokeCommandCommand = new InvokeCommandCommand();
             $invokeCommandCommand->setClass($commandClass);
             $invokeCommandCommand->setId($command->getId());
@@ -138,12 +126,12 @@ abstract class AbstractBus implements BusInterface
         // the InvokeCommandCommand tells that a command is invoked but does not care
         // if it succeeded. Later the CommandInvokedEvent can be used to check if a
         // command succeeded.
-        if( !isset($this->commandHandlerMap[$commandClass]) ){
+        if (!isset($this->commandHandlerMap[$commandClass])) {
             return false;
         }
 
-        foreach($this->commandHandlerMap[$commandClass] as $i => $callableOrDefinition) {
-            
+        foreach ($this->commandHandlerMap[$commandClass] as $i => $callableOrDefinition) {
+
             if (is_callable($callableOrDefinition)) {
                 call_user_func($callableOrDefinition, $command, $this->gate);
             }
@@ -155,17 +143,17 @@ abstract class AbstractBus implements BusInterface
                 // instead of invoking the handler method directly
                 // we call the execute function of the implemented trait and pass along a reference to the gate
                 $usedTraits = class_uses($commandHandler);
-                if( !isset($usedTraits['Cqrs\Adapter\AdapterTrait']) ){
+                if (!isset($usedTraits['Cqrs\Adapter\AdapterTrait'])) {
                     throw BusException::traitError('Adapter Trait is missing! Use it!');
                 }
-                $commandHandler->executeCommand($this->gate,$commandHandler,$method,$command);                
+                $commandHandler->executeCommand($this->gate, $commandHandler, $method, $command);
             }
         }
 
         // Dispatch the CommandInvokedEvent here! If for example a command could not be invoked
         // because it does not exist in the commandHandlerMap[<empty>] this Event would never
         // be dispatched!
-        if( !is_null($this->gate->getBus('system-bus')) ){
+        if (!is_null($this->gate->getBus('system-bus'))) {
             $commandInvokedEvent = new CommandInvokedEvent();
             $commandInvokedEvent->setClass($commandClass);
             $commandInvokedEvent->setId($command->getId());
@@ -173,13 +161,14 @@ abstract class AbstractBus implements BusInterface
             $commandInvokedEvent->setArguments($command->getArguments());
             $this->gate->getBus('system-bus')->publishEvent($commandInvokedEvent);
         }
+
+        return true;
     }
 
     /**
-     * register a event listener
-     *
-     * @param string $eventClass
-     * @param array|callable $callableOrDefinition
+     * @param $eventClass
+     * @param $callableOrDefinition
+     * @return bool|mixed
      */
     public function registerEventListener($eventClass, $callableOrDefinition)
     {
@@ -187,11 +176,10 @@ abstract class AbstractBus implements BusInterface
             $this->eventListenerMap[$eventClass] = array();
         }
         $this->eventListenerMap[$eventClass][] = $callableOrDefinition;
+        return true;
     }
 
     /**
-     * get the event listener map
-     *
      * @return array
      */
     public function getEventListenerMap()
@@ -200,9 +188,8 @@ abstract class AbstractBus implements BusInterface
     }
 
     /**
-     * pubish a event
-     *
-     * @param \Cqrs\Event\EventInterface $event
+     * @param EventInterface $event
+     * @return bool|void
      * @throws BusException
      */
     public function publishEvent(EventInterface $event)
@@ -213,7 +200,7 @@ abstract class AbstractBus implements BusInterface
         // the PublishEventCommand tells that a event is dispatched but does not care
         // if it succeeded. Later the EventPublishedEvent can be used to check if a
         // event succeeded.
-        if( !is_null($this->gate->getBus('system-bus')) ){
+        if (!is_null($this->gate->getBus('system-bus'))) {
             $publishEventCommand = new PublishEventCommand();
             $publishEventCommand->setClass($eventClass);
             $publishEventCommand->setId($event->getId());
@@ -222,11 +209,11 @@ abstract class AbstractBus implements BusInterface
             $this->gate->getBus('system-bus')->invokeCommand($publishEventCommand);
         }
 
-        if(!isset($this->eventListenerMap[$eventClass])){
+        if (!isset($this->eventListenerMap[$eventClass])) {
             return false;
         }
 
-        foreach($this->eventListenerMap[$eventClass] as $i => $callableOrDefinition) {
+        foreach ($this->eventListenerMap[$eventClass] as $i => $callableOrDefinition) {
             if (is_callable($callableOrDefinition)) {
                 call_user_func($callableOrDefinition, $event);
             }
@@ -238,17 +225,17 @@ abstract class AbstractBus implements BusInterface
                 // instead of invoking the handler method directly
                 // we call the execute function of the implemented trait and pass along a reference to the gate
                 $usedTraits = class_uses($eventListener);
-                if( !isset($usedTraits['Cqrs\Adapter\AdapterTrait']) ){
+                if (!isset($usedTraits['Cqrs\Adapter\AdapterTrait'])) {
                     throw BusException::traitError('Adapter Trait is missing! Use it!');
                 }
-                $eventListener->executeEvent($this->gate,$eventListener,$method,$event);
+                $eventListener->executeEvent($this->gate, $eventListener, $method, $event);
             }
         }
 
         // Dispatch the EventPublishedEvent here! If for example a event could not be dispatched
         // because it does not exist in the eventListenerMap[<empty>] this Event would never
         // be dispatched!
-        if( !is_null($this->gate->getBus('system-bus')) ){
+        if (!is_null($this->gate->getBus('system-bus'))) {
             $eventPublishedEvent = new EventPublishedEvent();
             $eventPublishedEvent->setClass($eventClass);
             $eventPublishedEvent->setId($event->getId());
@@ -256,5 +243,7 @@ abstract class AbstractBus implements BusInterface
             $eventPublishedEvent->setArguments($event->getArguments());
             $this->gate->getBus('system-bus')->publishEvent($eventPublishedEvent);
         }
+
+        return true;
     }
 }

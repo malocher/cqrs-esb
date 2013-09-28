@@ -1,7 +1,7 @@
 <?php
 /*
  * This file is part of the Cqrs package.
- * (c) Manfred Weber <manfred.weber@gmail.com>
+ * (c) Manfred Weber <crafics@php.net>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -13,14 +13,15 @@ use Cqrs\Event;
 use Cqrs\Message;
 
 /**
- * EventPublishedEvent
+ * Class EventPublishedEvent
  *
- * @author Manfred Weber <manfred.weber@gmail.com>
+ * @author Manfred Weber <crafics@php.net>
+ * @package Cqrs\Event
  */
 class EventPublishedEvent extends Message implements EventInterface
 {
     /**
-     * @var name of the invoking class
+     * @var string name of the invoking class
      */
     protected $class;
 
@@ -29,7 +30,8 @@ class EventPublishedEvent extends Message implements EventInterface
      *
      * @param string $class
      */
-    public function setClass($class) {
+    public function setClass($class)
+    {
         $this->class = $class;
     }
 
@@ -38,7 +40,8 @@ class EventPublishedEvent extends Message implements EventInterface
      *
      * @return string $class
      */
-    public function getClass() {
+    public function getClass()
+    {
         return $this->class;
     }
 

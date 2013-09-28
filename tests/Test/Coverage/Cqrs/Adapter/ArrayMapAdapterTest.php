@@ -1,7 +1,7 @@
 <?php
 /*
  * This file is part of the Cqrs package.
- * (c) Manfred Weber <manfred.weber@gmail.com> and Alexander Miertsch <kontakt@codeliner.ws>
+ * (c) Manfred Weber <crafics@php.net> and Alexander Miertsch <kontakt@codeliner.ws>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -14,6 +14,12 @@ use Cqrs\Event\ClassMapEventListenerLoader;
 use Test\Coverage\Mock\Bus\MockBus;
 use Test\TestCase;
 
+/**
+ * Class ArrayMapAdapterTest
+ *
+ * @author Manfred Weber <crafics@php.net>
+ * @package Test\Coverage\Cqrs\Adapter
+ */
 class ArrayMapAdapterTest extends TestCase implements AdapterInterfaceTest
 {
     /**
@@ -44,7 +50,7 @@ class ArrayMapAdapterTest extends TestCase implements AdapterInterfaceTest
                 'method' => 'handleCommand'
             )
         );
-        $this->adapter->pipe( $this->bus, $configuration );
+        $this->adapter->pipe($this->bus, $configuration);
     }
 
     public function testPipeProperCommand()
@@ -55,10 +61,10 @@ class ArrayMapAdapterTest extends TestCase implements AdapterInterfaceTest
                 'method' => 'handleCommand'
             )
         );
-        $this->adapter->pipe( $this->bus, $configuration );
+        $this->adapter->pipe($this->bus, $configuration);
         $map = $this->bus->getCommandHandlerMap()['Test\Coverage\Mock\Command\MockCommand'];
         $this->assertNotNull($map);
-        $this->assertEquals($configuration['Test\Coverage\Mock\Command\MockCommand']['alias'],$map[0]['alias']);
+        $this->assertEquals($configuration['Test\Coverage\Mock\Command\MockCommand']['alias'], $map[0]['alias']);
     }
 
     public function testPipeMockWrongCommand()
@@ -70,7 +76,7 @@ class ArrayMapAdapterTest extends TestCase implements AdapterInterfaceTest
                 'method' => 'handleCommand'
             )
         );
-        $this->adapter->pipe( $this->bus, $configuration );
+        $this->adapter->pipe($this->bus, $configuration);
     }
 
     public function testPipeWrongEvent()
@@ -82,7 +88,7 @@ class ArrayMapAdapterTest extends TestCase implements AdapterInterfaceTest
                 'method' => 'handleEvent'
             )
         );
-        $this->adapter->pipe( $this->bus, $configuration );
+        $this->adapter->pipe($this->bus, $configuration);
     }
 
     public function testPipeProperEvent()
@@ -93,10 +99,10 @@ class ArrayMapAdapterTest extends TestCase implements AdapterInterfaceTest
                 'method' => 'handleEvent'
             )
         );
-        $this->adapter->pipe( $this->bus, $configuration );
+        $this->adapter->pipe($this->bus, $configuration);
         $map = $this->bus->getEventListenerMap()['Test\Coverage\Mock\Event\MockEvent'];
         $this->assertNotNull($map);
-        $this->assertEquals($configuration['Test\Coverage\Mock\Event\MockEvent']['alias'],$map[0]['alias']);
+        $this->assertEquals($configuration['Test\Coverage\Mock\Event\MockEvent']['alias'], $map[0]['alias']);
     }
 
     public function testPipeMockWrongEvent()
@@ -108,6 +114,6 @@ class ArrayMapAdapterTest extends TestCase implements AdapterInterfaceTest
                 'method' => 'handleEvent'
             )
         );
-        $this->adapter->pipe( $this->bus, $configuration );
+        $this->adapter->pipe($this->bus, $configuration);
     }
 }

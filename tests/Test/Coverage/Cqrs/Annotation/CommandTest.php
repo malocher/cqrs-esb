@@ -1,7 +1,7 @@
 <?php
 /*
  * This file is part of the Cqrs package.
- * (c) Manfred Weber <manfred.weber@gmail.com> and Alexander Miertsch <kontakt@codeliner.ws>
+ * (c) Manfred Weber <crafics@php.net> and Alexander Miertsch <kontakt@codeliner.ws>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -9,20 +9,21 @@
 namespace Test\Coverage\Cqrs\Annotation;
 
 use Cqrs\Annotation\Command;
-use Test\TestCase;
 use Doctrine\Common\Annotations\AnnotationReader;
+use Test\TestCase;
 
+/**
+ * Class CommandTest
+ *
+ * @author Manfred Weber <crafics@php.net>
+ * @package Test\Coverage\Cqrs\Annotation
+ */
 class CommandTest extends TestCase
 {
     /**
-     * @var AnnotationAdapter
+     * @var AnnotationReader
      */
     private $reader;
-
-    /**
-     * @var MockBus
-     */
-    private $bus;
 
     public function setUp()
     {
@@ -33,8 +34,8 @@ class CommandTest extends TestCase
     {
         $reflClass = new \ReflectionClass('Test\Coverage\Mock\Command\MockCommandHandler');
         $reflM = $reflClass->getMethod('handleAnnotationCommand');
-        $aCommand = $this->reader->getMethodAnnotation($reflM,'Cqrs\Annotation\Command');
-        $this->assertEquals('Test\Coverage\Mock\Command\MockCommand',$aCommand->getClass());
+        $aCommand = $this->reader->getMethodAnnotation($reflM, 'Cqrs\Annotation\Command');
+        $this->assertEquals('Test\Coverage\Mock\Command\MockCommand', $aCommand->getClass());
         $this->assertTrue(class_exists($aCommand->getClass()));
     }
 

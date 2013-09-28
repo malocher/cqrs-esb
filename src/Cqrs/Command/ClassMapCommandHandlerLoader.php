@@ -1,7 +1,7 @@
 <?php
 /*
  * This file is part of the Cqrs package.
- * (c) Manfred Weber <manfred.weber@gmail.com> and Alexander Miertsch <kontakt@codeliner.ws>
+ * (c) Manfred Weber <crafics@php.net> and Alexander Miertsch <kontakt@codeliner.ws>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -9,11 +9,12 @@
 namespace Cqrs\Command;
 
 /**
- * Simple classmap CommandHandlerLoader
- * 
+ * Class ClassMapCommandHandlerLoader
+ *
  * Can be used as default, if command-handler-aliases are passed as full qualified classnames
- * 
+ *
  * @author Alexander Miertsch <kontakt@codeliner.ws>
+ * @package Cqrs\Command
  */
 class ClassMapCommandHandlerLoader implements CommandHandlerLoaderInterface
 {
@@ -22,13 +23,13 @@ class ClassMapCommandHandlerLoader implements CommandHandlerLoaderInterface
      *
      * @param string $alias
      * @throws CommandException
-     * @return \Cqrs\Command\CommandHandlerInterface
+     * @return callable
      */
     public function getCommandHandler($alias)
     {
-        if( class_exists($alias) ){
+        if (class_exists($alias)) {
             return new $alias;
         }
-        throw CommandException::handlerError(sprintf('alias <%s> does not exist',$alias));
-    }    
+        throw CommandException::handlerError(sprintf('alias <%s> does not exist', $alias));
+    }
 }

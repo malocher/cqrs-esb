@@ -1,7 +1,7 @@
 <?php
 /*
  * This file is part of the Cqrs package.
- * (c) Manfred Weber <manfred.weber@gmail.com> and Alexander Miertsch <kontakt@codeliner.ws>
+ * (c) Manfred Weber <crafics@php.net> and Alexander Miertsch <kontakt@codeliner.ws>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -14,6 +14,12 @@ use Cqrs\Event\ClassMapEventListenerLoader;
 use Test\Coverage\Mock\Bus\MockBus;
 use Test\TestCase;
 
+/**
+ * Class AnnotationAdapterTest
+ *
+ * @author Manfred Weber <crafics@php.net>
+ * @package Test\Coverage\Cqrs\Adapter
+ */
 class AnnotationAdapterTest extends TestCase implements AdapterInterfaceTest
 {
     /**
@@ -39,46 +45,46 @@ class AnnotationAdapterTest extends TestCase implements AdapterInterfaceTest
     {
         $this->setExpectedException('Cqrs\Adapter\AdapterException');
         $configuration = array('Test\Coverage\Mock\Command\NonExistingMockCommandHandler');
-        $this->adapter->pipe( $this->bus, $configuration );
+        $this->adapter->pipe($this->bus, $configuration);
     }
 
     public function testPipeProperCommandHandler()
     {
         $configuration = array('Test\Coverage\Mock\Command\MockCommandHandler');
-        $this->adapter->pipe( $this->bus, $configuration );
+        $this->adapter->pipe($this->bus, $configuration);
         $map = $this->bus->getCommandHandlerMap()['Test\Coverage\Mock\Command\MockCommand'];
         $this->assertNotNull($map);
-        $this->assertEquals('Test\Coverage\Mock\Command\MockCommandHandler',$map[0]['alias']);
+        $this->assertEquals('Test\Coverage\Mock\Command\MockCommandHandler', $map[0]['alias']);
     }
 
     public function testPipeWrongAnnotationsCommandHandler()
     {
         $this->setExpectedException('Cqrs\Adapter\AdapterException');
         $configuration = array('Test\Coverage\Mock\Command\MockCommandHandlerWrongAnnotations');
-        $this->adapter->pipe( $this->bus, $configuration );
+        $this->adapter->pipe($this->bus, $configuration);
     }
 
     public function testPipeWrongEventHandler()
     {
         $this->setExpectedException('Cqrs\Adapter\AdapterException');
         $configuration = array('Test\Coverage\Mock\Event\NonExistingMockEventHandler');
-        $this->adapter->pipe( $this->bus, $configuration );
+        $this->adapter->pipe($this->bus, $configuration);
     }
 
     public function testPipeProperEventHandler()
     {
         $configuration = array('Test\Coverage\Mock\Event\MockEventHandler');
-        $this->adapter->pipe( $this->bus, $configuration );
+        $this->adapter->pipe($this->bus, $configuration);
         $map = $this->bus->getEventListenerMap()['Test\Coverage\Mock\Event\MockEvent'];
         $this->assertNotNull($map);
-        $this->assertEquals('Test\Coverage\Mock\Event\MockEventHandler',$map[0]['alias']);
+        $this->assertEquals('Test\Coverage\Mock\Event\MockEventHandler', $map[0]['alias']);
     }
 
     public function testPipeWrongAnnotationsEventHandler()
     {
         $this->setExpectedException('Cqrs\Adapter\AdapterException');
         $configuration = array('Test\Coverage\Mock\Event\MockEventHandlerWrongAnnotations');
-        $this->adapter->pipe( $this->bus, $configuration );
+        $this->adapter->pipe($this->bus, $configuration);
     }
 
 }

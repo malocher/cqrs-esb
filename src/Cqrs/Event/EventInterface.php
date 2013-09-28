@@ -1,7 +1,7 @@
 <?php
 /*
  * This file is part of the Cqrs package.
- * (c) Manfred Weber <manfred.weber@gmail.com>
+ * (c) Manfred Weber <crafics@php.net>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -10,12 +10,14 @@
 namespace Cqrs\Event;
 
 /**
- * EventInterface
+ * Interface EventInterface
  *
- * @author Manfred Weber <manfred.weber@gmail.com>
+ * @author Manfred Weber <crafics@php.net>
  * @author Alexander Miertsch <kontakt@codeliner.ws>
+ * @package Cqrs\Event
  */
-interface EventInterface {
+interface EventInterface
+{
 
     /**
      * Constructor

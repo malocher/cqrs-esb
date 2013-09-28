@@ -1,42 +1,41 @@
 <?php
 /*
  * This file is part of the Cqrs package.
- * (c) Manfred Weber <manfred.weber@gmail.com> and Alexander Miertsch <kontakt@codeliner.ws>
+ * (c) Manfred Weber <crafics@php.net> and Alexander Miertsch <kontakt@codeliner.ws>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 namespace Cqrs\Bus;
 
-use Cqrs\Gate;
-use Cqrs\Command\CommandInterface;
-use Cqrs\Command\CommandHandlerInterface;
 use Cqrs\Command\CommandHandlerLoaderInterface;
+use Cqrs\Command\CommandInterface;
 use Cqrs\Event\EventInterface;
-use Cqrs\Event\EventListenerInterface;
 use Cqrs\Event\EventListenerLoaderInterface;
+use Cqrs\Gate;
 
 /**
- * BusInterfaces
+ * Interface BusInterface
  *
- * @author Manfred Weber <manfred.weber@gmail.com>
+ * @author Manfred Weber <crafics@php.net>
  * @author Alexander Miertsch <kontakt@codeliner.ws>
+ * @package Cqrs\Bus
  */
-interface BusInterface {
-    
+interface BusInterface
+{
     /**
      * Constructor
-     * 
+     *
      * @param CommandHandlerLoaderInterface $commandHandlerLoader
      * @param EventListenerLoaderInterface $eventListenerLoader
      */
     public function __construct(
         CommandHandlerLoaderInterface $commandHandlerLoader,
         EventListenerLoaderInterface $eventListenerLoader);
-    
+
     /**
      * Get the name of the bus
-     * 
+     *
      * @return string
      */
     public function getName();
@@ -54,77 +53,71 @@ interface BusInterface {
      * @return Gate $gate
      */
     public function getGate();
-    
+
     /**
      * Map a command to a command handler
-     * 
+     *
      * You can provide every callable as command handler or a definition array,
      * that contains the keys alias and method.
-     * 
+     *
      * @example defintion:
-     * 
+     *
      * $userCommandHandlerDefinition = array(
      *      'alias'  => 'user_handler',        //Alias is passed to CommandHandlerLoader
-     *      'method' => 'handleAddUserCommand' //Method is called after loading CommandHandler  
+     *      'method' => 'handleAddUserCommand' //Method is called after loading CommandHandler
      * );
-     * 
+     *
      * The method that handles a command gets two arguments.
      * The first one is the command and the second is the gate.
-     * 
-     * @param string         $commandClass
-     * @param callable|array $callableOrDefinition
-     * 
-     * @return void
+     *
+     * @param $commandClass
+     * @param $callableOrDefinition
+     * @return mixed
      */
     public function mapCommand($commandClass, $callableOrDefinition);
 
     /**
      * Get all mapped commands
      *
-     * @return array
+     * @return mixed
      */
     public function getCommandHandlerMap();
 
     /**
      * Hand over command to registered command handler(s)
      *
-     * @param $command CommandInterface
-     * @return void
+     * @param CommandInterface $command
+     * @return mixed
      */
     public function invokeCommand(CommandInterface $command);
-    
+
     /**
      * Register a listener for an event
-     * 
+     *
      * You can provide every callable as event listener or a definition array,
      * that contains the keys alias and method.
-     * 
+     *
      * @example defintion:
-     * 
+     *
      * $userAddedEventListenerDefinition = array(
      *      'alias'  => 'password_generator', //Alias is passed to EventListenerLoader
-     *      'method' => 'onUserAdded'         //Method is called after loading the EventListener  
+     *      'method' => 'onUserAdded'         //Method is called after loading the EventListener
      * );
-     * 
-     * @param string         $eventClass
-     * @param callable|array $callableOrDefinition
-     * 
-     * @return void
+     *
+     * @param $eventClass
+     * @param $callableOrDefinition
+     * @return mixed
      */
     public function registerEventListener($eventClass, $callableOrDefinition);
 
     /**
-     * Get all mapped events
-     *
-     * @return array
+     * @return mixed
      */
     public function getEventListenerMap();
-    
+
     /**
-     * Publish an event
-     * 
      * @param EventInterface $event
-     * @return void
+     * @return mixed
      */
     public function publishEvent(EventInterface $event);
 }

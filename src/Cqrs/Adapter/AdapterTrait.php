@@ -1,7 +1,7 @@
 <?php
 /*
  * This file is part of the Cqrs package.
- * (c) Manfred Weber <manfred.weber@gmail.com> and Alexander Miertsch <kontakt@codeliner.ws>
+ * (c) Manfred Weber <crafics@php.net> and Alexander Miertsch <kontakt@codeliner.ws>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -13,42 +13,37 @@ use Cqrs\Event\EventInterface;
 use Cqrs\Gate;
 
 /**
- * AdapterTrait
+ * Class AdapterTrait
  *
- * @author Manfred Weber <manfred.weber@gmail.com>
+ * @author Manfred Weber <crafics@php.net>
+ * @package Cqrs\Adapter
  */
-trait AdapterTrait {
-
+trait AdapterTrait
+{
     /**
      * @var $gate Gate
-     *
-     * A reference to the gate
      */
     private $gate;
 
     /**
-     * Execute command
-     *
-     * @param $gate Gate
-     * @param $commandHandler object
-     * @param $method Method the handler method to execute
-     * @param $command CommandInterface to pass to the handler method
+     * @param Gate $gate
+     * @param $commandHandler
+     * @param $method callable the handler method to execute
+     * @param CommandInterface $command to pass to the handler method
      */
-    public function executeCommand( Gate $gate, $commandHandler, $method, CommandInterface $command)
+    public function executeCommand(Gate $gate, $commandHandler, $method, CommandInterface $command)
     {
         $this->gate = $gate;
         $commandHandler->{$method}($command);
     }
 
     /**
-     * Execute event
-     *
      * @param $gate Gate
      * @param $eventListener object
-     * @param $method the handler method to execute
+     * @param $method callable the handler method to execute
      * @param $event EventInterface to pass to the handler method
      */
-    public function executeEvent( Gate $gate, $eventListener, $method, EventInterface $event)
+    public function executeEvent(Gate $gate, $eventListener, $method, EventInterface $event)
     {
         $this->gate = $gate;
         $eventListener->{$method}($event);

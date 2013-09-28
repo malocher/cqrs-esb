@@ -1,7 +1,7 @@
 <?php
 /*
  * This file is part of the Cqrs package.
- * (c) Manfred Weber <manfred.weber@gmail.com>
+ * (c) Manfred Weber <crafics@php.net>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -12,14 +12,15 @@ namespace Cqrs\Command;
 use Cqrs\Message;
 
 /**
- * InvokeCommandCommand
+ * Class InvokeCommandCommand
  *
- * @author Manfred Weber <manfred.weber@gmail.com>
+ * @author Manfred Weber <crafics@php.net>
+ * @package Cqrs\Command
  */
 class InvokeCommandCommand extends Message implements CommandInterface
 {
     /**
-     * @var name of the invoking class
+     * @var string name of the invoking class
      */
     protected $class;
 
@@ -28,7 +29,8 @@ class InvokeCommandCommand extends Message implements CommandInterface
      *
      * @param string $class
      */
-    public function setClass($class) {
+    public function setClass($class)
+    {
         $this->class = $class;
     }
 
@@ -37,7 +39,8 @@ class InvokeCommandCommand extends Message implements CommandInterface
      *
      * @return string $class
      */
-    public function getClass() {
+    public function getClass()
+    {
         return $this->class;
     }
 

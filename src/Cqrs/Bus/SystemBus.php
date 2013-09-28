@@ -1,21 +1,21 @@
 <?php
 /*
  * This file is part of the Cqrs package.
- * (c) Manfred Weber <manfred.weber@gmail.com> and Alexander Miertsch <kontakt@codeliner.ws>
+ * (c) Manfred Weber <crafics@php.net> and Alexander Miertsch <kontakt@codeliner.ws>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 namespace Cqrs\Bus;
 
-use Cqrs\Bus\AbstractBus;
 use Cqrs\Command\CommandInterface;
 use Cqrs\Event\EventInterface;
 
 /**
- * SystemBus
+ * Class SystemBus
  *
- * @author Manfred Weber <manfred.weber@gmail.com>
+ * @author Manfred Weber <crafics@php.net>
+ * @package Cqrs\Bus
  */
 class SystemBus extends AbstractBus
 {
@@ -40,11 +40,11 @@ class SystemBus extends AbstractBus
     {
         $commandClass = get_class($command);
 
-        if( !isset($this->commandHandlerMap[$commandClass]) ){
+        if (!isset($this->commandHandlerMap[$commandClass])) {
             return false;
         }
 
-        foreach($this->commandHandlerMap[$commandClass] as $i => $callableOrDefinition) {
+        foreach ($this->commandHandlerMap[$commandClass] as $i => $callableOrDefinition) {
 
             // @todo how will this work with traits ?
             if (is_callable($callableOrDefinition)) {
@@ -58,12 +58,14 @@ class SystemBus extends AbstractBus
                 // instead of invoking the handler method directly
                 // we call the execute function of the implemented trait and pass along a reference to the gate
                 $usedTraits = class_uses($commandHandler);
-                if( !isset($usedTraits['Cqrs\Adapter\AdapterTrait']) ){
+                if (!isset($usedTraits['Cqrs\Adapter\AdapterTrait'])) {
                     throw BusException::traitError('Adapter Trait is missing! Use it!');
                 }
-                $commandHandler->executeCommand($this->gate,$commandHandler,$method,$command);
+                $commandHandler->executeCommand($this->gate, $commandHandler, $method, $command);
             }
         }
+
+        return true;
     }
 
     /**
@@ -77,11 +79,11 @@ class SystemBus extends AbstractBus
     {
         $eventClass = get_class($event);
 
-        if(!isset($this->eventListenerMap[$eventClass])){
+        if (!isset($this->eventListenerMap[$eventClass])) {
             return false;
         }
 
-        foreach($this->eventListenerMap[$eventClass] as $i => $callableOrDefinition) {
+        foreach ($this->eventListenerMap[$eventClass] as $i => $callableOrDefinition) {
 
             // @todo how will this work with traits ?
             if (is_callable($callableOrDefinition)) {
@@ -95,11 +97,13 @@ class SystemBus extends AbstractBus
                 // instead of invoking the handler method directly
                 // we call the execute function of the implemented trait and pass along a reference to the gate
                 $usedTraits = class_uses($eventListener);
-                if( !isset($usedTraits['Cqrs\Adapter\AdapterTrait']) ){
+                if (!isset($usedTraits['Cqrs\Adapter\AdapterTrait'])) {
                     throw BusException::traitError('Adapter Trait is missing! Use it!');
                 }
-                $eventListener->executeEvent($this->gate,$eventListener,$method,$event);
+                $eventListener->executeEvent($this->gate, $eventListener, $method, $event);
             }
         }
+
+        return true;
     }
 }

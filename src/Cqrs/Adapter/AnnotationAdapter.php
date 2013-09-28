@@ -1,7 +1,7 @@
 <?php
 /*
  * This file is part of the Cqrs package.
- * (c) Manfred Weber <manfred.weber@gmail.com> and Alexander Miertsch <kontakt@codeliner.ws>
+ * (c) Manfred Weber <crafics@php.net> and Alexander Miertsch <kontakt@codeliner.ws>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -9,25 +9,24 @@
 namespace Cqrs\Adapter;
 
 use Cqrs\Bus\BusInterface;
-use Doctrine\Common\Annotations\AnnotationRegistry;
 use Doctrine\Common\Annotations\AnnotationReader;
+use Doctrine\Common\Annotations\AnnotationRegistry;
 
 /**
- * AnnotationAdapter
+ * Class AnnotationAdapter
  *
- * @author Manfred Weber <manfred.weber@gmail.com>
+ * @author Manfred Weber <crafics@php.net>
+ * @package Cqrs\Adapter
  */
-class AnnotationAdapter implements AdapterInterface {
-
+class AnnotationAdapter implements AdapterInterface
+{
     /**
      * @var AnnotationReader
      */
     public $annotationReader;
 
     /**
-     * Constructor
-     *
-     * @param array configuration
+     * @param array $configuration
      */
     public function __construct(array $configuration = null)
     {
@@ -68,44 +67,44 @@ class AnnotationAdapter implements AdapterInterface {
      *
      * - - - - - - - - - - - - - - - - - - -
      *
-     + class MockBarHandler
+     * + class MockBarHandler
      * **
      * * @Cqrs\Annotation\Command("Test\Mock\Command\MockCommand")
      * *
      * public function getBar($command)
      * - - - - - - - - - - - - - - - - - - -
      *
-     * @param BusInterface  $bus
-     * @param String        $qualifiedClassname
+     * @param BusInterface $bus
+     * @param String $qualifiedClassname
      * @throws AdapterException
      */
-    public function allow(BusInterface $bus,$qualifiedClassname)
+    public function allow(BusInterface $bus, $qualifiedClassname)
     {
-        if(!class_exists($qualifiedClassname)){
-            throw AdapterException::initializeError(sprintf('Class <%s> does not exist',$qualifiedClassname));
+        if (!class_exists($qualifiedClassname)) {
+            throw AdapterException::initializeError(sprintf('Class <%s> does not exist', $qualifiedClassname));
         }
         $reflClass = new \ReflectionClass($qualifiedClassname);
         $reflMs = $reflClass->getMethods();
 
-        foreach($reflMs as $reflM){
+        foreach ($reflMs as $reflM) {
             // command mapping
-            $aCommand = $this->annotationReader->getMethodAnnotation($reflM,'Cqrs\Annotation\Command');
-            if($aCommand){
-                if( !class_exists($aCommand->getClass()) ){
+            $aCommand = $this->annotationReader->getMethodAnnotation($reflM, 'Cqrs\Annotation\Command');
+            if ($aCommand) {
+                if (!class_exists($aCommand->getClass())) {
                     throw AdapterException::annotationError(sprintf('Command <%s> does not exists or wrong annotation!',
                         $aCommand->getClass()));
                 }
-               $bus->mapCommand($aCommand->getClass(),array('alias'=>$reflM->class,'method'=>$reflM->name));
+                $bus->mapCommand($aCommand->getClass(), array('alias' => $reflM->class, 'method' => $reflM->name));
             }
 
             // event registering
-            $aEvent = $this->annotationReader->getMethodAnnotation($reflM,'Cqrs\Annotation\Event');
-            if($aEvent){
-                if( !class_exists($aEvent->getClass()) ){
+            $aEvent = $this->annotationReader->getMethodAnnotation($reflM, 'Cqrs\Annotation\Event');
+            if ($aEvent) {
+                if (!class_exists($aEvent->getClass())) {
                     throw AdapterException::annotationError(sprintf('Event <%s> does not exist or wrong annotation!',
                         $aEvent->getClass()));
                 }
-                $bus->registerEventListener($aEvent->getClass(),array('alias'=>$reflM->class,'method'=>$reflM->name));
+                $bus->registerEventListener($aEvent->getClass(), array('alias' => $reflM->class, 'method' => $reflM->name));
             }
 
         }

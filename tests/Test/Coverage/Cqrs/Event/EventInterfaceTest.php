@@ -1,7 +1,7 @@
 <?php
 /*
  * This file is part of the Cqrs package.
- * (c) Manfred Weber <manfred.weber@gmail.com>
+ * (c) Manfred Weber <crafics@php.net>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -9,7 +9,14 @@
 
 namespace Test\Coverage\Cqrs\Event;
 
-interface EventInterfaceTest {
+/**
+ * Interface EventInterfaceTest
+ *
+ * @author Manfred Weber <crafics@php.net>
+ * @package Test\Coverage\Cqrs\Event
+ */
+interface EventInterfaceTest
+{
 
     //public function __construct(array $arguments = null);
 
