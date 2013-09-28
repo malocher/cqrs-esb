@@ -43,11 +43,12 @@ class Gate {
     public function reset()
     {
         foreach($this->buses as $bus){
+            if($bus->getName()==='system-bus'){
+                continue;
+            }
             $this->detach($bus);
         }
-        $this->buses = array();
-        //return self::getInstance();
-        return $this; //self::getInstance();
+        return $this;
     }
 
     /**
@@ -60,11 +61,7 @@ class Gate {
                 new ClassMapCommandHandlerLoader(),
                 new ClassMapEventListenerLoader()
             );
-            try {
-                $this->attach($systemBus);
-            } catch ( GateException $e ){
-                echo $e->getMessage();
-            }
+            $this->attach($systemBus);
         }
     }
 

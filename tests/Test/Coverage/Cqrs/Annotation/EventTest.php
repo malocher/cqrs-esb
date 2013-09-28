@@ -8,6 +8,7 @@
  */
 namespace Test\Coverage\Cqrs\Annotation;
 
+use Cqrs\Annotation\Event;
 use Test\TestCase;
 use Doctrine\Common\Annotations\AnnotationReader;
 
@@ -35,5 +36,11 @@ class EventTest extends TestCase
         $aEvent = $this->reader->getMethodAnnotation($reflM,'Cqrs\Annotation\Event');
         $this->assertEquals('Test\Coverage\Mock\Event\MockEvent',$aEvent->getClass());
         $this->assertTrue(class_exists($aEvent->getClass()));
+    }
+
+    public function testInvalidArguments()
+    {
+        $this->setExpectedException('Cqrs\Annotation\AnnotationException');
+        new Event(array('wrong'));
     }
 }

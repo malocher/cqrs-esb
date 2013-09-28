@@ -21,7 +21,7 @@ class Event {
     /**
      * Constructor
      *
-     * @throws \InvalidArgumentException
+     * @throws AnnotationException
      * @param array $options
      */
     public function __construct($options)
@@ -33,7 +33,7 @@ class Event {
 
         foreach ($options as $key => $value) {
             if (!property_exists($this, $key)) {
-                throw new \InvalidArgumentException(sprintf('Property "%s" does not exist', $key));
+                throw AnnotationException::propertyError(sprintf('Property "%s" does not exist', $value));
             }
             $this->$key = $value;
         }

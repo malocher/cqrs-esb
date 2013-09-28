@@ -139,7 +139,7 @@ abstract class AbstractBus implements BusInterface
         // if it succeeded. Later the CommandInvokedEvent can be used to check if a
         // command succeeded.
         if( !isset($this->commandHandlerMap[$commandClass]) ){
-            return;
+            return false;
         }
 
         foreach($this->commandHandlerMap[$commandClass] as $i => $callableOrDefinition) {
@@ -223,7 +223,7 @@ abstract class AbstractBus implements BusInterface
         }
 
         if(!isset($this->eventListenerMap[$eventClass])){
-            return;
+            return false;
         }
 
         foreach($this->eventListenerMap[$eventClass] as $i => $callableOrDefinition) {

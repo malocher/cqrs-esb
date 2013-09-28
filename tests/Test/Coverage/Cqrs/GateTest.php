@@ -37,6 +37,23 @@ class GateTest extends TestCase {
 
     public function testReset()
     {
+        $mockBus = new MockBus(
+            new ClassMapCommandHandlerLoader(),
+            new ClassMapEventListenerLoader()
+        );
+        $this->gate->attach($mockBus);
+        $this->gate->reset();
+        $attachedBuses = $this->gate->attachedBuses();
+        $this->assertEquals(0,count($attachedBuses));
+    }
+
+    public function testResetSystemBus()
+    {
+        $this->gate->enableSystemBus();
+        $this->gate->reset();
+        $attachedBuses = $this->gate->attachedBuses();
+        $this->assertEquals(1,count($attachedBuses));
+        $this->gate->disableSystemBus();
         $this->gate->reset();
         $attachedBuses = $this->gate->attachedBuses();
         $this->assertEquals(0,count($attachedBuses));

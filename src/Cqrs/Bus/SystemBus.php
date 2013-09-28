@@ -34,13 +34,14 @@ class SystemBus extends AbstractBus
      *
      * @param \Cqrs\Command\CommandInterface $command
      * @throws BusException
+     * @return bool|void
      */
     public function invokeCommand(CommandInterface $command)
     {
         $commandClass = get_class($command);
 
         if( !isset($this->commandHandlerMap[$commandClass]) ){
-            return;
+            return false;
         }
 
         foreach($this->commandHandlerMap[$commandClass] as $i => $callableOrDefinition) {
@@ -70,13 +71,14 @@ class SystemBus extends AbstractBus
      *
      * @param \Cqrs\Event\EventInterface $event
      * @throws BusException
+     * @return bool|void
      */
     public function publishEvent(EventInterface $event)
     {
         $eventClass = get_class($event);
 
         if(!isset($this->eventListenerMap[$eventClass])){
-            return;
+            return false;
         }
 
         foreach($this->eventListenerMap[$eventClass] as $i => $callableOrDefinition) {

@@ -141,4 +141,18 @@ class AbstractBusTest extends TestCase implements BusInterfaceTest
         $this->bus->publishEvent($mockEvent);
         $this->assertEquals(true,$mockEvent->isEdited());
     }
+
+    public function testInvokeNonMappedCommand()
+    {
+        $this->bus->setGate(new Gate());
+        $mockCommand = new MockCommand();
+        $this->assertFalse( $this->bus->invokeCommand($mockCommand) );
+    }
+
+    public function testInvokeNonMappedEvent()
+    {
+        $this->bus->setGate(new Gate());
+        $mockEvent = new MockEvent();
+        $this->assertFalse( $this->bus->publishEvent($mockEvent) );
+    }
 }

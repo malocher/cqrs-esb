@@ -181,4 +181,20 @@ class SystemBusTest extends AbstractBusTest
         $this->bus->publishEvent($mockEvent);
     }
 
+    public function testInvokeNonMappedCommand()
+    {
+        $gate = new Gate();
+        $gate->enableSystemBus();
+        $mockCommand = new MockCommand();
+        $this->assertFalse( $gate->getBus('system-bus')->invokeCommand($mockCommand) );
+    }
+
+    public function testInvokeNonMappedEvent()
+    {
+        $gate = new Gate();
+        $gate->enableSystemBus();
+        $mockEvent = new MockEvent();
+        $this->assertFalse( $gate->getBus('system-bus')->publishEvent($mockEvent) );
+    }
+
 }

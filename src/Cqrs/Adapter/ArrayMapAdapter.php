@@ -37,7 +37,9 @@ class ArrayMapAdapter implements AdapterInterface
     public function pipe(BusInterface $bus, array $configuration)
     {
         foreach ($configuration as $messageClass => $callableOrDefinition) {
-            if ($this->isCommand($messageClass)) {
+            if(!class_exists($messageClass)){
+                throw AdapterException::initializeError(sprintf('Message class <%s> does not exist',$messageClass));
+            } else if ($this->isCommand($messageClass)) {
                 $bus->mapCommand($messageClass, $callableOrDefinition);
             } else if ($this->isEvent($messageClass)) {
                 $bus->registerEventListener($messageClass, $callableOrDefinition);
@@ -60,9 +62,6 @@ class ArrayMapAdapter implements AdapterInterface
      * @return boolean
      */
     private function isCommand($messageClass) {
-        if(!class_exists($messageClass)){
-            throw AdapterException::initializeError(sprintf('Message class <%s> does not exist',$messageClass));
-        }
         $interfaces = class_implements($messageClass);
         if (!$interfaces) {
             return false;
@@ -78,9 +77,6 @@ class ArrayMapAdapter implements AdapterInterface
      * @return boolean
      */
     private function isEvent($messageClass) {
-        if(!class_exists($messageClass)){
-            throw AdapterException::initializeError(sprintf('Message class <%s> does not exist',$messageClass));
-        }
         $interfaces = class_implements($messageClass);
         if (!$interfaces) {
             return false;

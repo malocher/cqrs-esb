@@ -8,6 +8,7 @@
  */
 namespace Test\Coverage\Cqrs\Annotation;
 
+use Cqrs\Annotation\Command;
 use Test\TestCase;
 use Doctrine\Common\Annotations\AnnotationReader;
 
@@ -35,5 +36,11 @@ class CommandTest extends TestCase
         $aCommand = $this->reader->getMethodAnnotation($reflM,'Cqrs\Annotation\Command');
         $this->assertEquals('Test\Coverage\Mock\Command\MockCommand',$aCommand->getClass());
         $this->assertTrue(class_exists($aCommand->getClass()));
+    }
+
+    public function testInvalidArguments()
+    {
+        $this->setExpectedException('Cqrs\Annotation\AnnotationException');
+        new Command(array('wrong'));
     }
 }

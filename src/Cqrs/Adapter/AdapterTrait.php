@@ -53,15 +53,4 @@ trait AdapterTrait {
         $this->gate = $gate;
         $eventListener->{$method}($event);
     }
-
-    /**
-     * Get Bus
-     *
-     * @param $name
-     * @return \Cqrs\Bus\BusInterface
-     */
-    private function getBus( $name )
-    {
-        return $this->gate->getBus( $name );
-    }
 }

@@ -78,6 +78,7 @@ class SetupTest extends TestCase
     public function testInitialize()
     {
         $configuration = array(
+            'enable_system_bus' => true,
             'adapters' => array(
                 array(
                     'class' => 'Cqrs\Adapter\ArrayMapAdapter',
@@ -102,12 +103,62 @@ class SetupTest extends TestCase
         $this->assertInstanceOf('Cqrs\Event\EventListenerLoaderInterface',$this->setup->getEventListenerLoader());
         $this->assertInstanceOf('Test\Coverage\Mock\Bus\MockBus',$this->setup->getGate()->getBus('test-coverage-mock-bus'));
 
+        $this->assertInstanceOf('Cqrs\Bus\SystemBus',$this->setup->getGate()->getBus('system-bus'));
+
     }
 
     public function testInitializeWithoutGate()
     {
         $this->setExpectedException('Cqrs\Configuration\ConfigurationException');
         $this->setup->initialize(array());
+    }
+
+    public function testInitializeWithoutCommandHandlerLoader()
+    {
+        $this->setExpectedException('Cqrs\Configuration\ConfigurationException');
+        $configuration = array(
+            'enable_system_bus' => true,
+            'adapters' => array(
+                array(
+                    'class' => 'Cqrs\Adapter\ArrayMapAdapter',
+                    'buses' => array(
+                        'Test\Coverage\Mock\Bus\MockBus' => array(
+                            'Test\Coverage\Mock\Command\MockCommand' => array(
+                                'alias' => 'Test\Coverage\Mock\Command\MockCommandHandler',
+                                'method' => 'handleCommand'
+                            )
+                        )
+                    )
+                ),
+            ),
+        );
+        $this->setup->setGate(new Gate());
+        $this->setup->setEventListenerLoader(new ClassMapEventListenerLoader());
+        $this->setup->initialize($configuration);
+    }
+
+    public function testInitializeWithoutEventHandlerLoader()
+    {
+        $this->setExpectedException('Cqrs\Configuration\ConfigurationException');
+        $configuration = array(
+            'enable_system_bus' => true,
+            'adapters' => array(
+                array(
+                    'class' => 'Cqrs\Adapter\ArrayMapAdapter',
+                    'buses' => array(
+                        'Test\Coverage\Mock\Bus\MockBus' => array(
+                            'Test\Coverage\Mock\Command\MockCommand' => array(
+                                'alias' => 'Test\Coverage\Mock\Command\MockCommandHandler',
+                                'method' => 'handleCommand'
+                            )
+                        )
+                    )
+                ),
+            ),
+        );
+        $this->setup->setGate(new Gate());
+        $this->setup->setCommandHandlerLoader(new ClassMapCommandHandlerLoader());
+        $this->setup->initialize($configuration);
     }
 
     /*
