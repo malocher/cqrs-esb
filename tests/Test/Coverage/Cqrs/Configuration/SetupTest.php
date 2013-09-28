@@ -109,7 +109,7 @@ class SetupTest extends TestCase
         $this->assertInstanceOf('Cqrs\Event\EventListenerLoaderInterface', $this->setup->getEventListenerLoader());
         $this->assertInstanceOf('Test\Coverage\Mock\Bus\MockBus', $this->setup->getGate()->getBus('test-coverage-mock-bus'));
 
-        $this->assertInstanceOf('Cqrs\Bus\SystemBus', $this->setup->getGate()->getBus('system-bus'));
+        $this->assertInstanceOf('Cqrs\Bus\SystemBus', $this->setup->getGate()->getSystemBus());
 
     }
 

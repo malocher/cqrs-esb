@@ -68,3 +68,6 @@ Should we rename "Setup" to "Cqrs"
 - $cqrs->setCommandHandlerLoader(new ClassMapCommandHandlerLoader());
 - $cqrs->setEventListenerLoader(new ClassMapEventListenerLoader());
 What do you think?
+
+12)
+SystemBus events should also pass bus information

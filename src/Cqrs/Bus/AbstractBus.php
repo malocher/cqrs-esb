@@ -113,13 +113,14 @@ abstract class AbstractBus implements BusInterface
         $commandClass = get_class($command);
 
         // InvokeCommandCommand first! Because a commandClass _IS_ actually invoked.
-        if (!is_null($this->gate->getBus('system-bus'))) {
+        if (!is_null($this->gate->getSystemBus())) {
             $invokeCommandCommand = new InvokeCommandCommand();
             $invokeCommandCommand->setClass($commandClass);
+            $invokeCommandCommand->setBusName($this->getName());
             $invokeCommandCommand->setId($command->getId());
             $invokeCommandCommand->setTimestamp($command->getTimestamp());
             $invokeCommandCommand->setArguments($command->getArguments());
-            $this->gate->getBus('system-bus')->invokeCommand($invokeCommandCommand);
+            $this->gate->getSystemBus()->invokeCommand($invokeCommandCommand);
         }
 
         // Check if command exists after invoking the InvokeCommandCommand because
@@ -153,13 +154,14 @@ abstract class AbstractBus implements BusInterface
         // Dispatch the CommandInvokedEvent here! If for example a command could not be invoked
         // because it does not exist in the commandHandlerMap[<empty>] this Event would never
         // be dispatched!
-        if (!is_null($this->gate->getBus('system-bus'))) {
+        if (!is_null($this->gate->getSystemBus())) {
             $commandInvokedEvent = new CommandInvokedEvent();
             $commandInvokedEvent->setClass($commandClass);
+            $commandInvokedEvent->setBusName($this->getName());
             $commandInvokedEvent->setId($command->getId());
             $commandInvokedEvent->setTimestamp($command->getTimestamp());
             $commandInvokedEvent->setArguments($command->getArguments());
-            $this->gate->getBus('system-bus')->publishEvent($commandInvokedEvent);
+            $this->gate->getSystemBus()->publishEvent($commandInvokedEvent);
         }
 
         return true;
@@ -200,13 +202,14 @@ abstract class AbstractBus implements BusInterface
         // the PublishEventCommand tells that a event is dispatched but does not care
         // if it succeeded. Later the EventPublishedEvent can be used to check if a
         // event succeeded.
-        if (!is_null($this->gate->getBus('system-bus'))) {
+        if (!is_null($this->gate->getSystemBus())) {
             $publishEventCommand = new PublishEventCommand();
             $publishEventCommand->setClass($eventClass);
+            $publishEventCommand->setBusName($this->getName());
             $publishEventCommand->setId($event->getId());
             $publishEventCommand->setTimestamp($event->getTimestamp());
             $publishEventCommand->setArguments($event->getArguments());
-            $this->gate->getBus('system-bus')->invokeCommand($publishEventCommand);
+            $this->gate->getSystemBus()->invokeCommand($publishEventCommand);
         }
 
         if (!isset($this->eventListenerMap[$eventClass])) {
@@ -235,13 +238,14 @@ abstract class AbstractBus implements BusInterface
         // Dispatch the EventPublishedEvent here! If for example a event could not be dispatched
         // because it does not exist in the eventListenerMap[<empty>] this Event would never
         // be dispatched!
-        if (!is_null($this->gate->getBus('system-bus'))) {
+        if (!is_null($this->gate->getSystemBus())) {
             $eventPublishedEvent = new EventPublishedEvent();
             $eventPublishedEvent->setClass($eventClass);
+            $eventPublishedEvent->setBusName($this->getName());
             $eventPublishedEvent->setId($event->getId());
             $eventPublishedEvent->setTimestamp($event->getTimestamp());
             $eventPublishedEvent->setArguments($event->getArguments());
-            $this->gate->getBus('system-bus')->publishEvent($eventPublishedEvent);
+            $this->gate->getSystemBus()->publishEvent($eventPublishedEvent);
         }
 
         return true;

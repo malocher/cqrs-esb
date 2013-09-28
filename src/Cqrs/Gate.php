@@ -69,11 +69,19 @@ class Gate
     }
 
     /**
+     * @return BusInterface
+     */
+    public function getSystemBus()
+    {
+        return $this->getBus('system-bus');
+    }
+
+    /**
      * disable system bus
      */
     public function disableSystemBus()
     {
-        $systemBus = $this->getBus('system-bus');
+        $systemBus = $this->getSystemBus();
         if (isset($systemBus)) {
             $this->detach($systemBus);
         };

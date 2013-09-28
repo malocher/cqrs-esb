@@ -26,6 +26,11 @@ class CommandInvokedEvent extends Message implements EventInterface
     protected $class;
 
     /**
+     * @var string name of the bus of the invoking class
+     */
+    protected $busName;
+
+    /**
      * set class name
      *
      * @param string $class
@@ -43,6 +48,26 @@ class CommandInvokedEvent extends Message implements EventInterface
     public function getClass()
     {
         return $this->class;
+    }
+
+    /**
+     * set bus name
+     *
+     * @param string $busName
+     */
+    public function setBusName($busName)
+    {
+        $this->busName = $busName;
+    }
+
+    /**
+     * get bus name
+     *
+     * @return string $busName
+     */
+    public function getBusName()
+    {
+        return $this->busName;
     }
 
     /**

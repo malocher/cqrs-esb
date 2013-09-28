@@ -40,6 +40,18 @@ class EventPublishedEventTest extends MessageTest implements EventInterfaceTest
         $this->assertEquals(get_class($this->message), $this->message->getClass());
     }
 
+    public function testSetBusName()
+    {
+        $this->message->setBusName('mock-bus-name');
+        $this->assertEquals('mock-bus-name', $this->message->getBusName());
+    }
+
+    public function testGetBusName()
+    {
+        $this->message->setBusName('mock-bus-name');
+        $this->assertEquals('mock-bus-name', $this->message->getBusName());
+    }
+
     public function testSetId()
     {
         $id = uniqid();

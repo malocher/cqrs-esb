@@ -66,8 +66,20 @@ class GateTest extends TestCase
     public function testEnableSystemBus()
     {
         $this->gate->enableSystemBus();
-        $systemBus = $this->gate->getBus('system-bus');
+        $systemBus = $this->gate->getSystemBus();
         $this->assertInstanceOf('Cqrs\Bus\SystemBus', $systemBus);
+    }
+
+    public function testGetSystemBus()
+    {
+        $this->gate->enableSystemBus();
+        $this->assertInstanceOf('Cqrs\Bus\SystemBus', $this->gate->getSystemBus());
+    }
+
+    public function testGetNonInitializedSystemBus()
+    {
+        $this->gate->disableSystemBus();
+        $this->assertNull($this->gate->getSystemBus());
     }
 
     public function testAttachFakeSystemBus()
@@ -83,11 +95,11 @@ class GateTest extends TestCase
 
     public function testDisableSystemBus()
     {
-        if (is_null($this->gate->getBus('system-bus'))) {
+        if (is_null($this->gate->getSystemBus())) {
             $this->gate->enableSystemBus();
         }
         $this->gate->disableSystemBus();
-        $systemBus = $this->gate->getBus('system-bus');
+        $systemBus = $this->gate->getSystemBus();
         $this->assertNull($systemBus);
     }
 
