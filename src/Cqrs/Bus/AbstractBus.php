@@ -9,8 +9,8 @@
 namespace Cqrs\Bus;
 
 use Cqrs\Command\CommandHandlerLoaderInterface;
-use Cqrs\Command\CommandInterface;
 
+use Cqrs\Command\CommandInterface;
 use Cqrs\Command\InvokeCommandCommand;
 use Cqrs\Command\PublishEventCommand;
 use Cqrs\Event\CommandInvokedEvent;
@@ -27,6 +27,8 @@ use Cqrs\Gate;
  */
 abstract class AbstractBus implements BusInterface
 {
+    const SYSTEMBUS = 'system-bus';
+
     /**
      * @var \Cqrs\Command\CommandHandlerLoaderInterface
      */

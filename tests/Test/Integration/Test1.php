@@ -10,8 +10,8 @@ namespace Test\Integration;
 
 use Cqrs\Command\ClassMapCommandHandlerLoader;
 use Cqrs\Event\ClassMapEventListenerLoader;
-use Cqrs\Gate;
 
+use Cqrs\Gate;
 use Test\Integration\Test1\Test1Bus;
 use Test\Integration\Test1\Test1Command;
 use Test\Integration\Test1\Test1Event;

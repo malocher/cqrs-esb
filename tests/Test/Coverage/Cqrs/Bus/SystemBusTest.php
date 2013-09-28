@@ -8,6 +8,7 @@
  */
 namespace Test\Coverage\Cqrs\Bus;
 
+use Cqrs\Bus\AbstractBus;
 use Cqrs\Command\InvokeCommandCommand;
 use Cqrs\Command\PublishEventCommand;
 use Cqrs\Event\CommandInvokedEvent;
@@ -50,7 +51,7 @@ class SystemBusTest extends AbstractBusTest
             $this->bus->setGate(new Gate());
         }
         $this->bus->getGate()->enableSystemBus();
-        $this->assertEquals('system-bus', $this->bus->getGate()->getSystemBus()->getName());
+        $this->assertEquals(AbstractBus::SYSTEMBUS, $this->bus->getGate()->getSystemBus()->getName());
     }
 
     public function testClosureInvokeCommand()

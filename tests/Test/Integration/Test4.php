@@ -9,7 +9,6 @@
 namespace Cqrs\Configuration;
 
 use Cqrs\Command\ClassMapCommandHandlerLoader;
-
 use Cqrs\Event\ClassMapEventListenerLoader;
 use Cqrs\Gate;
 use Test\Integration\Test4\Test4Command;

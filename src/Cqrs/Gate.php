@@ -8,6 +8,7 @@
  */
 namespace Cqrs;
 
+use Cqrs\Bus\AbstractBus;
 use Cqrs\Bus\BusInterface;
 use Cqrs\Bus\SystemBus;
 use Cqrs\Command\ClassMapCommandHandlerLoader;
@@ -23,7 +24,6 @@ use Cqrs\Gate\GateException;
  */
 class Gate
 {
-
     /**
      * Buses
      *
@@ -40,13 +40,12 @@ class Gate
     }
 
     /**
-     * reset singleton
      * @return $this
      */
     public function reset()
     {
         foreach ($this->buses as $bus) {
-            if ($bus->getName() === 'system-bus') {
+            if ($bus->getName() === AbstractBus::SYSTEMBUS) {
                 continue;
             }
             $this->detach($bus);
@@ -59,7 +58,7 @@ class Gate
      */
     public function enableSystemBus()
     {
-        if (is_null($this->getBus('system-bus'))) {
+        if (is_null($this->getBus(AbstractBus::SYSTEMBUS))) {
             $systemBus = new SystemBus(
                 new ClassMapCommandHandlerLoader(),
                 new ClassMapEventListenerLoader()
@@ -73,7 +72,7 @@ class Gate
      */
     public function getSystemBus()
     {
-        return $this->getBus('system-bus');
+        return $this->getBus(AbstractBus::SYSTEMBUS);
     }
 
     /**
@@ -121,7 +120,7 @@ class Gate
         $bus->setGate($this);
         if (isset($this->buses[$bus->getName()])) {
             switch ($bus->getName()) {
-                case 'system-bus':
+                case AbstractBus::SYSTEMBUS:
                     throw GateException::attachError(sprintf('Bus <%s> is reserved!', $bus->getName()));
                 default:
                     throw GateException::attachError(sprintf('Bus <%s> is already attached!', $bus->getName()));

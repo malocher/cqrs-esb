@@ -26,7 +26,7 @@ class SystemBus extends AbstractBus
      */
     public function getName()
     {
-        return 'system-bus';
+        return self::SYSTEMBUS;
     }
 
     /**

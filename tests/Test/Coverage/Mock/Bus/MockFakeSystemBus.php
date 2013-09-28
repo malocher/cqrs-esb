@@ -23,6 +23,6 @@ class MockFakeSystemBus extends AbstractBus
      */
     public function getName()
     {
-        return 'system-bus';
+        return self::SYSTEMBUS;
     }
 }
