@@ -40,6 +40,7 @@ class AbstractBusTest extends TestCase implements BusInterfaceTest
     public function testSetGate()
     {
         $this->bus->setGate(new Gate());
+        $this->assertInstanceOf('Cqrs\Gate',$this->bus->getGate());
     }
 
     public function testGetGate() {
