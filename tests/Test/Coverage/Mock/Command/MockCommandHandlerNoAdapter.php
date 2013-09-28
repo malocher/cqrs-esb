@@ -19,9 +19,9 @@ use Cqrs\Command\CommandInterface;
 class MockCommandHandlerNoAdapter
 {
     /**
-     * @param CommandInterface $command
+     * @param MockCommand $command
      */
-    public function handleCommand(CommandInterface $command)
+    public function handleCommand(MockCommand $command)
     {
         if ($command instanceof MockCommand) {
             $command->edit();
@@ -30,8 +30,9 @@ class MockCommandHandlerNoAdapter
 
     /**
      * @Cqrs\Annotation\Command("Test\Coverage\Mock\Command\MockCommand")
+     * @param MockCommand $command
      */
-    public function handleAnnotationCommand(CommandInterface $command)
+    public function handleAnnotationCommand(MockCommand $command)
     {
         if ($command instanceof MockCommand) {
             $command->edit();

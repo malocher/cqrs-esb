@@ -33,9 +33,9 @@ class MockEventHandler
 
     /**
      * @Cqrs\Annotation\Event("Test\Coverage\Mock\Event\MockEvent")
-     * @param EventInterface $event
+     * @param MockEvent $event
      */
-    public function handleAnnotationEvent(EventInterface $event)
+    public function handleAnnotationEvent(MockEvent $event)
     {
         if ($event instanceof MockEvent) {
             $event->edit();

@@ -27,9 +27,6 @@ class MockCommandHandlerWrongAnnotations
      */
     public function handleNonExistingAnnotationCommand(CommandInterface $command)
     {
-        if ($command instanceof MockCommand) {
-            $command->edit();
-        }
     }
 
 }

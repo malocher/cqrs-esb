@@ -25,8 +25,5 @@ class MockEventHandlerWrongAnnotations
      */
     public function handleNonExistingAnnotationEvent(EventInterface $event)
     {
-        if ($event instanceof MockEvent) {
-            $event->edit();
-        }
     }
 }

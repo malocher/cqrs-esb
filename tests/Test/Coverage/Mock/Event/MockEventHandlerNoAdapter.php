@@ -19,9 +19,9 @@ use Cqrs\Event\EventInterface;
 class MockEventHandlerNoAdapter
 {
     /**
-     * @param EventInterface $event
+     * @param MockEvent $event
      */
-    public function handleEvent(EventInterface $event)
+    public function handleEvent(MockEvent $event)
     {
         if ($event instanceof MockEvent) {
             $event->edit();
@@ -30,8 +30,9 @@ class MockEventHandlerNoAdapter
 
     /**
      * @Cqrs\Annotation\Event("Test\Coverage\Mock\Event\MockEvent")
+     * @param MockEvent $event
      */
-    public function handleAnnotationEvent(EventInterface $event)
+    public function handleAnnotationEvent(MockEvent $event)
     {
         if ($event instanceof MockEvent) {
             $event->edit();

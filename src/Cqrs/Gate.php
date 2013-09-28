@@ -27,7 +27,7 @@ class Gate
     /**
      * Buses
      *
-     * @var array
+     * @var array Bus
      */
     private $buses;
 
@@ -127,7 +127,6 @@ class Gate
      *
      * @param string $name
      * @return BusInterface
-     * @throws \Exception
      */
     public function getBus($name)
     {
