@@ -16,8 +16,6 @@ use Test\TestCase;
 
 class AnnotationAdapterTest extends TestCase implements AdapterInterfaceTest
 {
-   use AdapterTraitTest;
-
     /**
      * @var AnnotationAdapter
      */

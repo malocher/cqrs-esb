@@ -12,14 +12,14 @@ use Cqrs\Gate;
 
 trait AdapterTraitTest {
 
-    /*
     public function testExecuteCommand()
     {
-        //$this->bus->executeCommand( Gate $gate, $commandHandler, $method, CommandInterface $command )
+        //$this->bus->executeCommand( $gate, $commandHandler, $method, CommandInterface $command )
     }
 
-    /*public function testExecuteEvent( GateTest $gate, $eventListener, $method, EventInterfaceTest $event)
+    public function testExecuteEvent()
     {
+        //$this->bus->executeEvent( new Gate(), 'Test\Coverage\Mock\Event\MockEventHandler', 'handleEvent', new MockCommand() );
     }
 
     /*private function testGetBus( $name )

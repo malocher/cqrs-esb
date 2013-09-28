@@ -12,13 +12,10 @@ use Cqrs\Adapter\ArrayMapAdapter;
 use Cqrs\Command\ClassMapCommandHandlerLoader;
 use Cqrs\Event\ClassMapEventListenerLoader;
 use Test\Coverage\Mock\Bus\MockBus;
-use Test\Coverage\Mock\Command\MockCommand;
 use Test\TestCase;
 
 class ArrayMapAdapterTest extends TestCase implements AdapterInterfaceTest
 {
-    use AdapterTraitTest;
-
     /**
      * @var ArrayMapAdapter
      */
