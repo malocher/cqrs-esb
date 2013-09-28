@@ -14,7 +14,6 @@ use Cqrs\Command\ClassMapCommandHandlerLoader;
 use Cqrs\Command\CommandInterface;
 use Cqrs\Event\ClassMapEventListenerLoader;
 use Cqrs\Gate;
-use Test\Coverage\Mock\Bus\MockBus;
 use Test\Coverage\Mock\Command\MockCommand;
 use Test\Coverage\Mock\Event\MockEvent;
 use Test\TestCase;

@@ -47,7 +47,7 @@ class SystemBusTest extends AbstractBusTest
         $this->assertEquals('system-bus',$this->bus->getGate()->getBus('system-bus')->getName());
     }
 
-    public function testInvokeCommand()
+    public function testClosureInvokeCommand()
     {
         $gate = new Gate();
         $gate->enableSystemBus();
@@ -70,7 +70,7 @@ class SystemBusTest extends AbstractBusTest
         $this->assertEquals('Test\Coverage\Mock\Command\MockCommand',$this->commandInvokedEvent->getClass());
     }
 
-    public function testPublishEvent()
+    public function testClosurePublishEvent()
     {
         $gate = new Gate();
         $gate->enableSystemBus();
@@ -92,4 +92,93 @@ class SystemBusTest extends AbstractBusTest
         $this->assertEquals('Test\Coverage\Mock\Event\MockEvent',$this->publishEventCommand->getClass());
         $this->assertEquals('Test\Coverage\Mock\Event\MockEvent',$this->eventPublishedEvent->getClass());
     }
+
+    public function testArrayMapInvokeCommand()
+    {
+        $gate = new Gate();
+        $gate->enableSystemBus();
+        $gate->attach($this->bus);
+        $this->bus->mapCommand(
+            'Test\Coverage\Mock\Command\MockCommand',
+            array('alias' => 'Test\Coverage\Mock\Command\MockCommandHandler','method' => 'handleCommand')
+        );
+        $gate->getBus('system-bus')->mapCommand(
+            'Cqrs\Command\InvokeCommandCommand',
+            array('alias' => 'Test\Coverage\Mock\Command\MockCommandHandler','method' => 'handleCommand')
+        );
+        $gate->getBus('system-bus')->registerEventListener(
+            'Cqrs\Event\CommandInvokedEvent',
+            array('alias' => 'Test\Coverage\Mock\Event\MockEventHandler','method' => 'handleEvent')
+        );
+        $mockCommand = new MockCommand();
+        $this->bus->invokeCommand($mockCommand);
+        $this->assertEquals(true,$mockCommand->isEdited());
+    }
+
+    public function testArrayMapPublishEvent()
+    {
+        $gate = new Gate();
+        $gate->enableSystemBus();
+        $gate->attach($this->bus);
+        $this->bus->registerEventListener(
+            'Test\Coverage\Mock\Event\MockEvent',
+            array('alias' => 'Test\Coverage\Mock\Event\MockEventHandler','method' => 'handleEvent')
+        );
+        $gate->getBus('system-bus')->mapCommand(
+            'Cqrs\Command\PublishEventCommand',
+            array('alias' => 'Test\Coverage\Mock\Command\MockCommandHandler','method' => 'handleCommand')
+        );
+        $gate->getBus('system-bus')->registerEventListener(
+            'Cqrs\Event\EventPublishedEvent',
+            array('alias' => 'Test\Coverage\Mock\Event\MockEventHandler','method' => 'handleEvent')
+        );
+        $mockEvent = new MockEvent();
+        $this->bus->publishEvent($mockEvent);
+        $this->assertEquals(true,$mockEvent->isEdited());
+    }
+
+    public function testArrayMapInvokeCommandMissingAdapterTrait()
+    {
+        $this->setExpectedException('Cqrs\Bus\BusException');
+        $gate = new Gate();
+        $gate->enableSystemBus();
+        $gate->attach($this->bus);
+        $this->bus->mapCommand(
+            'Test\Coverage\Mock\Command\MockCommand',
+            array('alias' => 'Test\Coverage\Mock\Command\MockCommandHandler','method' => 'handleCommand')
+        );
+        $gate->getBus('system-bus')->mapCommand(
+            'Cqrs\Command\InvokeCommandCommand',
+            array('alias' => 'Test\Coverage\Mock\Command\MockCommandHandlerNoAdapter','method' => 'handleCommand')
+        );
+        $gate->getBus('system-bus')->registerEventListener(
+            'Cqrs\Event\CommandInvokedEvent',
+            array('alias' => 'Test\Coverage\Mock\Event\MockEventHandler','method' => 'handleEvent')
+        );
+        $mockCommand = new MockCommand();
+        $this->bus->invokeCommand($mockCommand);
+    }
+
+    public function testArrayMapPublishEventMissingAdapterTrait()
+    {
+        $this->setExpectedException('Cqrs\Bus\BusException');
+        $gate = new Gate();
+        $gate->enableSystemBus();
+        $gate->attach($this->bus);
+        $this->bus->registerEventListener(
+            'Test\Coverage\Mock\Event\MockEvent',
+            array('alias' => 'Test\Coverage\Mock\Event\MockEventHandler','method' => 'handleEvent')
+        );
+        $gate->getBus('system-bus')->mapCommand(
+            'Cqrs\Command\PublishEventCommand',
+            array('alias' => 'Test\Coverage\Mock\Command\MockCommandHandler','method' => 'handleCommand')
+        );
+        $gate->getBus('system-bus')->registerEventListener(
+            'Cqrs\Event\EventPublishedEvent',
+            array('alias' => 'Test\Coverage\Mock\Event\MockEventHandlerNoAdapter','method' => 'handleEvent')
+        );
+        $mockEvent = new MockEvent();
+        $this->bus->publishEvent($mockEvent);
+    }
+
 }
