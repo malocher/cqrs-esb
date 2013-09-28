@@ -91,7 +91,10 @@ abstract class AbstractBus implements BusInterface
     }
 
     /**
-     * {@inheritDoc}
+     * map a command to a callable
+     *
+     * @param CommandInterface $commandClass
+     * @param array|callable $callableOrDefinition
      */
     public function mapCommand($commandClass, $callableOrDefinition)
     {
@@ -102,7 +105,9 @@ abstract class AbstractBus implements BusInterface
     }
 
     /**
-     * {@inheritDoc}
+     * get the command handler map
+     *
+     * @return array
      */
     public function getCommandHandlerMap()
     {
@@ -110,15 +115,16 @@ abstract class AbstractBus implements BusInterface
     }
 
     /**
-     * {@inheritDoc}
+     * invoke a command
+     *
+     * @param \Cqrs\Command\CommandInterface $command
+     * @throws BusException
      */
     public function invokeCommand(CommandInterface $command)
     {
         $commandClass = get_class($command);
 
-        /*
-         * InvokeCommandCommand first! Because a commandClass _IS_ actually invoked.
-         */
+        // InvokeCommandCommand first! Because a commandClass _IS_ actually invoked.
         if( !is_null($this->gate->getBus('system-bus')) ){
             $invokeCommandCommand = new InvokeCommandCommand();
             $invokeCommandCommand->setClass($commandClass);
@@ -128,12 +134,10 @@ abstract class AbstractBus implements BusInterface
             $this->gate->getBus('system-bus')->invokeCommand($invokeCommandCommand);
         }
 
-        /*
-         * Check if command exists after invoking the InvokeCommandCommand because
-         * the InvokeCommandCommand tells that a command is invoked but does not care
-         * if it succeeded. Later the CommandInvokedEvent can be used to check if a
-         * command succeeded.
-         */
+        // Check if command exists after invoking the InvokeCommandCommand because
+        // the InvokeCommandCommand tells that a command is invoked but does not care
+        // if it succeeded. Later the CommandInvokedEvent can be used to check if a
+        // command succeeded.
         if( !isset($this->commandHandlerMap[$commandClass]) ){
             return;
         }
@@ -148,9 +152,8 @@ abstract class AbstractBus implements BusInterface
                 $commandHandler = $this->commandHandlerLoader->getCommandHandler($callableOrDefinition['alias']);
                 $method = $callableOrDefinition['method'];
 
-                /* instead of invoking the handler method directly
-                 * we call the execute function of the implemented trait and pass along a reference to the gate
-                 */
+                // instead of invoking the handler method directly
+                // we call the execute function of the implemented trait and pass along a reference to the gate
                 $usedTraits = class_uses($commandHandler);
                 if( !isset($usedTraits['Cqrs\Adapter\AdapterTrait']) ){
                     throw BusException::traitError('Adapter Trait is missing! Use it!');
@@ -159,11 +162,9 @@ abstract class AbstractBus implements BusInterface
             }
         }
 
-        /*
-         * Dispatch the CommandInvokedEvent here! If for example a command could not be invoked
-         * because it does not exist in the commandHandlerMap[<empty>] this Event would never
-         * be dispatched!
-         */
+        // Dispatch the CommandInvokedEvent here! If for example a command could not be invoked
+        // because it does not exist in the commandHandlerMap[<empty>] this Event would never
+        // be dispatched!
         if( !is_null($this->gate->getBus('system-bus')) ){
             $commandInvokedEvent = new CommandInvokedEvent();
             $commandInvokedEvent->setClass($commandClass);
@@ -173,9 +174,12 @@ abstract class AbstractBus implements BusInterface
             $this->gate->getBus('system-bus')->publishEvent($commandInvokedEvent);
         }
     }
-    
+
     /**
-     * {@inheritDoc}
+     * register a event listener
+     *
+     * @param string $eventClass
+     * @param array|callable $callableOrDefinition
      */
     public function registerEventListener($eventClass, $callableOrDefinition)
     {
@@ -186,26 +190,29 @@ abstract class AbstractBus implements BusInterface
     }
 
     /**
-     * {@inheritDoc}
+     * get the event listener map
+     *
+     * @return array
      */
     public function getEventListenerMap()
     {
         return $this->eventListenerMap;
     }
-    
+
     /**
-     * {@inheritDoc}
+     * pubish a event
+     *
+     * @param \Cqrs\Event\EventInterface $event
+     * @throws BusException
      */
     public function publishEvent(EventInterface $event)
     {
         $eventClass = get_class($event);
 
-        /*
-         * Check if event exists after invoking the PublishEventCommand because
-         * the PublishEventCommand tells that a event is dispatched but does not care
-         * if it succeeded. Later the EventPublishedEvent can be used to check if a
-         * event succeeded.
-         */
+        // Check if event exists after invoking the PublishEventCommand because
+        // the PublishEventCommand tells that a event is dispatched but does not care
+        // if it succeeded. Later the EventPublishedEvent can be used to check if a
+        // event succeeded.
         if( !is_null($this->gate->getBus('system-bus')) ){
             $publishEventCommand = new PublishEventCommand();
             $publishEventCommand->setClass($eventClass);
@@ -228,9 +235,8 @@ abstract class AbstractBus implements BusInterface
                 $eventListener = $this->eventListenerLoader->getEventListener($callableOrDefinition['alias']);
                 $method = $callableOrDefinition['method'];
 
-                /* instead of invoking the handler method directly
-                 * we call the execute function of the implemented trait and pass along a reference to the gate
-                 */
+                // instead of invoking the handler method directly
+                // we call the execute function of the implemented trait and pass along a reference to the gate
                 $usedTraits = class_uses($eventListener);
                 if( !isset($usedTraits['Cqrs\Adapter\AdapterTrait']) ){
                     throw BusException::traitError('Adapter Trait is missing! Use it!');
@@ -239,11 +245,9 @@ abstract class AbstractBus implements BusInterface
             }
         }
 
-        /*
-         * Dispatch the EventPublishedEvent here! If for example a event could not be dispatched
-         * because it does not exist in the eventListenerMap[<empty>] this Event would never
-         * be dispatched!
-         */
+        // Dispatch the EventPublishedEvent here! If for example a event could not be dispatched
+        // because it does not exist in the eventListenerMap[<empty>] this Event would never
+        // be dispatched!
         if( !is_null($this->gate->getBus('system-bus')) ){
             $eventPublishedEvent = new EventPublishedEvent();
             $eventPublishedEvent->setClass($eventClass);

@@ -50,11 +50,9 @@ class Gate {
         return $this; //self::getInstance();
     }
 
-    private function __clone()
-    {
-        //Singleton implementation, so clone is not allowed
-    }
-
+    /**
+     * enable system bus
+     */
     public function enableSystemBus()
     {
         if( is_null( $this->getBus('system-bus') ) ){
@@ -70,6 +68,9 @@ class Gate {
         }
     }
 
+    /**
+     * disable system bus
+     */
     public function disableSystemBus()
     {
         $systemBus = $this->getBus('system-bus');
@@ -78,6 +79,11 @@ class Gate {
         };
     }
 
+    /**
+     * detach bus
+     *
+     * @param BusInterface $bus
+     */
     public function detach(BusInterface $bus)
     {
         if( isset($this->buses[$bus->getName()]) ){
@@ -86,11 +92,22 @@ class Gate {
         }
     }
 
+    /**
+     * get attached buses
+     *
+     * @return array
+     */
     public function attachedBuses()
     {
         return $this->buses;
     }
 
+    /**
+     * attach bus
+     *
+     * @param BusInterface $bus
+     * @throws Gate\GateException
+     */
     public function attach(BusInterface $bus)
     {
         $bus->setGate($this);
@@ -106,7 +123,8 @@ class Gate {
     }
 
     /**
-     * 
+     * get bus
+     *
      * @param string $name
      * @return BusInterface
      * @throws \Exception

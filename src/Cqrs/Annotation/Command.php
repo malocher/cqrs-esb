@@ -21,6 +21,7 @@ class Command {
     /**
      * Constructor
      *
+     * @throws \InvalidArgumentException
      * @param array $options
      */
     public function __construct($options)

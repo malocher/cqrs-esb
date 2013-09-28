@@ -80,6 +80,7 @@ interface BusInterface {
 
     /**
      * Get all mapped commands
+     *
      * @return array
      */
     public function getCommandHandlerMap();
@@ -114,6 +115,7 @@ interface BusInterface {
 
     /**
      * Get all mapped events
+     *
      * @return array
      */
     public function getEventListenerMap();

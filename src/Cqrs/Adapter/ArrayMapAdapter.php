@@ -18,8 +18,9 @@ use Cqrs\Bus\BusInterface;
 class ArrayMapAdapter implements AdapterInterface
 {
     /**
-     * 
-     * {@inheritDoc}
+     * Constructor
+     *
+     * @param array configuration
      */
     public function __construct(array $configuration = null)
     {
@@ -27,8 +28,11 @@ class ArrayMapAdapter implements AdapterInterface
     }
 
     /**
-     * 
-     * {@inheritDoc}
+     * Initialize (pipe) a bus via configuration file!
+     *
+     * @param BusInterface $bus
+     * @param array $configuration
+     * @throws AdapterException
      */
     public function pipe(BusInterface $bus, array $configuration)
     {

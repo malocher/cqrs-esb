@@ -18,7 +18,11 @@ namespace Cqrs\Command;
 class ClassMapCommandHandlerLoader implements CommandHandlerLoaderInterface
 {
     /**
-     * {@inheritDoc}
+     * get command handler
+     *
+     * @param string $alias
+     * @throws CommandException
+     * @return \Cqrs\Command\CommandHandlerInterface
      */
     public function getCommandHandler($alias)
     {

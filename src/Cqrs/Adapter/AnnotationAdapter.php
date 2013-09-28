@@ -26,6 +26,8 @@ class AnnotationAdapter implements AdapterInterface {
 
     /**
      * Constructor
+     *
+     * @param array configuration
      */
     public function __construct(array $configuration = null)
     {
@@ -34,7 +36,10 @@ class AnnotationAdapter implements AdapterInterface {
     }
 
     /**
-     * Initialize a bus via Configuration file!
+     * Initialize (pipe) a bus via vonfiguration file!
+     *
+     * @param \Cqrs\Bus\BusInterface $bus
+     * @param array $configuration
      */
     public function pipe(BusInterface $bus, array $configuration)
     {

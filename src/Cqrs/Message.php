@@ -15,10 +15,24 @@ namespace Cqrs;
  */
 class Message {
 
+    /**
+     * @var string
+     */
     protected $id;
+
+    /**
+     * @var void
+     */
     protected $timestamp;
+
+    /**
+     * @var array
+     */
     protected $arguments = array();
 
+    /**
+     * @param array $arguments
+     */
     public function __construct(array $arguments = null)
     {
         if (!is_null($arguments)) {
@@ -28,16 +42,25 @@ class Message {
         $this->timestamp = date_timestamp_get(date_create());
     }
 
+    /**
+     * @return string
+     */
     public function getId()
     {
         return $this->id;
     }
 
+    /**
+     * @return int
+     */
     public function getTimestamp()
     {
         return $this->timestamp;
     }
 
+    /**
+     * @return array
+     */
     public function getArguments()
     {
         return $this->arguments;

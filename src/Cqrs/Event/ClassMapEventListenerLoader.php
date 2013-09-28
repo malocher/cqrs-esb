@@ -15,6 +15,13 @@ namespace Cqrs\Event;
  */
 class ClassMapEventListenerLoader implements EventListenerLoaderInterface
 {
+    /**
+     * Get event listener
+     *
+     * @param string $alias
+     * @return EventListenerInterface
+     * @throws EventException
+     */
     public function getEventListener($alias) {
         if( class_exists($alias) ){
             return new $alias;

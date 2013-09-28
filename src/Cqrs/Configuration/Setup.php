@@ -39,37 +39,59 @@ class Setup
     protected $eventListenerLoader;
 
 
+    /**
+     * set gate
+     *
+     * @param Gate $gate
+     */
     public function setGate(Gate $gate)
     {
         $this->gate = $gate;
     }
 
+    /**
+     * get gate
+     *
+     * @return Gate
+     */
     public function getGate()
     {
         return $this->gate;
     }
 
+    /**
+     * Set CommandHandlerLoaderInterface
+     *
+     * @param CommandHandlerLoaderInterface $commandHandlerLoader
+     */
     public function setCommandHandlerLoader(CommandHandlerLoaderInterface $commandHandlerLoader)
     {
         $this->commandHandlerLoader = $commandHandlerLoader;
     }
-    
+
     /**
-     * 
+     * Get CommandHandlerLoaderInterface
+     *
      * @return CommandHandlerLoaderInterface
      */
     public function getCommandHandlerLoader()
     {
         return $this->commandHandlerLoader;
     }
-    
+
+    /**
+     * Set EventListenerLoaderInterface
+     *
+     * @param EventListenerLoaderInterface $eventListenerLoader
+     */
     public function setEventListenerLoader(EventListenerLoaderInterface $eventListenerLoader)
     {
         $this->eventListenerLoader = $eventListenerLoader;
     }
 
     /**
-     * 
+     * Get EventListenerLoader
+     *
      * @return EventListenerLoaderInterface
      */
     public function getEventListenerLoader()
@@ -77,6 +99,12 @@ class Setup
         return $this->eventListenerLoader;
     }
 
+    /**
+     * initialize
+     *
+     * @param array $configuration
+     * @throws ConfigurationException
+     */
     public function initialize(array $configuration)
     {
 
@@ -97,12 +125,12 @@ class Setup
             }
         }
     }
-    
+
     /**
-     * 
+     * load adapter
+     *
      * @param array $configuration
-     * 
-     * @return AdapterInterface
+     * @return mixed
      */
     protected function loadAdapter(array $configuration)
     {
@@ -111,12 +139,13 @@ class Setup
         
         return new $adapterClass($config);
     }
-    
+
     /**
-     * 
-     * @param string $busClass
-     * 
-     * @return BusInterface
+     * load bus
+     *
+     * @param $busClass
+     * @return mixed
+     * @throws ConfigurationException
      */
     protected function loadBus($busClass)
     {

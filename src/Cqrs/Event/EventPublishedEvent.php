@@ -19,26 +19,54 @@ use Cqrs\Message;
  */
 class EventPublishedEvent extends Message implements EventInterface
 {
+    /**
+     * @var name of the invoking class
+     */
     protected $class;
 
+    /**
+     * set class name
+     *
+     * @param string $class
+     */
     public function setClass($class) {
         $this->class = $class;
     }
 
+    /**
+     * get class name
+     *
+     * @return string $class
+     */
     public function getClass() {
         return $this->class;
     }
 
+    /**
+     * set id
+     *
+     * @param int $id
+     */
     public function setId($id)
     {
         $this->id = $id;
     }
 
+    /**
+     * set timestamp
+     *
+     * @param int $ts
+     */
     public function setTimestamp($ts)
     {
         $this->timestamp = $ts;
     }
 
+    /**
+     * set arguments
+     *
+     * @param array $args
+     */
     public function setArguments($args)
     {
         $this->arguments = $args;

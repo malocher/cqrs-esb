@@ -21,6 +21,7 @@ class Event {
     /**
      * Constructor
      *
+     * @throws \InvalidArgumentException
      * @param array $options
      */
     public function __construct($options)
