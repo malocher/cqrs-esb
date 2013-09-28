@@ -10,9 +10,9 @@ namespace Cqrs\Configuration;
 
 use Cqrs\Command\ClassMapCommandHandlerLoader;
 use Cqrs\Event\ClassMapEventListenerLoader;
+
 use Cqrs\Gate;
 use Test\Integration\Test4\Test4Command;
-
 use Test\Integration\Test4\Test4Event;
 use Test\TestCase;
 
@@ -68,7 +68,7 @@ class Test4 extends TestCase
                     'class' => 'Cqrs\Adapter\ArrayMapAdapter',
                     'buses' => array(
                         'Test\Integration\Test4\Test4Bus' => array(
-                            'Test\Integration\Test4\Test4Event' => function ($event) {
+                            'Test\Integration\Test4\Test4Event' => function (Test4Event $event) {
                                 $event->edit();
                             }
                         )

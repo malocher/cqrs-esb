@@ -8,9 +8,9 @@
  */
 namespace Cqrs\Adapter;
 
+use Cqrs\Bus\AbstractBus;
 use Cqrs\Command\CommandInterface;
 use Cqrs\Event\EventInterface;
-use Cqrs\Gate;
 
 /**
  * Class AdapterTrait
@@ -21,31 +21,43 @@ use Cqrs\Gate;
 trait AdapterTrait
 {
     /**
-     * @var $gate Gate
+     * @var AbstractBus $bus
      */
-    private $gate;
+    private $bus;
 
     /**
-     * @param Gate $gate
+     * @param AbstractBus $bus
      * @param $commandHandler
-     * @param $method callable the handler method to execute
-     * @param CommandInterface $command to pass to the handler method
+     * @param $method
+     * @param CommandInterface $command
      */
-    public function executeCommand(Gate $gate, $commandHandler, $method, CommandInterface $command)
+    public function executeCommand(AbstractBus $bus, $commandHandler, $method, CommandInterface $command)
     {
-        $this->gate = $gate;
+        $this->bus = $bus;
         $commandHandler->{$method}($command);
     }
 
     /**
-     * @param $gate Gate
-     * @param $eventListener object
-     * @param $method callable the handler method to execute
-     * @param $event EventInterface to pass to the handler method
+     * @param AbstractBus $bus
+     * @param $eventListener
+     * @param $method
+     * @param EventInterface $event
      */
-    public function executeEvent(Gate $gate, $eventListener, $method, EventInterface $event)
+    public function executeEvent(AbstractBus $bus, $eventListener, $method, EventInterface $event)
     {
-        $this->gate = $gate;
+        $this->bus = $bus;
         $eventListener->{$method}($event);
     }
+
+    /**
+     * @param null $name
+     * @return AbstractBus|\Cqrs\Bus\BusInterface
+     */
+    public function getBus($name=null)
+    {
+        return is_null($name)
+            ? $this->bus
+            : $this->bus->getGate()->getBus($name);
+    }
+
 }

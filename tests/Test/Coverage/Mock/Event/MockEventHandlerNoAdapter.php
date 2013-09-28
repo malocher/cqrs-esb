@@ -8,8 +8,6 @@
  */
 namespace Test\Coverage\Mock\Event;
 
-use Cqrs\Event\EventInterface;
-
 /**
  * Class MockEventHandlerNoAdapter
  *

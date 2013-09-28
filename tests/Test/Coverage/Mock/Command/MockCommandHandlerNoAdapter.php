@@ -8,8 +8,6 @@
  */
 namespace Test\Coverage\Mock\Command;
 
-use Cqrs\Command\CommandInterface;
-
 /**
  * Class MockCommandHandlerNoAdapter
  *

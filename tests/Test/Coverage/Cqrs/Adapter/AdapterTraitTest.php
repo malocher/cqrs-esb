@@ -8,7 +8,15 @@
  */
 namespace Test\Coverage\Cqrs\Adapter;
 
+use Cqrs\Adapter\AdapterTrait;
+use Cqrs\Command\ClassMapCommandHandlerLoader;
+use Cqrs\Event\ClassMapEventListenerLoader;
 use Cqrs\Gate;
+use Test\Coverage\Mock\Bus\MockAnotherBus;
+use Test\Coverage\Mock\Bus\MockBus;
+use Test\Coverage\Mock\Command\MockCommand;
+use Test\Coverage\Mock\Event\MockEvent;
+use Test\TestCase;
 
 /**
  * Class AdapterTraitTest
@@ -16,20 +24,85 @@ use Cqrs\Gate;
  * @author Manfred Weber <crafics@php.net>
  * @package Test\Coverage\Cqrs\Adapter
  */
-trait AdapterTraitTest
+class AdapterTraitTest extends TestCase
 {
+    use AdapterTrait;
 
+    /**
+     * @var \Cqrs\Bus\BusInterface
+     */
+    private $anotherBus;
+
+    /**
+     *
+     */
+    public function setUp()
+    {
+        $this->bus = new MockBus(
+            new ClassMapCommandHandlerLoader(),
+            new ClassMapEventListenerLoader()
+        );
+        $this->anotherBus = new MockAnotherBus(
+            new ClassMapCommandHandlerLoader(),
+            new ClassMapEventListenerLoader()
+        );
+        $gate = new Gate();
+        $gate->attach($this->bus);
+        $gate->attach($this->anotherBus);
+    }
+
+    /**
+     * @param MockCommand $command
+     */
+    public function executeCommandHandler(MockCommand $command)
+    {
+        $command->edit();
+    }
+
+    /**
+     *
+     */
     public function testExecuteCommand()
     {
-        //$this->bus->executeCommand( $gate, $commandHandler, $method, CommandInterface $command )
+        $this->bus->mapCommand('Test\Coverage\Mock\Command\MockCommand', array(
+            'alias' => get_class($this),
+            'method' => 'executeCommandHandler'
+        ));
+        $command = new MockCommand();
+        $this->executeCommand( $this->bus, $this, 'executeCommandHandler', $command );
+        $this->assertTrue($command->isEdited());
     }
 
+    /**
+     * @param MockEvent $event
+     */
+    public function executeEventHandler(MockEvent $event)
+    {
+        $event->edit();
+    }
+
+    /**
+     *
+     */
     public function testExecuteEvent()
     {
-        //$this->bus->executeEvent( new Gate(), 'Test\Coverage\Mock\Event\MockEventHandler', 'handleEvent', new MockCommand() );
+        $this->bus->registerEventListener('Test\Coverage\Mock\Event\MockEvent', array(
+            'alias' => get_class($this),
+            'method' => 'executeEventHandler'
+        ));
+        $event = new MockEvent();
+        $this->executeEvent( $this->bus, $this, 'executeEventHandler', $event );
+        $this->assertTrue($event->isEdited());
     }
 
-    /*private function testGetBus( $name )
+    /**
+     *
+     */
+    public function testGetBus()
     {
-    }*/
+        $bus = $this->getBus();
+        $this->assertEquals($this->bus, $bus);
+        $anotherBus = $this->getBus('test-coverage-mock-another-bus');
+        $this->assertEquals($this->anotherBus, $anotherBus);
+    }
 }

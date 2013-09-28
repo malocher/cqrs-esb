@@ -9,7 +9,6 @@
 namespace Test\Coverage\Mock\Command;
 
 use Cqrs\Adapter\AdapterTrait;
-use Cqrs\Command\CommandInterface;
 
 /**
  * Class MockCallbackCommandHandler

@@ -81,7 +81,7 @@ class Test3 extends TestCase
     {
         $this->bus->mapCommand(
             'Test\Integration\Test3\Test3Command',
-            function ($command) {
+            function (Test3Command $command) {
                 $command->edit();
             }
         );

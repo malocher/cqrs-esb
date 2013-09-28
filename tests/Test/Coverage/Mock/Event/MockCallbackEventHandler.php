@@ -9,7 +9,6 @@
 namespace Test\Coverage\Mock\Event;
 
 use Cqrs\Adapter\AdapterTrait;
-use Cqrs\Event\EventInterface;
 
 /**
  * Class MockCallbackEventHandler
