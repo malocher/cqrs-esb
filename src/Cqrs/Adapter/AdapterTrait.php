@@ -53,7 +53,7 @@ trait AdapterTrait
      * @param null $name
      * @return AbstractBus|\Cqrs\Bus\BusInterface
      */
-    public function getBus($name=null)
+    public function getBus($name = null)
     {
         return is_null($name)
             ? $this->bus

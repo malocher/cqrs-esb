@@ -10,8 +10,8 @@ namespace Cqrs\Bus;
 
 use Cqrs\Command\CommandHandlerLoaderInterface;
 use Cqrs\Command\CommandInterface;
-use Cqrs\Command\InvokeCommandCommand;
 
+use Cqrs\Command\InvokeCommandCommand;
 use Cqrs\Command\PublishEventCommand;
 use Cqrs\Event\CommandInvokedEvent;
 use Cqrs\Event\EventInterface;

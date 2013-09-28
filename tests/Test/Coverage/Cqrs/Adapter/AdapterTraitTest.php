@@ -69,7 +69,7 @@ class AdapterTraitTest extends TestCase
             'method' => 'executeCommandHandler'
         ));
         $command = new MockCommand();
-        $this->executeCommand( $this->bus, $this, 'executeCommandHandler', $command );
+        $this->executeCommand($this->bus, $this, 'executeCommandHandler', $command);
         $this->assertTrue($command->isEdited());
     }
 
@@ -91,7 +91,7 @@ class AdapterTraitTest extends TestCase
             'method' => 'executeEventHandler'
         ));
         $event = new MockEvent();
-        $this->executeEvent( $this->bus, $this, 'executeEventHandler', $event );
+        $this->executeEvent($this->bus, $this, 'executeEventHandler', $event);
         $this->assertTrue($event->isEdited());
     }
 

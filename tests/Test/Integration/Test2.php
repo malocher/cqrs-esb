@@ -12,8 +12,8 @@ use Cqrs\Adapter\AnnotationAdapter;
 use Cqrs\Command\ClassMapCommandHandlerLoader;
 use Cqrs\Event\ClassMapEventListenerLoader;
 use Cqrs\Gate;
-use Test\Integration\Test2\Test2Bus;
 
+use Test\Integration\Test2\Test2Bus;
 use Test\Integration\Test2\Test2Command;
 use Test\Integration\Test2\Test2Event;
 use Test\Integration\Test2\Test2Handler;
