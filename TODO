@@ -9,11 +9,6 @@ $this->adapter->initializeBus(
 );
 
 
-2) - DONE
-"initializeBus" will be renamed to "pipe".
-"pipe" could be __THE__ adapter main integration function cia configuration
-
-
 3)
 Full coverage!!!
 
@@ -39,69 +34,6 @@ function simple_printer($name) {
         print $name;
     };
 }
-
-
-6) - DONE
-do we need "command_map" key in configuration
--> 'command_map' => array(
-Can't we use "interface_exists('CommandInterface')" or "interface_exists('EventInterface')" ???
-
-AM: Good point, I've implemented it.
-AM: +1 (Manfred)
-
-7)
-configuration looks like this right now:
-'adapter' => array(
-    'class' => 'Cqrs\Adapter\ArrayMapAdapter'
-),
-'buses' => array(
-    'Test\Coverage\Mock\Bus\BusMock' => array(
-        'command_map' => array(
-            'Test\Coverage\Mock\Command\MockCommand' => array(
-                'alias' => 'Test\Coverage\Mock\Command\MockCommandHandler',
-                'method' => 'handleCommand'
-            )
-        )
-    )
-)
-does it make sense to put the adapter->class into the handler?
-Imagine there're different developers for every handler. we should give them the freedom
-to decide which handler they implement.
-
-AM: What about this version?
-
-        $configuration = array(
-            'adapters' => array(
-                array(
-                    'class' => 'Cqrs\Adapter\ArrayMapAdapter',
-                    'buses' => array(
-                        'Test\Coverage\Mock\Bus\BusMock' => array(
-                            'Test\Coverage\Mock\Command\MockCommand' => array(
-                                'alias' => 'Test\Coverage\Mock\Command\MockCommandHandler',
-                                'method' => 'handleCommand'
-                            )
-                        )
-                    )
-                ),
-                array(
-                    'class' => 'Cqrs\Adapter\AnnotationAdapter',
-                    'buses' => array(
-                        'Test\Coverage\Mock\Bus\BusMock' => array(
-                            'Test\Coverage\Mock\Command\AnnotationCommandHandler'
-                        )
-                    )
-                ),
-            ),
-        );
-
-- You can configure many adapters and each adapter gets it's own bus-configuration
-- we have two advantages with this version:
-    - we can use different adapters for different types of handlers
-    - it is easier to understand, that each adapter type defines it's own bus-configuration format:
-        - AnnotationAdapter only needs the FQCN
-        - ArrayMapAdapter gets a message to handler mapping
-
-AM: +1 (Manfred) Really like this
 
 
 8)
