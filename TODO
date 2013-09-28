@@ -9,34 +9,19 @@ $this->adapter->initializeBus(
 );
 
 
-3)
-Full coverage!!!
-Adapter         100% files, 100% lines
-Annotation      100% files, 100% lines
-Bus             100% files, 100% lines
-Command         100% files, 100% lines
-Configuration   100% files, 100% lines
-Event           100% files, 100% lines
-Gate            100% files, 100% lines
-Gate.php        100% lines
-Message.php     100% lines
 
 4)
 Integration tests for:
-- all exceptions which we should redesign from scratch probably(?)
 - many pipes and piping commands and events in every possible direction
 - monitoring systembus with 1 pipe
 - monitoring systembus with man pipes
 - handler methods with multiple annotations (could be use as input or output handler)
 - handler methods with namespace annotations (?possible)
 - testing closures
-- Gate not static (?)
-- configuration testing
 
 
 5)
 maybe adapter implementation for closures possible?
-
 function simple_printer($name) {
     return function () use ($name) {
         print $name;
@@ -44,18 +29,15 @@ function simple_printer($name) {
 }
 
 
-8)
-$this->getBus() <- without parameter returns the currents bus!
-$this->getBus($name) <- returns any bus
-
 
 9)
-command/event mapping (?)
-\                           <- allows every handler (which is default)
-\namespace                  <- only namespace
-\namespace\namespace        <- only namespace/namespace
-\namespace\class            <- only class
-\namespace\class\method     <- only method
+annotation
+- Cqrs\Annotation\Command("Test\Event\TestEvent1")
+- Cqrs\Annotation\Command("Test\Event\TestEvent2")
+- Cqrs\Annotation\Event("Test\Command\TestCommand1")
+- Cqrs\Annotation\Event("Test\Command\TestCommand2")
+- Cqrs\Annotation\Namespace("Test\Event")
+- Cqrs\Annotation\Namespace("Test\Command")
 
 
 10)
@@ -68,6 +50,3 @@ Should we rename "Setup" to "Cqrs"
 - $cqrs->setCommandHandlerLoader(new ClassMapCommandHandlerLoader());
 - $cqrs->setEventListenerLoader(new ClassMapEventListenerLoader());
 What do you think?
-
-12)
-SystemBus events should also pass bus information
