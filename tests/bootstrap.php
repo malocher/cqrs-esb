@@ -9,6 +9,3 @@
 error_reporting(E_ALL);
 
 $loader = require __DIR__ . '/../vendor/autoload.php';
-
-\Doctrine\Common\Annotations\AnnotationRegistry::registerFile(dirname(__DIR__) . '/src/Cqrs/Annotation/Command.php');
-\Doctrine\Common\Annotations\AnnotationRegistry::registerFile(dirname(__DIR__) . '/src/Cqrs/Annotation/Event.php');

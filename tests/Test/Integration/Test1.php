@@ -9,7 +9,6 @@
 namespace Test\Integration;
 
 use Cqrs\Command\ClassMapCommandHandlerLoader;
-
 use Cqrs\Event\ClassMapEventListenerLoader;
 use Cqrs\Gate;
 use Test\Integration\Test1\Test1Bus;

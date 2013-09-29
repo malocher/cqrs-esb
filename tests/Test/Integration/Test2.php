@@ -9,8 +9,8 @@
 namespace Test\Integration;
 
 use Cqrs\Adapter\AnnotationAdapter;
-use Cqrs\Command\ClassMapCommandHandlerLoader;
 
+use Cqrs\Command\ClassMapCommandHandlerLoader;
 use Cqrs\Event\ClassMapEventListenerLoader;
 use Cqrs\Gate;
 use Test\Integration\Test2\Test2Bus;
@@ -61,7 +61,7 @@ class Test2 extends TestCase
      */
     public function test1()
     {
-        $this->adapter->allow($this->bus, 'Test\Integration\Test2\Test2Handler');
+        $this->adapter->pipe($this->bus, array('Test\Integration\Test2\Test2Handler'));
         $command = new Test2Command();
         $command->callback = function (Test2Handler $returnedHandler, Test2Command $returnedCommand, $returnedCommandIsEdited) {
             $this->assertInstanceOf('Test\Integration\Test2\Test2Handler', $returnedHandler);
@@ -77,7 +77,7 @@ class Test2 extends TestCase
      */
     public function test2()
     {
-        $this->adapter->allow($this->bus, 'Test\Integration\Test2\Test2Handler');
+        $this->adapter->pipe($this->bus, array('Test\Integration\Test2\Test2Handler'));
         $event = new Test2Event();
         $event->callback = function (Test2Handler $returnedHandler, Test2Event $returnedEvent, $returnedEventIsEdited) {
             $this->assertInstanceOf('Test\Integration\Test2\Test2Handler', $returnedHandler);

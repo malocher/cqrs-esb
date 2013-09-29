@@ -10,7 +10,6 @@ namespace Cqrs\Adapter;
 
 use Cqrs\Bus\BusInterface;
 use Doctrine\Common\Annotations\AnnotationReader;
-use Doctrine\Common\Annotations\AnnotationRegistry;
 
 /**
  * Class AnnotationAdapter
@@ -30,7 +29,8 @@ class AnnotationAdapter implements AdapterInterface
      */
     public function __construct(array $configuration = null)
     {
-        AnnotationRegistry::registerAutoloadNamespace('Cqrs\\Annotation\\');
+        \Doctrine\Common\Annotations\AnnotationRegistry::registerFile(dirname(__DIR__) . '/Annotation/Command.php');
+        \Doctrine\Common\Annotations\AnnotationRegistry::registerFile(dirname(__DIR__) . '/Annotation/Event.php');
         $this->annotationReader = new AnnotationReader();
     }
 
@@ -78,7 +78,7 @@ class AnnotationAdapter implements AdapterInterface
      * @param String $qualifiedClassname
      * @throws AdapterException
      */
-    public function allow(BusInterface $bus, $qualifiedClassname)
+    private function allow(BusInterface $bus, $qualifiedClassname)
     {
         if (!class_exists($qualifiedClassname)) {
             throw AdapterException::initializeError(sprintf('Class <%s> does not exist', $qualifiedClassname));
