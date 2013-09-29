@@ -29,12 +29,12 @@ class Message
     /**
      * @var array
      */
-    protected $arguments = array();
+    protected $arguments;
 
     /**
-     * @param array $arguments
+     * @param mixed $arguments
      */
-    public function __construct(array $arguments = null)
+    public function __construct($arguments = null)
     {
         if (!is_null($arguments)) {
             $this->arguments = $arguments;
@@ -60,7 +60,7 @@ class Message
     }
 
     /**
-     * @return array
+     * @return mixed
      */
     public function getArguments()
     {

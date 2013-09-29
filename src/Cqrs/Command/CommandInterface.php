@@ -22,9 +22,9 @@ interface CommandInterface
     /**
      * Constructor
      *
-     * @param array $arguments
+     * @param mixed $arguments
      */
-    public function __construct(array $arguments = null);
+    public function __construct($arguments = null);
 
     /**
      * Get arguments of the command as array
