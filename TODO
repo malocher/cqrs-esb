@@ -5,7 +5,7 @@ AdapterTrait
 Integration tests for:
 - many pipes and piping commands and events in every possible direction
 - monitoring systembus with 1 pipe
-- monitoring systembus with man pipes
+- monitoring systembus with many pipes
 - handler methods with multiple annotations (could be use as input or output handler)
 - handler methods with namespace annotations (?possible)
 - testing closures
@@ -19,7 +19,20 @@ function simple_printer($name) {
     };
 }
 
-
+6) Remove ['enable-systembus] from configuration. It works perfect like so:
+'adapters' => [
+    [
+        'class' => 'Cqrs\Adapter\AnnotationAdapter',
+        'buses' => [
+            'Iteration\Iteration5\Iteration5Bus' => [
+                'Iteration\Iteration5\Iteration5Handler'
+            ],
+            'Cqrs\Bus\SystemBus' => [
+                'Iteration\Iteration5\Iteration5Monitor'
+            ]
+        ]
+    ],
+],
 
 9)
 annotation
