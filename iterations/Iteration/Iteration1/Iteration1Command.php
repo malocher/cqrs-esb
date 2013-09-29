@@ -6,18 +6,19 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace Example\Example4;
+namespace Iteration\Iteration1;
 
 use Cqrs\Command\CommandInterface;
 use Cqrs\Message;
 
 /**
- * Class Example4Command
+ * Class Iteration1Command
  *
+ * @author Alexander Miertsch <kontakt@codeliner.ws>
  * @author Manfred Weber <crafics@php.net>
- * @package Example\Example4
+ * @package Iteration\Iteration1
  */
-class Example4Command extends Message implements CommandInterface
+class Iteration1Command extends Message implements CommandInterface
 {
     /**
      * @var bool

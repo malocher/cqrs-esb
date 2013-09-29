@@ -6,7 +6,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace Example\Example4;
+namespace Iteration\Iteration4;
 
 use Cqrs\Adapter\AdapterTrait;
 use Cqrs\Command\InvokeCommandCommand;
@@ -15,15 +15,15 @@ use Cqrs\Event\CommandInvokedEvent;
 use Cqrs\Event\EventPublishedEvent;
 
 /**
- * Class Example4Monitor
+ * Class Iteration4Monitor
  *
  * This Handler class makes use of annotations... thx doctrine!
  * Note the use of the AdapterTrait which loosely couples this file with the cqrs package
  *
  * @author Manfred Weber <crafics@php.net>
- * @package Example\Example4
+ * @package Iteration\Iteration4
  */
-class Example4Monitor
+class Iteration4Monitor
 {
     use AdapterTrait;
 

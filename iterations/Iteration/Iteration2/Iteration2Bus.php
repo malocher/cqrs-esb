@@ -6,17 +6,17 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace Example\Example4;
+namespace Iteration\Iteration2;
 
 use Cqrs\Bus\AbstractBus;
 
 /**
- * Class Example4Bus
+ * Class Iteration2Bus
  *
  * @author Manfred Weber <crafics@php.net>
- * @package Example\Example4
+ * @package Iteration\Iteration2
  */
-class Example4Bus extends AbstractBus
+class Iteration2Bus extends AbstractBus
 {
     /**
      * @return string

@@ -1,4 +1,0 @@
-
-Run PHPUnit with bootstrap
-
-phpunit --bootstrap tests/bootstrap.php tests/

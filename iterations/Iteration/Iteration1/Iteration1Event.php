@@ -6,18 +6,19 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace Example\Example4;
+namespace Iteration\Iteration1;
 
 use Cqrs\Event\EventInterface;
 use Cqrs\Message;
 
 /**
- * Class Example4Event
+ * Class Iteration1Event
  *
+ * @author Alexander Miertsch <kontakt@codeliner.ws>
  * @author Manfred Weber <crafics@php.net>
- * @package Example\Example4
+ * @package Iteration\Iteration1
  */
-class Example4Event extends Message implements EventInterface
+class Iteration1Event extends Message implements EventInterface
 {
     /**
      * @var bool

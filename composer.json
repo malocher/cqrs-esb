@@ -7,6 +7,6 @@
         "phpunit/phpunit": "3.7.*"
     },
     "autoload": {
-        "psr-0": { "Test\\": "tests/","Example\\": "examples/","Cqrs\\": "src/" }
+        "psr-0": { "Test\\": "tests/","Iteration\\": "iterations/","Cqrs\\": "src/" }
     }
 }

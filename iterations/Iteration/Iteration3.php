@@ -7,26 +7,32 @@
  * file that was distributed with this source code.
  */
 
-namespace Example;
+namespace Iteration;
 
 use Cqrs\Adapter\AnnotationAdapter;
 use Cqrs\Command\ClassMapCommandHandlerLoader;
 use Cqrs\Event\ClassMapEventListenerLoader;
 use Cqrs\Gate;
-use Example\Example4\Example4Bus;
-use Example\Example4\Example4Command;
+use Iteration\Iteration3\Iteration3Bus;
+use Iteration\Iteration3\Iteration3Command;
 
 require __DIR__ . '/../bootstrap.php';
 
 /**
- * Class Example4
+ * Class Iteration3
  *
- * This example goes a step further and introduces the system-bus
+ * This is a basic example to start learning how cqrs-php works.
+ * A gate is created and a bus is attached, a command handler is mapped and a event listener is registered.
+ *
+ * We make use of the annotation adapter! Have a look into the Iteration3/Iteration3Handler.php
+ *
+ * The Iteration3Command is invoked on the bus. The Iteration3Handler editCommand method is called which publishes
+ * the Iteration3Event back to the bus. The Iteration3Handler editEvent method method is called.
  *
  * @author Manfred Weber <crafics@php.net>
- * @package Example
+ * @package Iteration
  */
-class Example4
+class Iteration3
 {
 
     /**
@@ -35,7 +41,7 @@ class Example4
     private $gate;
 
     /**
-     * @var Example4Bus
+     * @var Iteration3Bus
      */
     private $bus;
 
@@ -48,7 +54,7 @@ class Example4
         $this->gate = new Gate();
 
         // Create a bus and attach it to the gate
-        $this->bus = new Example4Bus(
+        $this->bus = new Iteration3Bus(
             new ClassMapCommandHandlerLoader(),
             new ClassMapEventListenerLoader()
         );
@@ -56,18 +62,15 @@ class Example4
 
         // Use of AnnotationAdapter, adapters always us pipe
         $adapter = new AnnotationAdapter();
-        $adapter->pipe($this->bus, array('Example\Example4\Example4Handler'));
-
-        // Enable the SystemBus and pipe it to some Monitoring
-        $this->gate->enableSystemBus();
-        $adapter->pipe($this->gate->getSystemBus(), array('Example\Example4\Example4Monitor'));
+        $adapter->pipe($this->bus, array('Iteration\Iteration3\Iteration3Handler'));
+        // See how this affects Iteration3Handler
 
         // Send a command to the bus
-        // Example4Handler::editCommand is mapped against this command and will be called
-        $this->bus->invokeCommand(new Example4Command('Hello'));
+        // Iteration3Handler::editCommand is mapped against this command and will be called
+        $this->bus->invokeCommand(new Iteration3Command('Hello'));
     }
 
 }
 
 
-new Example4();
+new Iteration3();

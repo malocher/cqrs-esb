@@ -6,41 +6,39 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace Example\Example4;
+namespace Iteration\Iteration1;
 
 use Cqrs\Adapter\AdapterTrait;
 
 /**
- * Class Example4Handler
+ * Class Iteration1Handler
  *
- * This Handler class makes use of annotations... thx doctrine!
  * Note the use of the AdapterTrait which loosely couples this file with the cqrs package
  *
+ * @author Alexander Miertsch <kontakt@codeliner.ws>
  * @author Manfred Weber <crafics@php.net>
- * @package Example\Example4
+ * @package Iteration\Iteration1
  */
-class Example4Handler
+class Iteration1Handler
 {
     use AdapterTrait;
 
     /**
-     * @Cqrs\Annotation\Command("Example\Example4\Example4Command")
-     * @param Example4Command $command
+     * @param Iteration1Command $command
      */
-    public function editCommand(Example4Command $command)
+    public function editCommand(Iteration1Command $command)
     {
         $command->edit();
         print sprintf("%s says: %s ... Command\n", __METHOD__, $command->getArguments());
-        $event = new Example4Event('Welcome');
+        $event = new Iteration1Event('Hello');
         $event->edit();
         $this->getBus()->publishEvent($event);
     }
 
     /**
-     * @Cqrs\Annotation\Event("Example\Example4\Example4Event")
-     * @param Example4Event $event
+     * @param Iteration1Event $event
      */
-    public function editEvent(Example4Event $event)
+    public function editEvent(Iteration1Event $event)
     {
         print sprintf("%s says: %s ... Event\n", __METHOD__, $event->getArguments());
     }
