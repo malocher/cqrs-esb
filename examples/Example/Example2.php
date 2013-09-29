@@ -12,7 +12,6 @@ namespace Example;
 use Cqrs\Command\ClassMapCommandHandlerLoader;
 use Cqrs\Event\ClassMapEventListenerLoader;
 use Cqrs\Gate;
-use Example\Example1\Example1Event;
 use Example\Example2\Example2Bus;
 use Example\Example2\Example2Command;
 use Example\Example2\Example2Event;
@@ -65,7 +64,7 @@ class Example2
             function (Example2Command $command) {
                 $command->edit();
                 print sprintf("%s says: %s ... Command\n", __METHOD__, $command->getArguments());
-                $event = new Example1Event('Hello');
+                $event = new Example2Event('Hello');
                 $event->edit();
                 $this->bus->publishEvent($event);
             }
@@ -89,4 +88,4 @@ class Example2
 }
 
 
-new Example1();
+new Example2();
