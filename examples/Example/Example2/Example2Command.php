@@ -6,18 +6,18 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace Example\Example1;
+namespace Example\Example2;
 
-use Cqrs\Event\EventInterface;
+use Cqrs\Command\CommandInterface;
 use Cqrs\Message;
 
 /**
- * Class Example1Event
+ * Class Example2Command
  *
  * @author Manfred Weber <crafics@php.net>
- * @package Example\Example1
+ * @package Example\Example2
  */
-class Example1Event extends Message implements EventInterface
+class Example2Command extends Message implements CommandInterface
 {
     /**
      * @var bool

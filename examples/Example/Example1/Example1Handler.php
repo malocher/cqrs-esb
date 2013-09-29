@@ -14,7 +14,7 @@ use Cqrs\Adapter\AdapterTrait;
  * Class Example1Handler
  *
  * @author Manfred Weber <crafics@php.net>
- * @package Example1
+ * @package Example\Example1
  */
 class Example1Handler
 {
@@ -27,9 +27,7 @@ class Example1Handler
     {
         $command->edit();
 
-        print sprintf("%s says: %s ... Command\n"
-            ,__METHOD__,$command->getArguments()
-        );
+        print sprintf("%s says: %s ... Command\n", __METHOD__, $command->getArguments());
 
         $event = new Example1Event('Hello');
         $event->edit();
@@ -42,8 +40,6 @@ class Example1Handler
      */
     public function editEvent(Example1Event $event)
     {
-        print sprintf("%s says: %s ... Event\n"
-            ,__METHOD__,$event->getArguments()
-        );
+        print sprintf("%s says: %s ... Event\n", __METHOD__, $event->getArguments());
     }
 }

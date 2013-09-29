@@ -15,7 +15,7 @@ use Cqrs\Message;
  * Class Example1Command
  *
  * @author Manfred Weber <crafics@php.net>
- * @package Example1
+ * @package Example\Example1
  */
 class Example1Command extends Message implements CommandInterface
 {

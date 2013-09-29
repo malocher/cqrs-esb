@@ -12,24 +12,25 @@ namespace Example;
 use Cqrs\Command\ClassMapCommandHandlerLoader;
 use Cqrs\Event\ClassMapEventListenerLoader;
 use Cqrs\Gate;
-use Example\Example1\Example1Bus;
-use Example\Example1\Example1Command;
+use Example\Example1\Example1Event;
+use Example\Example2\Example2Bus;
+use Example\Example2\Example2Command;
+use Example\Example2\Example2Event;
 
 require __DIR__ . '/../bootstrap.php';
 
 /**
- * Class Example1
+ * Class Example2
  *
  * This is a basic example to start learning how cqrs-php works.
  * A gate is created and a bus is attached, a command handler is mapped and a event listener is registered.
  *
- * The Example1Command is invoked on the bus. The Example1Handler editCommand method is called which publishes
- * the Example1Event back to the bus. The Example1Handler editEvent method method is called.
+ * This example uses closures or anonymous function to handle command and events
  *
  * @author Manfred Weber <crafics@php.net>
  * @package Example
  */
-class Example1
+class Example2
 {
 
     /**
@@ -38,7 +39,7 @@ class Example1
     private $gate;
 
     /**
-     * @var Example1Bus
+     * @var Example2Bus
      */
     private $bus;
 
@@ -51,7 +52,7 @@ class Example1
         $this->gate = new Gate();
 
         // Create a bus and attach it to the gate
-        $this->bus = new Example1Bus(
+        $this->bus = new Example2Bus(
             new ClassMapCommandHandlerLoader(),
             new ClassMapEventListenerLoader()
         );
@@ -59,25 +60,30 @@ class Example1
 
         // Map a command to a handler
         $this->bus->mapCommand(
-            'Example\Example1\Example1Command',
-            array(
-                'alias' => 'Example\Example1\Example1Handler',
-                'method' => 'editCommand'
-            )
+
+            'Example\Example2\Example2Command',
+            function (Example2Command $command) {
+                $command->edit();
+                print sprintf("%s says: %s ... Command\n", __METHOD__, $command->getArguments());
+                $event = new Example1Event('Hello');
+                $event->edit();
+                $this->bus->publishEvent($event);
+            }
         );
 
         // Register a event to a handler
         $this->bus->registerEventListener(
-            'Example\Example1\Example1Event',
-            array(
-                'alias' => 'Example\Example1\Example1Handler',
-                'method' => 'editEvent'
-            )
+
+            'Example\Example2\Example2Event',
+            function (Example2Event $event) {
+                $event->edit();
+                print sprintf("%s says: %s ... Event\n", __METHOD__, $event->getArguments());
+            }
         );
 
         // Send a command to the bus
         // Example1Handler::editCommand is mapped against this command and will be called
-        $this->bus->invokeCommand(new Example1Command('Hello'));
+        $this->bus->invokeCommand(new Example2Command('Hello'));
     }
 
 }
