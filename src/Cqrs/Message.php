@@ -66,4 +66,12 @@ class Message
     {
         return $this->arguments;
     }
+
+    /**
+     * @return array
+     */
+    public function getMessageVars()
+    {
+        return get_object_vars($this);
+    }
 }

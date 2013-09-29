@@ -21,23 +21,28 @@ use Cqrs\Message;
 class CommandInvokedEvent extends Message implements EventInterface
 {
     /**
-     * @var string name of the invoking class
-     */
-    protected $class;
-
-    /**
      * @var string name of the bus of the invoking class
      */
     protected $busName;
 
     /**
+     * @var array message vars of the invoking class
+     */
+    protected $messageVars;
+
+    /**
+     * @var string message class of the invoking class
+     */
+    protected $messageClass;
+
+    /**
      * set class name
      *
-     * @param string $class
+     * @param $messageClass
      */
-    public function setClass($class)
+    public function setMessageClass($messageClass)
     {
-        $this->class = $class;
+        $this->messageClass = $messageClass;
     }
 
     /**
@@ -45,9 +50,29 @@ class CommandInvokedEvent extends Message implements EventInterface
      *
      * @return string $class
      */
-    public function getClass()
+    public function getMessageClass()
     {
-        return $this->class;
+        return $this->messageClass;
+    }
+
+    /**
+     * set message vars
+     *
+     * @param array $args
+     */
+    public function setMessageVars($args)
+    {
+        $this->messageVars = $args;
+    }
+
+    /**
+     * get message vars
+     *
+     * @return array
+     */
+    public function getMessageVars()
+    {
+        return $this->messageVars;
     }
 
     /**
@@ -68,35 +93,5 @@ class CommandInvokedEvent extends Message implements EventInterface
     public function getBusName()
     {
         return $this->busName;
-    }
-
-    /**
-     * set id
-     *
-     * @param int $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    /**
-     * set timestamp
-     *
-     * @param int $ts
-     */
-    public function setTimestamp($ts)
-    {
-        $this->timestamp = $ts;
-    }
-
-    /**
-     * set arguments
-     *
-     * @param array $args
-     */
-    public function setArguments($args)
-    {
-        $this->arguments = $args;
     }
 }

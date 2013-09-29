@@ -9,7 +9,6 @@
 namespace Cqrs\Bus;
 
 use Cqrs\Command\CommandHandlerLoaderInterface;
-
 use Cqrs\Command\CommandInterface;
 use Cqrs\Command\InvokeCommandCommand;
 use Cqrs\Command\PublishEventCommand;
@@ -117,11 +116,9 @@ abstract class AbstractBus implements BusInterface
         // InvokeCommandCommand first! Because a commandClass _IS_ actually invoked.
         if (!is_null($this->gate->getSystemBus())) {
             $invokeCommandCommand = new InvokeCommandCommand();
-            $invokeCommandCommand->setClass($commandClass);
+            $invokeCommandCommand->setMessageClass(get_class($command));
+            $invokeCommandCommand->setMessageVars($command->getMessageVars());
             $invokeCommandCommand->setBusName($this->getName());
-            $invokeCommandCommand->setId($command->getId());
-            $invokeCommandCommand->setTimestamp($command->getTimestamp());
-            $invokeCommandCommand->setArguments($command->getArguments());
             $this->gate->getSystemBus()->invokeCommand($invokeCommandCommand);
         }
 
@@ -158,11 +155,9 @@ abstract class AbstractBus implements BusInterface
         // be dispatched!
         if (!is_null($this->gate->getSystemBus())) {
             $commandInvokedEvent = new CommandInvokedEvent();
-            $commandInvokedEvent->setClass($commandClass);
+            $commandInvokedEvent->setMessageClass(get_class($command));
+            $commandInvokedEvent->setMessageVars($command->getMessageVars());
             $commandInvokedEvent->setBusName($this->getName());
-            $commandInvokedEvent->setId($command->getId());
-            $commandInvokedEvent->setTimestamp($command->getTimestamp());
-            $commandInvokedEvent->setArguments($command->getArguments());
             $this->gate->getSystemBus()->publishEvent($commandInvokedEvent);
         }
 
@@ -206,11 +201,9 @@ abstract class AbstractBus implements BusInterface
         // event succeeded.
         if (!is_null($this->gate->getSystemBus())) {
             $publishEventCommand = new PublishEventCommand();
-            $publishEventCommand->setClass($eventClass);
+            $publishEventCommand->setMessageClass(get_class($event));
+            $publishEventCommand->setMessageVars($event->getMessageVars());
             $publishEventCommand->setBusName($this->getName());
-            $publishEventCommand->setId($event->getId());
-            $publishEventCommand->setTimestamp($event->getTimestamp());
-            $publishEventCommand->setArguments($event->getArguments());
             $this->gate->getSystemBus()->invokeCommand($publishEventCommand);
         }
 
@@ -242,11 +235,9 @@ abstract class AbstractBus implements BusInterface
         // be dispatched!
         if (!is_null($this->gate->getSystemBus())) {
             $eventPublishedEvent = new EventPublishedEvent();
-            $eventPublishedEvent->setClass($eventClass);
+            $eventPublishedEvent->setMessageClass(get_class($event));
+            $eventPublishedEvent->setMessageVars($event->getMessageVars());
             $eventPublishedEvent->setBusName($this->getName());
-            $eventPublishedEvent->setId($event->getId());
-            $eventPublishedEvent->setTimestamp($event->getTimestamp());
-            $eventPublishedEvent->setArguments($event->getArguments());
             $this->gate->getSystemBus()->publishEvent($eventPublishedEvent);
         }
 

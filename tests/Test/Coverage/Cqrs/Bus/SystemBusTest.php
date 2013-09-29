@@ -73,8 +73,8 @@ class SystemBusTest extends AbstractBusTest
         $this->assertEquals(true, $mockCommand->isEdited());
         $this->assertInstanceOf('Cqrs\Command\InvokeCommandCommand', $this->invokeCommandCommand);
         $this->assertInstanceOf('Cqrs\Event\CommandInvokedEvent', $this->commandInvokedEvent);
-        $this->assertEquals('Test\Coverage\Mock\Command\MockCommand', $this->invokeCommandCommand->getClass());
-        $this->assertEquals('Test\Coverage\Mock\Command\MockCommand', $this->commandInvokedEvent->getClass());
+        $this->assertEquals('Test\Coverage\Mock\Command\MockCommand', $this->invokeCommandCommand->getMessageClass());
+        $this->assertEquals('Test\Coverage\Mock\Command\MockCommand', $this->commandInvokedEvent->getMessageClass());
     }
 
     public function testClosurePublishEvent()
@@ -96,8 +96,8 @@ class SystemBusTest extends AbstractBusTest
         $this->assertEquals(true, $mockEvent->isEdited());
         $this->assertInstanceOf('Cqrs\Command\PublishEventCommand', $this->publishEventCommand);
         $this->assertInstanceOf('Cqrs\Event\EventPublishedEvent', $this->eventPublishedEvent);
-        $this->assertEquals('Test\Coverage\Mock\Event\MockEvent', $this->publishEventCommand->getClass());
-        $this->assertEquals('Test\Coverage\Mock\Event\MockEvent', $this->eventPublishedEvent->getClass());
+        $this->assertEquals('Test\Coverage\Mock\Event\MockEvent', $this->publishEventCommand->getMessageClass());
+        $this->assertEquals('Test\Coverage\Mock\Event\MockEvent', $this->eventPublishedEvent->getMessageClass());
     }
 
     public function testArrayMapInvokeCommand()

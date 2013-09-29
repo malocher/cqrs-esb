@@ -48,4 +48,11 @@ interface CommandInterface
      */
     public function getTimestamp();
 
+    /**
+     * Get message vars of the command
+     *
+     * @return array
+     */
+    public function getMessageVars();
+
 }

@@ -25,19 +25,33 @@ class EventPublishedEventTest extends MessageTest implements EventInterfaceTest
         $this->message = new EventPublishedEvent();
     }
 
-    public function testSetClass()
+    public function testSetMessageClass()
     {
         $class = get_class($this->message);
-        $this->message->setClass($class);
-        $this->assertEquals($class, $this->message->getClass());
+        $this->message->setMessageClass($class);
+        $this->assertEquals($class, $this->message->getMessageClass());
     }
 
-    public function testGetClass()
+    public function testGetMessageClass()
     {
-        if (is_null($this->message->getClass())) {
-            $this->message->setClass(get_class($this->message));
+        if (is_null($this->message->getMessageClass())) {
+            $this->message->setMessageClass(get_class($this->message));
         }
-        $this->assertEquals(get_class($this->message), $this->message->getClass());
+        $this->assertEquals(get_class($this->message), $this->message->getMessageClass());
+    }
+
+    public function testSetMessageVars()
+    {
+        $vars = array(1, 2, 3, 4, 5);
+        $this->message->setMessageVars($vars);
+        $this->assertEquals($vars, $this->message->getMessageVars());
+    }
+
+    public function testGetMessageVars()
+    {
+        $vars = array(1, 2, 3, 4, 5);
+        $this->message->setMessageVars($vars);
+        $this->assertEquals($vars, $this->message->getMessageVars());
     }
 
     public function testSetBusName()
@@ -50,26 +64,5 @@ class EventPublishedEventTest extends MessageTest implements EventInterfaceTest
     {
         $this->message->setBusName('mock-bus-name');
         $this->assertEquals('mock-bus-name', $this->message->getBusName());
-    }
-
-    public function testSetId()
-    {
-        $id = uniqid();
-        $this->message->setId($id);
-        $this->assertEquals($id, $this->message->getId());
-    }
-
-    public function testSetTimestamp()
-    {
-        $ts = date_timestamp_get(date_create());
-        $this->message->setTimestamp($ts);
-        $this->assertEquals($ts, $this->message->getTimestamp());
-    }
-
-    public function testSetArguments()
-    {
-        $args = array(1, 2, 3, 4, 5);
-        $this->message->setArguments($args);
-        $this->assertEquals($args, $this->message->getArguments());
     }
 }

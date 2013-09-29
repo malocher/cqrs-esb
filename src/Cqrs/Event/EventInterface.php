@@ -48,4 +48,11 @@ interface EventInterface
      */
     public function getTimestamp();
 
+    /**
+     * Get message vars of the event
+     *
+     * @return array
+     */
+    public function getMessageVars();
+
 }
