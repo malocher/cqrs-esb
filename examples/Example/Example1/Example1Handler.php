@@ -13,6 +13,9 @@ use Cqrs\Adapter\AdapterTrait;
 /**
  * Class Example1Handler
  *
+ * Note the use of the AdapterTrait which loosely couples this file with the cqrs package
+ *
+ * @author Alexander Miertsch <kontakt@codeliner.ws>
  * @author Manfred Weber <crafics@php.net>
  * @package Example\Example1
  */
@@ -26,12 +29,9 @@ class Example1Handler
     public function editCommand(Example1Command $command)
     {
         $command->edit();
-
         print sprintf("%s says: %s ... Command\n", __METHOD__, $command->getArguments());
-
         $event = new Example1Event('Hello');
         $event->edit();
-
         $this->getBus()->publishEvent($event);
     }
 

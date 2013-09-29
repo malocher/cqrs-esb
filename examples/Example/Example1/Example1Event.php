@@ -14,6 +14,7 @@ use Cqrs\Message;
 /**
  * Class Example1Event
  *
+ * @author Alexander Miertsch <kontakt@codeliner.ws>
  * @author Manfred Weber <crafics@php.net>
  * @package Example\Example1
  */

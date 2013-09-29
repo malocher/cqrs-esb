@@ -9,7 +9,6 @@
 namespace Test\Integration;
 
 use Cqrs\Adapter\AnnotationAdapter;
-
 use Cqrs\Command\ClassMapCommandHandlerLoader;
 use Cqrs\Event\ClassMapEventListenerLoader;
 use Cqrs\Gate;

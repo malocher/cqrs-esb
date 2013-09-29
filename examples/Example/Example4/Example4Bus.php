@@ -6,18 +6,17 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace Example\Example1;
+namespace Example\Example4;
 
 use Cqrs\Bus\AbstractBus;
 
 /**
- * Class Example1Bus
+ * Class Example4Bus
  *
- * @author Alexander Miertsch <kontakt@codeliner.ws>
  * @author Manfred Weber <crafics@php.net>
- * @package Example\Example1
+ * @package Example\Example4
  */
-class Example1Bus extends AbstractBus
+class Example4Bus extends AbstractBus
 {
     /**
      * @return string
