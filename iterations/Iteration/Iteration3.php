@@ -21,13 +21,7 @@ require __DIR__ . '/../bootstrap.php';
 /**
  * Class Iteration3
  *
- * This is a basic example to start learning how cqrs-php works.
- * A gate is created and a bus is attached, a command handler is mapped and a event listener is registered.
- *
- * We make use of the annotation adapter! Have a look into the Iteration3/Iteration3Handler.php
- *
- * The Iteration3Command is invoked on the bus. The Iteration3Handler editCommand method is called which publishes
- * the Iteration3Event back to the bus. The Iteration3Handler editEvent method method is called.
+ * Use the annotation adapter! Also look into the Iteration3/Iteration3Handler.php
  *
  * @author Manfred Weber <crafics@php.net>
  * @package Iteration

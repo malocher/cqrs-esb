@@ -21,10 +21,7 @@ require __DIR__ . '/../bootstrap.php';
 /**
  * Class Iteration2
  *
- * This is a basic example to start learning how cqrs-php works.
- * A gate is created and a bus is attached, a command handler is mapped and a event listener is registered.
- *
- * This example uses closures or anonymous function to handle command and events
+ * Using closures or anonymous function to handle command and events
  *
  * @author Manfred Weber <crafics@php.net>
  * @package Iteration
