@@ -1,15 +1,6 @@
 AdapterTrait
 ------------
 
-1)
-"allow" becomes private since we can always easily use "initializeBus" like so:
-$this->adapter->initializeBus(
-    $this->bus,
-    array('Test\Integration\Test2\Test2Handler')
-);
-
-
-
 4)
 Integration tests for:
 - many pipes and piping commands and events in every possible direction
@@ -39,9 +30,6 @@ annotation
 - Cqrs\Annotation\Namespace("Test\Event")
 - Cqrs\Annotation\Namespace("Test\Command")
 
-
-10)
-Add Vagrantfile
 
 11)
 Should we rename "Setup" to "Cqrs"
