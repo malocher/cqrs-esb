@@ -23,6 +23,6 @@ class Iteration2Bus extends AbstractBus
      */
     public function getName()
     {
-        return 'test-integration-test1-bus';
+        return 'iteration-iteration2-bus';
     }
 }
