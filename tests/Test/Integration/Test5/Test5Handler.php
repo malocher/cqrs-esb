@@ -21,7 +21,7 @@ class Test5Handler
     use AdapterTrait;
 
     /**
-     * @Cqrs\Annotation\Command("Test\Integration\Test5\Test5Command")
+     * @command Test\Integration\Test5\Test5Command
      * @param Test5Command $command
      */
     public function editCommand(Test5Command $command)
@@ -33,7 +33,7 @@ class Test5Handler
     }
 
     /**
-     * @Cqrs\Annotation\Event("Test\Integration\Test5\Test5Event")
+     * @event Test\Integration\Test5\Test5Event
      * @param Test5Event $event
      */
     public function editEvent(Test5Event $event)
@@ -47,8 +47,8 @@ class Test5Handler
     /**
      * you should _not_ do this - cqrs definition separates events and commands
      *
-     * @Cqrs\Annotation\Event("Test\Integration\Test5\Test5Event")
-     * @Cqrs\Annotation\Command("Test\Integration\Test5\Test5Command")
+     * @event Test\Integration\Test5\Test5Event
+     * @command Test\Integration\Test5\Test5Command
      * @param Message $message
      */
     public function editBoth(Message $message)

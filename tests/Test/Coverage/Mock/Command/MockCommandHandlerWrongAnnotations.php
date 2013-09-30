@@ -22,7 +22,7 @@ class MockCommandHandlerWrongAnnotations
     use AdapterTrait;
 
     /**
-     * @Cqrs\Annotation\Command("Test\Coverage\Mock\Command\NonExistingMockCommand")
+     * @command Test\Coverage\Mock\Command\NonExistingMockCommand
      * @param CommandInterface $command
      */
     public function handleNonExistingAnnotationCommand(CommandInterface $command)

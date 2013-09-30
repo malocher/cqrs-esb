@@ -13,7 +13,7 @@ use Cqrs\Adapter\AdapterTrait;
 /**
  * Class Iteration4Handler
  *
- * This Handler class makes use of annotations... thx doctrine!
+ * This Handler class makes use of annotations
  * Note the use of the AdapterTrait which loosely couples this file with the cqrs package
  *
  * @author Manfred Weber <crafics@php.net>
@@ -24,7 +24,7 @@ class Iteration4Handler
     use AdapterTrait;
 
     /**
-     * @Cqrs\Annotation\Command("Iteration\Iteration4\Iteration4Command")
+     * @command Iteration\Iteration4\Iteration4Command
      * @param Iteration4Command $command
      */
     public function editCommand(Iteration4Command $command)
@@ -37,7 +37,7 @@ class Iteration4Handler
     }
 
     /**
-     * @Cqrs\Annotation\Event("Iteration\Iteration4\Iteration4Event")
+     * @event Iteration\Iteration4\Iteration4Event
      * @param Iteration4Event $event
      */
     public function editEvent(Iteration4Event $event)

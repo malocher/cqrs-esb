@@ -21,7 +21,7 @@ class Test2Handler
     use AdapterTrait;
 
     /**
-     * @Cqrs\Annotation\Command("Test\Integration\Test2\Test2Command")
+     * @command Test\Integration\Test2\Test2Command
      * @param Test2Command $command
      */
     public function editCommand(Test2Command $command)
@@ -35,7 +35,7 @@ class Test2Handler
     }
 
     /**
-     * @Cqrs\Annotation\Event("Test\Integration\Test2\Test2Event")
+     * @event Test\Integration\Test2\Test2Event
      * @param Test2Event $event
      */
     public function editEvent(Test2Event $event)

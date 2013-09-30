@@ -9,7 +9,6 @@
 namespace Cqrs\Adapter;
 
 use Cqrs\Bus\BusInterface;
-use Doctrine\Common\Annotations\AnnotationReader;
 
 /**
  * Class AnnotationAdapter
@@ -20,22 +19,14 @@ use Doctrine\Common\Annotations\AnnotationReader;
 class AnnotationAdapter implements AdapterInterface
 {
     /**
-     * @var AnnotationReader
-     */
-    public $annotationReader;
-
-    /**
      * @param array $configuration
      */
     public function __construct(array $configuration = null)
     {
-        \Doctrine\Common\Annotations\AnnotationRegistry::registerFile(dirname(__DIR__) . '/Annotation/Command.php');
-        \Doctrine\Common\Annotations\AnnotationRegistry::registerFile(dirname(__DIR__) . '/Annotation/Event.php');
-        $this->annotationReader = new AnnotationReader();
     }
 
     /**
-     * Initialize (pipe) a bus via vonfiguration file!
+     * Initialize (pipe) a bus via configuration file!
      *
      * @param \Cqrs\Bus\BusInterface $bus
      * @param array $configuration
@@ -69,7 +60,7 @@ class AnnotationAdapter implements AdapterInterface
      *
      * + class MockBarHandler
      * **
-     * * @Cqrs\Annotation\Command("Test\Mock\Command\MockCommand")
+     * * @command Test\Mock\Command\MockCommand
      * *
      * public function getBar($command)
      * - - - - - - - - - - - - - - - - - - -
@@ -87,26 +78,21 @@ class AnnotationAdapter implements AdapterInterface
         $reflMs = $reflClass->getMethods();
 
         foreach ($reflMs as $reflM) {
-            // command mapping
-            $aCommand = $this->annotationReader->getMethodAnnotation($reflM, 'Cqrs\Annotation\Command');
-            if ($aCommand) {
-                if (!class_exists($aCommand->getClass())) {
-                    throw AdapterException::annotationError(sprintf('Command <%s> does not exists or wrong annotation!',
-                        $aCommand->getClass()));
-                }
-                $bus->mapCommand($aCommand->getClass(), array('alias' => $reflM->class, 'method' => $reflM->name));
-            }
 
-            // event registering
-            $aEvent = $this->annotationReader->getMethodAnnotation($reflM, 'Cqrs\Annotation\Event');
-            if ($aEvent) {
-                if (!class_exists($aEvent->getClass())) {
-                    throw AdapterException::annotationError(sprintf('Event <%s> does not exist or wrong annotation!',
-                        $aEvent->getClass()));
+            if( preg_match_all('~@(command|event)\s+(\S+)~i',$reflM->getDocComment(),$annotations,PREG_SET_ORDER) > 0){
+                foreach($annotations as $class){
+                    $qualifiedClassname = $class[2];
+                    if( false === class_exists($qualifiedClassname) ){
+                        throw AdapterException::annotationError(sprintf('Class <%s> does not exist', $qualifiedClassname));
+                    }
+                    if(isset(class_implements($qualifiedClassname)['Cqrs\Command\CommandInterface'])){
+                        $bus->mapCommand($qualifiedClassname, array('alias' => $reflM->class, 'method' => $reflM->name));
+                    }
+                    if(isset(class_implements($qualifiedClassname)['Cqrs\Event\EventInterface'])){
+                        $bus->registerEventListener($qualifiedClassname, array('alias' => $reflM->class, 'method' => $reflM->name));
+                    }
                 }
-                $bus->registerEventListener($aEvent->getClass(), array('alias' => $reflM->class, 'method' => $reflM->name));
             }
-
         }
     }
 }

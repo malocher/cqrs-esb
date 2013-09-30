@@ -32,7 +32,7 @@ class MockCommandHandler
     }
 
     /**
-     * @Cqrs\Annotation\Command("Test\Coverage\Mock\Command\MockCommand")
+     * @command Test\Coverage\Mock\Command\MockCommand
      * @param MockCommand $command
      */
     public function handleAnnotationCommand(MockCommand $command)

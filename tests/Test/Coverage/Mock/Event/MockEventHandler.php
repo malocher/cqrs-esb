@@ -32,7 +32,7 @@ class MockEventHandler
     }
 
     /**
-     * @Cqrs\Annotation\Event("Test\Coverage\Mock\Event\MockEvent")
+     * @event Test\Coverage\Mock\Event\MockEvent
      * @param MockEvent $event
      */
     public function handleAnnotationEvent(MockEvent $event)

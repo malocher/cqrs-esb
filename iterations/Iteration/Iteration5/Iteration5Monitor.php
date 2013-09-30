@@ -28,7 +28,7 @@ class Iteration5Monitor
     use AdapterTrait;
 
     /**
-     * @Cqrs\Annotation\Command("Cqrs\Command\InvokeCommandCommand")
+     * @command Cqrs\Command\InvokeCommandCommand
      * @param InvokeCommandCommand $command
      */
     public function invokeCommandHandler(InvokeCommandCommand $command)
@@ -48,7 +48,7 @@ class Iteration5Monitor
     }
 
     /**
-     * @Cqrs\Annotation\Command("Cqrs\Command\PublishEventCommand")
+     * @command Cqrs\Command\PublishEventCommand
      * @param PublishEventCommand $command
      */
     public function publishEventHandler(PublishEventCommand $command)
@@ -68,7 +68,7 @@ class Iteration5Monitor
     }
 
     /**
-     * @Cqrs\Annotation\Event("Cqrs\Event\CommandInvokedEvent")
+     * @event Cqrs\Event\CommandInvokedEvent
      * @param CommandInvokedEvent $event
      */
     public function commandInvokedHandler(CommandInvokedEvent $event)
@@ -88,7 +88,7 @@ class Iteration5Monitor
     }
 
     /**
-     * @Cqrs\Annotation\Event("Cqrs\Event\EventPublishedEvent")
+     * @event Cqrs\Event\EventPublishedEvent
      * @param EventPublishedEvent $event
      */
     public function eventPublishedHandler(EventPublishedEvent $event)

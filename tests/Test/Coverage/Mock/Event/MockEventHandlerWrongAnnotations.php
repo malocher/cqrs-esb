@@ -20,7 +20,7 @@ use Cqrs\Event\EventInterface;
 class MockEventHandlerWrongAnnotations
 {
     /**
-     * @Cqrs\Annotation\Event("Test\Coverage\Mock\Event\NonExistingMockEvent")
+     * @event Test\Coverage\Mock\Event\NonExistingMockEvent
      * @param EventInterface $event
      */
     public function handleNonExistingAnnotationEvent(EventInterface $event)
