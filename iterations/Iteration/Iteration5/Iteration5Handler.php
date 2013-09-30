@@ -24,7 +24,6 @@ class Iteration5Handler
     use AdapterTrait;
 
     /**
-     * @command  Iteration\Iteration5\Iteration5Command
      * @command Iteration\Iteration5\Iteration5Command
      * @param Iteration5Command $command
      */
