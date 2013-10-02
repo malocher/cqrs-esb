@@ -36,3 +36,9 @@ Should we rename "Setup" to "Cqrs"
 - $cqrs->setCommandHandlerLoader(new ClassMapCommandHandlerLoader());
 - $cqrs->setEventListenerLoader(new ClassMapEventListenerLoader());
 What do you think?
+
+AM:
+It looks nice, but the classname "Cqrs" says nothing about it's functionality.
+The Setup class is an optional helper to SETUP your CQRS-System. You can use it, or
+you make each step by hand. Maybe we can find a better name than Setup, but I think
+we shouldn't call it Cqrs, cause it isn't the system itself.
