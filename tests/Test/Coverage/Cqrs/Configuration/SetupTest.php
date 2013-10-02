@@ -83,8 +83,9 @@ class SetupTest extends TestCase
 
     public function testInitialize()
     {
+        $monitor = new \Test\Coverage\Mock\Command\MockCommandMonitor();
+        
         $configuration = array(
-            'enable_system_bus' => true,
             'adapters' => array(
                 array(
                     'class' => 'Cqrs\Adapter\ArrayMapAdapter',
@@ -94,6 +95,10 @@ class SetupTest extends TestCase
                                 'alias' => 'Test\Coverage\Mock\Command\MockCommandHandler',
                                 'method' => 'handleCommand'
                             )
+                        ),
+                        'Cqrs\Bus\SystemBus' => array(
+                            'Cqrs\Command\InvokeCommandCommand' => $monitor,
+                            'Cqrs\Event\CommandInvokedEvent'    => $monitor,
                         )
                     )
                 ),
@@ -110,7 +115,18 @@ class SetupTest extends TestCase
         $this->assertInstanceOf('Test\Coverage\Mock\Bus\MockBus', $this->setup->getGate()->getBus('test-coverage-mock-bus'));
 
         $this->assertInstanceOf('Cqrs\Bus\SystemBus', $this->setup->getGate()->getSystemBus());
-
+        
+        $mockCommand = new \Test\Coverage\Mock\Command\MockCommand();
+        
+        $this->setup->getGate()->getBus('test-coverage-mock-bus')->invokeCommand($mockCommand);
+        
+        $this->assertTrue($mockCommand->isEdited());
+        
+        $invokeCommandCommand = $monitor->getInvokeCommandCommands()[0];
+        $commandInvokedEvent  = $monitor->getCommandInvokedEvents()[0];
+        
+        $this->assertEquals('Test\Coverage\Mock\Command\MockCommand', $invokeCommandCommand->getMessageClass());
+        $this->assertEquals('Test\Coverage\Mock\Command\MockCommand', $commandInvokedEvent->getMessageClass());
     }
 
     public function testInitializeWithoutGate()

@@ -19,21 +19,6 @@ function simple_printer($name) {
     };
 }
 
-6) Remove ['enable-systembus] from configuration. It works perfect like so:
-'adapters' => [
-    [
-        'class' => 'Cqrs\Adapter\AnnotationAdapter',
-        'buses' => [
-            'Iteration\Iteration5\Iteration5Bus' => [
-                'Iteration\Iteration5\Iteration5Handler'
-            ],
-            'Cqrs\Bus\SystemBus' => [
-                'Iteration\Iteration5\Iteration5Monitor'
-            ]
-        ]
-    ],
-],
-
 9)
 annotation
 - Cqrs\Annotation\Command("Test\Event\TestEvent1")
