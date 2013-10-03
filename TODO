@@ -42,3 +42,9 @@ It looks nice, but the classname "Cqrs" says nothing about it's functionality.
 The Setup class is an optional helper to SETUP your CQRS-System. You can use it, or
 you make each step by hand. Maybe we can find a better name than Setup, but I think
 we shouldn't call it Cqrs, cause it isn't the system itself.
+
+12) Create a crafics/cqrs-php packagist package to fully support the installation with composer. 
+Custom repositories like github can only be defined in the root package, 
+see http://getcomposer.org/doc/04-schema.md#repositories. 
+That means, I cannot declare crafics/cqrs-php in my zf2-cqrs-module as dependency, until the consumer of 
+my ZF2 module defines the repository link to crafics/cqrs-php in it's composer.json. This makes thinks complicated.
