@@ -15,7 +15,7 @@ use Cqrs\Event\ClassMapEventListenerLoader;
 use Cqrs\Gate;
 use Iteration\Iteration5\Iteration5Command;
 
-require __DIR__ . '/../bootstrap.php';
+require dirname(dirname(__DIR__)). '/bootstrap.php';
 
 /**
  * Class Iteration5

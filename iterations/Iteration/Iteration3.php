@@ -16,7 +16,7 @@ use Cqrs\Gate;
 use Iteration\Iteration3\Iteration3Bus;
 use Iteration\Iteration3\Iteration3Command;
 
-require __DIR__ . '/../bootstrap.php';
+require dirname(dirname(__DIR__)). '/bootstrap.php';
 
 /**
  * Class Iteration3

@@ -16,7 +16,7 @@ use Iteration\Iteration2\Iteration2Bus;
 use Iteration\Iteration2\Iteration2Command;
 use Iteration\Iteration2\Iteration2Event;
 
-require __DIR__ . '/../bootstrap.php';
+require dirname(dirname(__DIR__)). '/bootstrap.php';
 
 /**
  * Class Iteration2
