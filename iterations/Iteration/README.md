@@ -17,7 +17,7 @@ We make use of the annotation adapter! Have a look into the Iteration3/Iteration
 
 ### Iteration4 - System Bus
 
-Introduction of the System-Bus
+Introduction of the System-Bus! The system bus can be used to track messages [Event-Sourcing, Command-Sourcing].
 
 ### Iteration5 - Configuration
 
