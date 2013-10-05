@@ -17,7 +17,7 @@ use Cqrs\Event\EventPublishedEvent;
 /**
  * Class Iteration4Monitor
  *
- * This Handler class makes use of annotations... thx doctrine!
+ * This Handler class makes use of annotations
  * Note the use of the AdapterTrait which loosely couples this file with the cqrs package
  *
  * @author Manfred Weber <crafics@php.net>
