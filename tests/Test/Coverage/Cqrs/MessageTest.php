@@ -20,7 +20,7 @@ use Test\TestCase;
 class MessageTest extends TestCase
 {
     /**
-     * @var mixed
+     * @var Message
      */
     protected $message;
 
@@ -46,6 +46,18 @@ class MessageTest extends TestCase
     {
         $this->message = new Message();
         $this->assertNotNull($this->message->getTimestamp());
+    }
+
+    public function testGetVersion()
+    {
+        $this->message = new Message();
+        $this->assertEquals(1.0,$this->message->getVersion());
+    }
+
+    public function testGetAnotherVersion()
+    {
+        $this->message = new Message(null,2.0);
+        $this->assertEquals(2.0,$this->message->getVersion());
     }
 
     public function testGetArguments()

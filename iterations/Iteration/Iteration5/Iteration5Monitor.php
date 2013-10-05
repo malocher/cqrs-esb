@@ -38,10 +38,11 @@ class Iteration5Monitor
             $command->getMessageClass(),
             $command->getBusName()
         );
-        print sprintf("id:%s, edited:%s, ts:%s, arguments:%s \n",
+        print sprintf("id:%s, edited:%s, ts:%s, version:%s, arguments:%s \n",
             $command->getMessageVars()['id'],
             $command->getMessageVars()['edited'],
             $command->getMessageVars()['timestamp'],
+            $command->getMessageVars()['version'],
             $command->getMessageVars()['arguments']
         );
         print"---- monitoring ends ------\n";
@@ -58,10 +59,11 @@ class Iteration5Monitor
             $command->getMessageClass(),
             $command->getBusName()
         );
-        print sprintf("id:%s, edited:%s, ts:%s, arguments:%s \n",
+        print sprintf("id:%s, edited:%s, ts:%s, version:%s, arguments:%s \n",
             $command->getMessageVars()['id'],
             $command->getMessageVars()['edited'],
             $command->getMessageVars()['timestamp'],
+            $command->getMessageVars()['version'],
             $command->getMessageVars()['arguments']
         );
         print"---- monitoring ends ------\n";
@@ -78,10 +80,11 @@ class Iteration5Monitor
             $event->getMessageClass(),
             $event->getBusName()
         );
-        print sprintf("id:%s, edited:%s, ts:%s, arguments:%s \n",
+        print sprintf("id:%s, edited:%s, ts:%s, version:%s, arguments:%s \n",
             $event->getMessageVars()['id'],
             $event->getMessageVars()['edited'],
             $event->getMessageVars()['timestamp'],
+            $event->getMessageVars()['version'],
             $event->getMessageVars()['arguments']
         );
         print"---- monitoring ends ------\n";
@@ -98,10 +101,11 @@ class Iteration5Monitor
             $event->getMessageClass(),
             $event->getBusName()
         );
-        print sprintf("id:%s, edited:%s, ts:%s, arguments:%s \n",
+        print sprintf("id:%s, edited:%s, ts:%s, version:%s, arguments:%s \n",
             $event->getMessageVars()['id'],
             $event->getMessageVars()['edited'],
             $event->getMessageVars()['timestamp'],
+            $event->getMessageVars()['version'],
             $event->getMessageVars()['arguments']
         );
         print"---- monitoring ends ------\n";

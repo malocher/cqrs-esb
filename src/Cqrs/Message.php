@@ -27,20 +27,27 @@ class Message
     protected $timestamp;
 
     /**
+     * @var int
+     */
+    protected $version;
+
+    /**
      * @var array
      */
     protected $arguments;
 
     /**
-     * @param mixed $arguments
+     * @param null $arguments
+     * @param float $version
      */
-    public function __construct($arguments = null)
+    public function __construct($arguments = null, $version=1.0)
     {
         if (!is_null($arguments)) {
             $this->arguments = $arguments;
         }
         $this->id = uniqid();
         $this->timestamp = date_timestamp_get(date_create());
+        $this->version = $version;
     }
 
     /**
@@ -57,6 +64,14 @@ class Message
     public function getTimestamp()
     {
         return $this->timestamp;
+    }
+
+    /**
+     * @return float
+     */
+    public function getVersion()
+    {
+        return $this->version;
     }
 
     /**

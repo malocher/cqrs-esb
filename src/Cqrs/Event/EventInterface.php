@@ -34,6 +34,13 @@ interface EventInterface
     public function getArguments();
 
     /**
+     * Get version of the command
+     *
+     * @return int Version number
+     */
+    public function getVersion();
+
+    /**
      * Get id of the command
      * Id is a unique identifier of this command
      *
@@ -47,12 +54,5 @@ interface EventInterface
      * @return string id
      */
     public function getTimestamp();
-
-    /**
-     * Get message vars of the event
-     *
-     * @return array
-     */
-    public function getMessageVars();
 
 }
