@@ -11,6 +11,7 @@ namespace Test\Coverage\Cqrs\Adapter;
 use Cqrs\Adapter\ArrayMapAdapter;
 use Cqrs\Command\ClassMapCommandHandlerLoader;
 use Cqrs\Event\ClassMapEventListenerLoader;
+use Cqrs\Query\ClassMapQueryHandlerLoader;
 use Test\Coverage\Mock\Bus\MockBus;
 use Test\TestCase;
 
@@ -37,7 +38,8 @@ class ArrayMapAdapterTest extends TestCase implements AdapterInterfaceTest
         $this->adapter = new ArrayMapAdapter();
         $this->bus = new MockBus(
             new ClassMapCommandHandlerLoader(),
-            new ClassMapEventListenerLoader()
+            new ClassMapEventListenerLoader(),
+            new ClassMapQueryHandlerLoader()
         );
     }
 

@@ -11,6 +11,7 @@ namespace Test\Coverage\Cqrs\Configuration;
 use Cqrs\Command\ClassMapCommandHandlerLoader;
 use Cqrs\Configuration\Setup;
 use Cqrs\Event\ClassMapEventListenerLoader;
+use Cqrs\Query\ClassMapQueryHandlerLoader;
 use Cqrs\Gate;
 use Test\TestCase;
 
@@ -80,6 +81,12 @@ class SetupTest extends TestCase
         }
         $this->assertInstanceOf('Cqrs\Event\ClassMapEventListenerLoader', $this->setup->getEventListenerLoader());
     }
+    
+    public function testSetGetQueryHandlerLoader()
+    {
+        $this->setup->setQueryHandlerLoader(new ClassMapQueryHandlerLoader());
+        $this->assertInstanceOf('Cqrs\Query\QueryHandlerLoaderInterface', $this->setup->getQueryHandlerLoader());
+    }
 
     public function testInitialize()
     {
@@ -107,6 +114,7 @@ class SetupTest extends TestCase
         $this->setup->setGate(new Gate());
         $this->setup->setCommandHandlerLoader(new ClassMapCommandHandlerLoader());
         $this->setup->setEventListenerLoader(new ClassMapEventListenerLoader());
+        $this->setup->setQueryHandlerLoader(new ClassMapQueryHandlerLoader());
         $this->setup->initialize($configuration);
 
         $this->assertInstanceOf('Cqrs\Gate', $this->setup->getGate());

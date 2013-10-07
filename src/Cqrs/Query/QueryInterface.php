@@ -6,19 +6,15 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
-namespace Cqrs\Command;
+namespace Cqrs\Query;
 
 /**
- * Interface CommandInterface
- *
- * @author Manfred Weber <crafics@php.net>
+ * Interface QueryInterface
+ * 
  * @author Alexander Miertsch <kontakt@codeliner.ws>
- * @package Cqrs\Command
  */
-interface CommandInterface
+interface QueryInterface
 {
-
     /**
      * Constructor
      * 
@@ -30,21 +26,21 @@ interface CommandInterface
     public function __construct($arguments = null, $id = null, $timestamp = null, $version=1.0);
 
     /**
-     * Get arguments of the command as array
+     * Get arguments of the query as array
      *
      * @return array List of arguments
      */
     public function getArguments();
 
     /**
-     * Get version of the command
+     * Get version of the query
      *
      * @return int Version number
      */
     public function getVersion();
 
     /**
-     * Get id of the command
+     * Get id of the query
      * Id is a unique identifier of this command
      *
      * @return string id
@@ -52,14 +48,14 @@ interface CommandInterface
     public function getId();
 
     /**
-     * Get timestamp of the command
+     * Get timestamp of the query
      *
      * @return string id
      */
     public function getTimestamp();
     
     /**
-     * Get all properties of the command (id, payload, timestamp, ...)
+     * Get all properties of the query (id, payload, timestamp, ...)
      * 
      * @return array
      */

@@ -10,6 +10,7 @@ namespace Test\Coverage\Cqrs;
 
 use Cqrs\Command\ClassMapCommandHandlerLoader;
 use Cqrs\Event\ClassMapEventListenerLoader;
+use Cqrs\Query\ClassMapQueryHandlerLoader;
 use Cqrs\Gate;
 use Test\Coverage\Mock\Bus\MockBus;
 use Test\Coverage\Mock\Bus\MockFakeSystemBus;
@@ -43,7 +44,8 @@ class GateTest extends TestCase
     {
         $mockBus = new MockBus(
             new ClassMapCommandHandlerLoader(),
-            new ClassMapEventListenerLoader()
+            new ClassMapEventListenerLoader(),
+            new ClassMapQueryHandlerLoader()
         );
         $this->gate->attach($mockBus);
         $this->gate->reset();
@@ -88,7 +90,8 @@ class GateTest extends TestCase
         $this->gate->enableSystemBus();
         $mockFakeSystemBus = new MockFakeSystemBus(
             new ClassMapCommandHandlerLoader(),
-            new ClassMapEventListenerLoader()
+            new ClassMapEventListenerLoader(),
+            new ClassMapQueryHandlerLoader()
         );
         $this->gate->attach($mockFakeSystemBus);
     }
@@ -109,7 +112,8 @@ class GateTest extends TestCase
         if (is_null($mockBus)) {
             $mockBus = new MockBus(
                 new ClassMapCommandHandlerLoader(),
-                new ClassMapEventListenerLoader()
+                new ClassMapEventListenerLoader(),
+                new ClassMapQueryHandlerLoader()
             );
             $this->gate->attach($mockBus);
         }
@@ -123,7 +127,8 @@ class GateTest extends TestCase
         $this->assertEquals(0, count($this->gate->attachedBuses()));
         $mockBus = new MockBus(
             new ClassMapCommandHandlerLoader(),
-            new ClassMapEventListenerLoader()
+            new ClassMapEventListenerLoader(),
+            new ClassMapQueryHandlerLoader()
         );
         $this->gate->attach($mockBus);
         $this->assertEquals(1, count($this->gate->attachedBuses()));
@@ -133,7 +138,8 @@ class GateTest extends TestCase
     {
         $mockBus = new MockBus(
             new ClassMapCommandHandlerLoader(),
-            new ClassMapEventListenerLoader()
+            new ClassMapEventListenerLoader(),
+            new ClassMapQueryHandlerLoader()
         );
         $this->gate->attach($mockBus);
         $this->assertEquals(
@@ -147,7 +153,8 @@ class GateTest extends TestCase
         $this->setExpectedException('Cqrs\Gate\GateException');
         $mockBus = new MockBus(
             new ClassMapCommandHandlerLoader(),
-            new ClassMapEventListenerLoader()
+            new ClassMapEventListenerLoader(),
+            new ClassMapQueryHandlerLoader()
         );
         $this->gate->attach($mockBus);
         $this->gate->attach($mockBus);
@@ -159,7 +166,8 @@ class GateTest extends TestCase
         if (is_null($mockBus)) {
             $mockBus = new MockBus(
                 new ClassMapCommandHandlerLoader(),
-                new ClassMapEventListenerLoader()
+                new ClassMapEventListenerLoader(),
+                new ClassMapQueryHandlerLoader()
             );
             $this->gate->attach($mockBus);
         }

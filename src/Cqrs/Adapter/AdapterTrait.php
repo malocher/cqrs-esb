@@ -10,6 +10,7 @@ namespace Cqrs\Adapter;
 
 use Cqrs\Bus\AbstractBus;
 use Cqrs\Command\CommandInterface;
+use Cqrs\Query\QueryInterface;
 use Cqrs\Event\EventInterface;
 
 /**
@@ -36,6 +37,20 @@ trait AdapterTrait
         $this->bus = $bus;
         $commandHandler->{$method}($command);
     }
+    
+    /**
+     * @param AbstractBus $bus
+     * @param $queryHandler
+     * @param $method
+     * @param QueryInterface $query
+     */
+    public function executeQuery(AbstractBus $bus, $queryHandler, $method, QueryInterface $query)
+    {
+        $this->bus = $bus;
+        $queryHandler->{$method}($query);
+    }
+    
+    
 
     /**
      * @param AbstractBus $bus

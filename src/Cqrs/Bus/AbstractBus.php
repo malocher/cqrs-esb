@@ -11,11 +11,15 @@ namespace Cqrs\Bus;
 use Cqrs\Command\CommandHandlerLoaderInterface;
 use Cqrs\Command\CommandInterface;
 use Cqrs\Command\InvokeCommandCommand;
+use Cqrs\Command\ExecuteQueryCommand;
 use Cqrs\Command\PublishEventCommand;
 use Cqrs\Event\CommandInvokedEvent;
+use Cqrs\Event\QueryExecutedEvent;
 use Cqrs\Event\EventInterface;
 use Cqrs\Event\EventListenerLoaderInterface;
 use Cqrs\Event\EventPublishedEvent;
+use Cqrs\Query\QueryInterface;
+use Cqrs\Query\QueryHandlerLoaderInterface;
 use Cqrs\Gate;
 
 /**
@@ -37,6 +41,12 @@ abstract class AbstractBus implements BusInterface
      * @var \Cqrs\Event\EventListenerLoaderInterface
      */
     protected $eventListenerLoader;
+    
+    /**
+     *
+     * @var \Cqrs\Query\QueryHandlerLoaderInterface 
+     */
+    protected $queryHandlerLoader;
 
     /**
      * @var array
@@ -47,6 +57,11 @@ abstract class AbstractBus implements BusInterface
      * @var array
      */
     protected $eventListenerMap = array();
+    
+    /**
+     * @var array
+     */
+    protected $queryHandlerMap = array();
 
     /**
      * @var Gate
@@ -59,11 +74,13 @@ abstract class AbstractBus implements BusInterface
      */
     public function __construct(
         CommandHandlerLoaderInterface $commandHandlerLoader,
-        EventListenerLoaderInterface $eventListenerLoader)
+        EventListenerLoaderInterface $eventListenerLoader,
+        QueryHandlerLoaderInterface $queryHandlerLoader)
     {
 
         $this->commandHandlerLoader = $commandHandlerLoader;
-        $this->eventListenerLoader = $eventListenerLoader;
+        $this->eventListenerLoader  = $eventListenerLoader;
+        $this->queryHandlerLoader   = $queryHandlerLoader;
     }
 
     /**
@@ -162,6 +179,103 @@ abstract class AbstractBus implements BusInterface
         }
 
         return true;
+    }
+    
+    /**
+     * @param string $queryClass
+     * @param mixed  $callableOrDefinition
+     * @return mixed
+     */
+    public function mapQuery($queryClass, $callableOrDefinition)
+    {
+        if (!isset($this->commandHandlerMap[$queryClass])) {
+            $this->commandHandlerMap[$queryClass] = array();
+        }
+        $this->commandHandlerMap[$queryClass][] = $callableOrDefinition;
+        return true;
+    }
+
+    /**
+     * @return array
+     */
+    public function getQueryHandlerMap()
+    {
+        return $this->queryHandlerMap;
+    }
+
+    /**
+     * Execute the query and return the result
+     * 
+     * The bus loops over the QueryHandlerMap until a valid result is returned (not null)
+     * by a handler or each handler has executed the query
+     *  
+     * @param QueryInterface $query
+     * @return mixed
+     * @throws BusException
+     */
+    public function executeQuery(QueryInterface $query)
+    {
+        $queryClass = get_class($query);
+
+        // ExecuteQueryCommand first! Because a queryClass _IS_ actually invoked.
+        if (!is_null($this->gate->getSystemBus())) {
+            $executeQueryCommand = new ExecuteQueryCommand();
+            $executeQueryCommand->setMessageClass(get_class($query));
+            $executeQueryCommand->setMessageVars($query->getMessageVars());
+            $executeQueryCommand->setBusName($this->getName());
+            $this->gate->getSystemBus()->invokeCommand($executeQueryCommand);
+        }
+
+        // Check if query exists after invoking the ExecuteQueryCommand because
+        // the ExecuteQueryCommand tells that a query is executed but does not care
+        // if it succeeded. Later the QueryExecutedEvent can be used to check if a
+        // query succeeded.
+        if (!isset($this->queryHandlerMap[$queryClass])) {
+            return false;
+        }
+        
+        $result = null;
+
+        foreach ($this->queryHandlerMap[$queryClass] as $i => $callableOrDefinition) {
+
+            if (is_callable($callableOrDefinition)) {
+                $result = call_user_func($callableOrDefinition, $query, $this->gate);
+                
+                if (!is_null($result)) {
+                    break;
+                }
+            }
+
+            if (is_array($callableOrDefinition)) {
+                $queryHandler = $this->queryHandlerLoader->getQueryHandler($callableOrDefinition['alias']);
+                $method = $callableOrDefinition['method'];
+
+                // instead of invoking the handler method directly
+                // we call the execute function of the implemented trait and pass along a reference to the gate
+                $usedTraits = class_uses($queryHandler);
+                if (!isset($usedTraits['Cqrs\Adapter\AdapterTrait'])) {
+                    throw BusException::traitError('Adapter Trait is missing! Use it!');
+                }
+                $result = $queryHandler->executeQuery($this, $queryHandler, $method, $query);
+                if (!is_null($result)) {
+                    break;
+                }
+            }
+        }
+
+        // Dispatch the QueryExecutedEvent here! If for example a query could not be executed
+        // because it does not exist in the queryHandlerMap[<empty>] this Event would never
+        // be dispatched!
+        if (!is_null($this->gate->getSystemBus())) {
+            $queryExecutedEvent = new QueryExecutedEvent();
+            $queryExecutedEvent->setMessageClass(get_class($query));
+            $queryExecutedEvent->setMessageVars($query->getMessageVars());
+            $queryExecutedEvent->setBusName($this->getName());
+            $queryExecutedEvent->setResult($result);
+            $this->gate->getSystemBus()->publishEvent($queryExecutedEvent);
+        }
+
+        return $result;
     }
 
     /**

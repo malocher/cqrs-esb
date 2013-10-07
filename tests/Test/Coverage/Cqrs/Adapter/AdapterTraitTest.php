@@ -11,6 +11,7 @@ namespace Test\Coverage\Cqrs\Adapter;
 use Cqrs\Adapter\AdapterTrait;
 use Cqrs\Command\ClassMapCommandHandlerLoader;
 use Cqrs\Event\ClassMapEventListenerLoader;
+use Cqrs\Query\ClassMapQueryHandlerLoader;
 use Cqrs\Gate;
 use Test\Coverage\Mock\Bus\MockAnotherBus;
 use Test\Coverage\Mock\Bus\MockBus;
@@ -40,11 +41,13 @@ class AdapterTraitTest extends TestCase
     {
         $this->bus = new MockBus(
             new ClassMapCommandHandlerLoader(),
-            new ClassMapEventListenerLoader()
+            new ClassMapEventListenerLoader(),
+            new ClassMapQueryHandlerLoader()
         );
         $this->anotherBus = new MockAnotherBus(
             new ClassMapCommandHandlerLoader(),
-            new ClassMapEventListenerLoader()
+            new ClassMapEventListenerLoader(),
+            new ClassMapQueryHandlerLoader()
         );
         $gate = new Gate();
         $gate->attach($this->bus);

@@ -6,33 +6,37 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace Cqrs\Event;
 
 use Cqrs\Message;
-
 /**
- * Class CommandInvokedEvent
- *
- * @author Manfred Weber <crafics@php.net>
- * @package Cqrs\Event
+ * Description of QueryExecutedEvent
+ * 
+ * @author Alexander Miertsch <kontakt@codeliner.ws>
+ * @copyright (c) 2013, Alexander Miertsch
  */
-class CommandInvokedEvent extends Message implements EventInterface
+class QueryExecutedEvent extends Message implements EventInterface
 {
     /**
-     * @var string name of the bus of the invoking class
+     * @var string name of the bus of the executing class
      */
     protected $busName;
 
     /**
-     * @var array message vars of the invoking class
+     * @var array message vars of the query class
      */
     protected $messageVars;
 
     /**
-     * @var string message class of the invoking class
+     * @var string message class of the query class
      */
     protected $messageClass;
+    
+    /**
+     *
+     * @var mixed result of the query 
+     */
+    protected $result;
 
     /**
      * set class name
@@ -92,5 +96,25 @@ class CommandInvokedEvent extends Message implements EventInterface
     public function getBusName()
     {
         return $this->busName;
+    }
+    
+    /**
+     * Set result of the query
+     * 
+     * @param mixed $result
+     */
+    public function setResult($result)
+    {
+        $this->result = $result;
+    }
+    
+    /**
+     * Get result of the query
+     * 
+     * @return mixed
+     */
+    public function getResult()
+    {
+        return $this->result;
     }
 }

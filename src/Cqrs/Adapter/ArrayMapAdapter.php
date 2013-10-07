@@ -42,11 +42,15 @@ class ArrayMapAdapter implements AdapterInterface
                 $bus->mapCommand($messageClass, $callableOrDefinition);
             } else if ($this->isEvent($messageClass)) {
                 $bus->registerEventListener($messageClass, $callableOrDefinition);
-            } else {
+            } else if ($this->isQuery($messageClass)) {
+                $bus->mapQuery($messageClass, $callableOrDefinition);
+            }
+            else {
                 throw AdapterException::pipeError(sprintf(
-                    'Message <%s> must implement %s or %s',
+                    'Message <%s> must implement %s, %s or %s',
                     $messageClass,
                     'Cqrs\Command\CommandInterface',
+                    'Cqrs\Query\QueryInterface',
                     'Cqrs\Event\EventInterface'
                 ));
             }
@@ -57,7 +61,6 @@ class ArrayMapAdapter implements AdapterInterface
      * Check if message implements Cqrs\Command\CommandInterface
      *
      * @param string $messageClass
-     * @throws AdapterException
      * @return boolean
      */
     private function isCommand($messageClass)
@@ -68,12 +71,26 @@ class ArrayMapAdapter implements AdapterInterface
         }
         return in_array('Cqrs\Command\CommandInterface', $interfaces);
     }
+    
+    /**
+     * Check if message implements Cqrs\Query\QueryInterface
+     *
+     * @param string $messageClass
+     * @return boolean
+     */
+    private function isQuery($messageClass) 
+    {
+        $interfaces = class_implements($messageClass);
+        if (!$interfaces) {
+            return false;
+        }
+        return in_array('Cqrs\Query\QueryInterface', $interfaces);
+    }
 
     /**
      * Check if message implements Cqrs\Command\CommandInterface
      *
      * @param string $messageClass
-     * @throws AdapterException
      * @return boolean
      */
     private function isEvent($messageClass)

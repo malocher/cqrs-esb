@@ -14,6 +14,7 @@ use Cqrs\Command\ClassMapCommandHandlerLoader;
 use Cqrs\Command\CommandInterface;
 use Cqrs\Event\ClassMapEventListenerLoader;
 use Cqrs\Event\EventInterface;
+use Cqrs\Query\ClassMapQueryHandlerLoader;
 use Cqrs\Gate;
 use Test\Coverage\Mock\Command\MockCommand;
 use Test\Coverage\Mock\Event\MockEvent;
@@ -35,7 +36,9 @@ class AbstractBusTest extends TestCase implements BusInterfaceTest
     public function setUp()
     {
         $this->bus = $this->getMockForAbstractClass('Cqrs\Bus\AbstractBus', array(
-            new ClassMapCommandHandlerLoader(), new ClassMapEventListenerLoader()
+            new ClassMapCommandHandlerLoader(), 
+            new ClassMapEventListenerLoader(),
+            new ClassMapQueryHandlerLoader()
         ));
     }
 

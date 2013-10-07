@@ -12,6 +12,8 @@ use Cqrs\Command\CommandHandlerLoaderInterface;
 use Cqrs\Command\CommandInterface;
 use Cqrs\Event\EventInterface;
 use Cqrs\Event\EventListenerLoaderInterface;
+use Cqrs\Query\QueryInterface;
+use Cqrs\Query\QueryHandlerLoaderInterface;
 use Cqrs\Gate;
 
 /**
@@ -31,7 +33,8 @@ interface BusInterface
      */
     public function __construct(
         CommandHandlerLoaderInterface $commandHandlerLoader,
-        EventListenerLoaderInterface $eventListenerLoader);
+        EventListenerLoaderInterface $eventListenerLoader,
+        QueryHandlerLoaderInterface $queryHandlerLoader);
 
     /**
      * Get the name of the bus
@@ -67,8 +70,9 @@ interface BusInterface
      *      'method' => 'handleAddUserCommand' //Method is called after loading CommandHandler
      * );
      *
-     * The method that handles a command gets two arguments.
-     * The first one is the command and the second is the gate.
+     * A callable gets two arguments: the command to execute and the gate.
+     * A normal class provided as definition should implement the \Cqrs\Adapter\AdapterTrait
+     * and only gets the command as argument.
      *
      * @param $commandClass
      * @param $callableOrDefinition
@@ -90,6 +94,49 @@ interface BusInterface
      * @return mixed
      */
     public function invokeCommand(CommandInterface $command);
+    
+    /**
+     * Map a query to a query handler
+     *
+     * You can provide every callable as query handler or a definition array,
+     * that contains the keys: alias and method.
+     *
+     * @example defintion:
+     *
+     * $userQueryHandlerDefinition = array(
+     *      'alias'  => 'user_handler',        //Alias is passed to QueryHandlerLoader
+     *      'method' => 'handleGetUserQuery' //Method is called after loading QueryHandler
+     * );
+     *
+     * A callable gets two arguments the query to execute and the gate.
+     * A normal class provided as definition should implement the \Cqrs\Adapter\AdapterTrait
+     * and only gets the query as argument.
+     * 
+     * Both (callable or definition) must return the result of the query.
+     *
+     * @param $commandClass
+     * @param $callableOrDefinition
+     * @return mixed
+     */
+    public function mapQuery($queryClass, $callableOrDefinition);
+
+    /**
+     * Get all mapped queries
+     *
+     * @return mixed
+     */
+    public function getQueryHandlerMap();
+
+    /**
+     * Hand over query to registered query handler(s) and return result
+     * 
+     * The bus should loop over the QueryHandlerMap until a valid result is returned (not null)
+     * by a handler or each handler has executed the query
+     *
+     * @param QueryInterface $query
+     * @return mixed|null
+     */
+    public function executeQuery(QueryInterface $query);
 
     /**
      * Register a listener for an event

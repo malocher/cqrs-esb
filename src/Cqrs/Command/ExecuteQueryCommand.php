@@ -6,18 +6,16 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
-namespace Cqrs\Event;
+namespace Cqrs\Command;
 
 use Cqrs\Message;
-
 /**
- * Class CommandInvokedEvent
- *
- * @author Manfred Weber <crafics@php.net>
- * @package Cqrs\Event
+ * Class ExecuteQueryCommand
+ * 
+ * @author Alexander Miertsch <kontakt@codeliner.ws>
+ * @copyright (c) 2013, Alexander Miertsch
  */
-class CommandInvokedEvent extends Message implements EventInterface
+class ExecuteQueryCommand extends Message implements CommandInterface
 {
     /**
      * @var string name of the bus of the invoking class
