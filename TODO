@@ -17,3 +17,30 @@ That means, I cannot declare crafics/cqrs-php in my zf2-cqrs-module as dependenc
 my ZF2 module defines the repository link to crafics/cqrs-php in it's composer.json. This makes thinks complicated.
 
 DONE: https://packagist.org/packages/crafics/cqrs-php
+
+13)
+Add Handling of Queries: work in progress
+
+14)
+Split BusInterface into: 
+    - BusInterface: getName(), setGate(), getGate()
+    - CommandBusInterface: setCommandHandlerLoader(), mapCommand(), getCommandHandlerMap(), invokeCommand()
+    - EventBusInterface: setEventListenerLoader(), registerEvent(), getEventListenerMap(), publishEvent()
+    - QueryBusInterface: setQueryHandlerLoader(), mapQuery(), getQueryHandlerMap(), executeQuery()
+
+Provide Traits for all 4 Types.
+
+The AbstractBus implements all 4 interfaces and uses all 4 Traits to provide a simple setup with only one bus extending the AbstractBus.
+If you want to work with specific buses, f.e. a seperate QueryBus you only need to implement BusInterface, QueryBusInterface and use BusTrait and QueryBusTrait.
+
+15)
+Rename property $arguments to $payload (for Commands, Events and Queries)
+
+16)
+Write UnitTests for new query stuff
+
+17)
+Add Query Annotation
+
+18)
+Find a solution to decouple system bus setup with hardcoded dependency to ClassMapLoaders
