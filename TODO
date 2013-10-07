@@ -17,3 +17,6 @@ That means, I cannot declare crafics/cqrs-php in my zf2-cqrs-module as dependenc
 my ZF2 module defines the repository link to crafics/cqrs-php in it's composer.json. This makes thinks complicated.
 
 DONE: https://packagist.org/packages/crafics/cqrs-php
+
+13)
+Add Handling of Queries: work in progress
