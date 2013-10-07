@@ -43,11 +43,13 @@ trait AdapterTrait
      * @param $queryHandler
      * @param $method
      * @param QueryInterface $query
+     * 
+     * @return mixed Result of the query
      */
     public function executeQuery(AbstractBus $bus, $queryHandler, $method, QueryInterface $query)
     {
         $this->bus = $bus;
-        $queryHandler->{$method}($query);
+        return $queryHandler->{$method}($query);
     }
     
     
