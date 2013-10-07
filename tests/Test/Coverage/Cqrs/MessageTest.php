@@ -41,11 +41,27 @@ class MessageTest extends TestCase
         $this->message = new Message();
         $this->assertNotNull($this->message->getId());
     }
+    
+    public function testSetGetId()
+    {
+        $this->message = new Message(null, 1);
+        
+        $this->assertEquals(1, $this->message->getId());
+    }
 
     public function testGetTimestamp()
     {
         $this->message = new Message();
         $this->assertNotNull($this->message->getTimestamp());
+    }
+    
+    public function testSetGetTimestamp()
+    {
+        $ts = strtotime('-1 day');
+        
+        $this->message = new Message(null, null, $ts);
+        
+        $this->assertEquals($ts, $this->message->getTimestamp());
     }
 
     public function testGetVersion()
@@ -56,7 +72,7 @@ class MessageTest extends TestCase
 
     public function testGetAnotherVersion()
     {
-        $this->message = new Message(null,2.0);
+        $this->message = new Message(null, null, null, 2.0);
         $this->assertEquals(2.0,$this->message->getVersion());
     }
 
