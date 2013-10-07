@@ -44,3 +44,12 @@ Add Query Annotation
 
 18)
 Find a solution to decouple system bus setup with hardcoded dependency to ClassMapLoaders
+
+19)
+Check, implement and test handling of transactions:
+When and how should a transaction be started?
+If a transaction fails, no Events should be published!
+
+20)
+Implement ConventionAdapter
+
