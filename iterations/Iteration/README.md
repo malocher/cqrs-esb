@@ -22,3 +22,8 @@ Introduction of the System-Bus! The system bus can be used to track messages [Ev
 ### Iteration5 - Configuration
 
 Configuration using Setup
+
+### Iteration6 - Queries
+
+Introduction of Queries that live outside the domain or business model. Query handler return data to the caller.
+Also look into Iteration6/Iteration6Monitor.php!
