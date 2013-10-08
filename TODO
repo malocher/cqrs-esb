@@ -20,3 +20,58 @@ DONE: https://packagist.org/packages/crafics/cqrs-php
 
 13)
 Add Handling of Queries: work in progress
+
+14)
+Split BusInterface into: 
+    - BusInterface: getName(), setGate(), getGate()
+    - CommandBusInterface: setCommandHandlerLoader(), mapCommand(), getCommandHandlerMap(), invokeCommand()
+    - EventBusInterface: setEventListenerLoader(), registerEvent(), getEventListenerMap(), publishEvent()
+    - QueryBusInterface: setQueryHandlerLoader(), mapQuery(), getQueryHandlerMap(), executeQuery()
+
+Provide Traits for all 4 Types.
+
+The AbstractBus implements all 4 interfaces and uses all 4 Traits to provide a simple setup with only one bus extending the AbstractBus.
+If you want to work with specific buses, f.e. a seperate QueryBus you only need to implement BusInterface, QueryBusInterface and use BusTrait and QueryBusTrait.
+
+What do you think?
+
+
+15)
+Rename property $arguments to $payload (for Commands, Events and Queries)
+
+16)
+Write UnitTests for new query stuff
+
+17)
+Add Query Annotation
+
+18)
+Find a solution to decouple system bus setup from hardcoded dependency to ClassMapLoaders
+
+19)
+Check, implement and test handling of transactions:
+When and how should a transaction be started?
+If a transaction fails, no Events should be published!
+
+Brainstorming:
+
+- new Methods in BusInterface: activateEventQueue(); deactivateEventQueue(); queueEvent(EventInterface $event); dequeueEvents(); dropEvents();
+- CQRS-Transactions are handled via Gate: beginTransaction(); roleback(); commit();
+- when beginTransaction() is called, Gate loops over each registered Bus and call activateEventQueue(), excluding the system-bus
+- if the eventQueue of a Bus is active, the bus must queue each published event, if not the bus can publish the evnet like now
+- if commit() is called, the Gate loops over each registered Bus and call dequeueEvents(), first now the events are realy published to the Listeners
+- if roleback() is callled, the Gate loops over each registered Bus and call dropEvents(), no Event is published to a listener
+- in both cases (commit and roleback), the Gate calls deactivateEventQueue() on each Bus
+- the system bus is excluded from the transaction behavior, cause we want to monitor each event, also if a roleback is triggered and
+  if you want to work with an event store, it should get the possibility to store the events during transaction
+
+
+
+
+20)
+Implement ConventionAdapter
+
+DONE: https://packagist.org/packages/crafics/cqrs-php
+
+13)
+Add Handling of Queries: work in progress
