@@ -44,8 +44,7 @@ class ArrayMapAdapter implements AdapterInterface
                 $bus->registerEventListener($messageClass, $callableOrDefinition);
             } else if ($this->isQuery($messageClass)) {
                 $bus->mapQuery($messageClass, $callableOrDefinition);
-            }
-            else {
+            } else {
                 throw AdapterException::pipeError(sprintf(
                     'Message <%s> must implement %s, %s or %s',
                     $messageClass,
@@ -71,14 +70,14 @@ class ArrayMapAdapter implements AdapterInterface
         }
         return in_array('Cqrs\Command\CommandInterface', $interfaces);
     }
-    
+
     /**
      * Check if message implements Cqrs\Query\QueryInterface
      *
      * @param string $messageClass
      * @return boolean
      */
-    private function isQuery($messageClass) 
+    private function isQuery($messageClass)
     {
         $interfaces = class_implements($messageClass);
         if (!$interfaces) {

@@ -11,6 +11,7 @@ namespace Cqrs\Configuration;
 use Cqrs\Command\ClassMapCommandHandlerLoader;
 use Cqrs\Event\ClassMapEventListenerLoader;
 use Cqrs\Gate;
+use Cqrs\Query\ClassMapQueryHandlerLoader;
 use Test\Integration\Test4\Test4Command;
 use Test\Integration\Test4\Test4Event;
 use Test\TestCase;
@@ -34,6 +35,7 @@ class Test4 extends TestCase
         $this->object->setGate(new Gate());
         $this->object->setCommandHandlerLoader(new ClassMapCommandHandlerLoader());
         $this->object->setEventListenerLoader(new ClassMapEventListenerLoader());
+        $this->object->setQueryHandlerLoader(new ClassMapQueryHandlerLoader());
     }
 
     public function testInitializeCommand()

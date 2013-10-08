@@ -13,10 +13,11 @@ use Cqrs\Adapter\AnnotationAdapter;
 use Cqrs\Command\ClassMapCommandHandlerLoader;
 use Cqrs\Event\ClassMapEventListenerLoader;
 use Cqrs\Gate;
+use Cqrs\Query\ClassMapQueryHandlerLoader;
 use Iteration\Iteration3\Iteration3Bus;
 use Iteration\Iteration3\Iteration3Command;
 
-require dirname(dirname(__DIR__)). '/bootstrap.php';
+require dirname(dirname(__DIR__)) . '/bootstrap.php';
 
 /**
  * Class Iteration3
@@ -50,7 +51,8 @@ class Iteration3
         // Create a bus and attach it to the gate
         $this->bus = new Iteration3Bus(
             new ClassMapCommandHandlerLoader(),
-            new ClassMapEventListenerLoader()
+            new ClassMapEventListenerLoader(),
+            new ClassMapQueryHandlerLoader()
         );
         $this->gate->attach($this->bus);
 

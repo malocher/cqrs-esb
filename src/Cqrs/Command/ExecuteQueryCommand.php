@@ -9,9 +9,10 @@
 namespace Cqrs\Command;
 
 use Cqrs\Message;
+
 /**
  * Class ExecuteQueryCommand
- * 
+ *
  * @author Alexander Miertsch <kontakt@codeliner.ws>
  * @copyright (c) 2013, Alexander Miertsch
  */

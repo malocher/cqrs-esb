@@ -11,8 +11,8 @@ namespace Test\Coverage\Cqrs\Configuration;
 use Cqrs\Command\ClassMapCommandHandlerLoader;
 use Cqrs\Configuration\Setup;
 use Cqrs\Event\ClassMapEventListenerLoader;
-use Cqrs\Query\ClassMapQueryHandlerLoader;
 use Cqrs\Gate;
+use Cqrs\Query\ClassMapQueryHandlerLoader;
 use Test\TestCase;
 
 /**
@@ -81,7 +81,7 @@ class SetupTest extends TestCase
         }
         $this->assertInstanceOf('Cqrs\Event\ClassMapEventListenerLoader', $this->setup->getEventListenerLoader());
     }
-    
+
     public function testSetGetQueryHandlerLoader()
     {
         $this->setup->setQueryHandlerLoader(new ClassMapQueryHandlerLoader());
@@ -91,7 +91,7 @@ class SetupTest extends TestCase
     public function testInitialize()
     {
         $monitor = new \Test\Coverage\Mock\Command\MockCommandMonitor();
-        
+
         $configuration = array(
             'adapters' => array(
                 array(
@@ -105,7 +105,7 @@ class SetupTest extends TestCase
                         ),
                         'Cqrs\Bus\SystemBus' => array(
                             'Cqrs\Command\InvokeCommandCommand' => $monitor,
-                            'Cqrs\Event\CommandInvokedEvent'    => $monitor,
+                            'Cqrs\Event\CommandInvokedEvent' => $monitor,
                         )
                     )
                 ),
@@ -123,16 +123,16 @@ class SetupTest extends TestCase
         $this->assertInstanceOf('Test\Coverage\Mock\Bus\MockBus', $this->setup->getGate()->getBus('test-coverage-mock-bus'));
 
         $this->assertInstanceOf('Cqrs\Bus\SystemBus', $this->setup->getGate()->getSystemBus());
-        
+
         $mockCommand = new \Test\Coverage\Mock\Command\MockCommand();
-        
+
         $this->setup->getGate()->getBus('test-coverage-mock-bus')->invokeCommand($mockCommand);
-        
+
         $this->assertTrue($mockCommand->isEdited());
-        
+
         $invokeCommandCommand = $monitor->getInvokeCommandCommands()[0];
-        $commandInvokedEvent  = $monitor->getCommandInvokedEvents()[0];
-        
+        $commandInvokedEvent = $monitor->getCommandInvokedEvents()[0];
+
         $this->assertEquals('Test\Coverage\Mock\Command\MockCommand', $invokeCommandCommand->getMessageClass());
         $this->assertEquals('Test\Coverage\Mock\Command\MockCommand', $commandInvokedEvent->getMessageClass());
     }

@@ -21,13 +21,13 @@ interface EventInterface
 
     /**
      * Constructor
-     * 
-     * @param mixed  $arguments
+     *
+     * @param mixed $arguments
      * @param string $id
-     * @param int    $timestamp
-     * @param float  $version
+     * @param int $timestamp
+     * @param float $version
      */
-    public function __construct($arguments = null, $id = null, $timestamp = null, $version=1.0);
+    public function __construct($arguments = null, $id = null, $timestamp = null, $version = 1.0);
 
     /**
      * Get arguments of the command as array
@@ -57,10 +57,10 @@ interface EventInterface
      * @return string id
      */
     public function getTimestamp();
-    
+
     /**
      * Get all properties of the event (id, payload, timestamp, ...)
-     * 
+     *
      * @return array
      */
     public function getMessageVars();

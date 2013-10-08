@@ -79,17 +79,20 @@ class AnnotationAdapter implements AdapterInterface
 
         foreach ($reflMs as $reflM) {
 
-            if( preg_match_all('~@(command|event)\s+(\S+)~i',$reflM->getDocComment(),$annotations,PREG_SET_ORDER) > 0){
-                foreach($annotations as $class){
+            if (preg_match_all('~@(command|event|query)\s+(\S+)~i', $reflM->getDocComment(), $annotations, PREG_SET_ORDER) > 0) {
+                foreach ($annotations as $class) {
                     $qualifiedClassname = $class[2];
-                    if( false === class_exists($qualifiedClassname) ){
+                    if (false === class_exists($qualifiedClassname)) {
                         throw AdapterException::annotationError(sprintf('Class <%s> does not exist', $qualifiedClassname));
                     }
-                    if(isset(class_implements($qualifiedClassname)['Cqrs\Command\CommandInterface'])){
+                    if (isset(class_implements($qualifiedClassname)['Cqrs\Command\CommandInterface'])) {
                         $bus->mapCommand($qualifiedClassname, array('alias' => $reflM->class, 'method' => $reflM->name));
                     }
-                    if(isset(class_implements($qualifiedClassname)['Cqrs\Event\EventInterface'])){
+                    if (isset(class_implements($qualifiedClassname)['Cqrs\Event\EventInterface'])) {
                         $bus->registerEventListener($qualifiedClassname, array('alias' => $reflM->class, 'method' => $reflM->name));
+                    }
+                    if (isset(class_implements($qualifiedClassname)['Cqrs\Query\QueryInterface'])) {
+                        $bus->mapQuery($qualifiedClassname, array('alias' => $reflM->class, 'method' => $reflM->name));
                     }
                 }
             }

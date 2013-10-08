@@ -10,17 +10,17 @@ namespace Cqrs\Bus;
 
 use Cqrs\Command\CommandHandlerLoaderInterface;
 use Cqrs\Command\CommandInterface;
-use Cqrs\Command\InvokeCommandCommand;
 use Cqrs\Command\ExecuteQueryCommand;
+use Cqrs\Command\InvokeCommandCommand;
 use Cqrs\Command\PublishEventCommand;
 use Cqrs\Event\CommandInvokedEvent;
-use Cqrs\Event\QueryExecutedEvent;
 use Cqrs\Event\EventInterface;
 use Cqrs\Event\EventListenerLoaderInterface;
 use Cqrs\Event\EventPublishedEvent;
-use Cqrs\Query\QueryInterface;
-use Cqrs\Query\QueryHandlerLoaderInterface;
+use Cqrs\Event\QueryExecutedEvent;
 use Cqrs\Gate;
+use Cqrs\Query\QueryHandlerLoaderInterface;
+use Cqrs\Query\QueryInterface;
 
 /**
  * Class AbstractBus
@@ -41,10 +41,10 @@ abstract class AbstractBus implements BusInterface
      * @var \Cqrs\Event\EventListenerLoaderInterface
      */
     protected $eventListenerLoader;
-    
+
     /**
      *
-     * @var \Cqrs\Query\QueryHandlerLoaderInterface 
+     * @var \Cqrs\Query\QueryHandlerLoaderInterface
      */
     protected $queryHandlerLoader;
 
@@ -57,7 +57,7 @@ abstract class AbstractBus implements BusInterface
      * @var array
      */
     protected $eventListenerMap = array();
-    
+
     /**
      * @var array
      */
@@ -71,6 +71,7 @@ abstract class AbstractBus implements BusInterface
     /**
      * @param CommandHandlerLoaderInterface $commandHandlerLoader
      * @param EventListenerLoaderInterface $eventListenerLoader
+     * @param QueryHandlerLoaderInterface $queryHandlerLoader
      */
     public function __construct(
         CommandHandlerLoaderInterface $commandHandlerLoader,
@@ -79,8 +80,8 @@ abstract class AbstractBus implements BusInterface
     {
 
         $this->commandHandlerLoader = $commandHandlerLoader;
-        $this->eventListenerLoader  = $eventListenerLoader;
-        $this->queryHandlerLoader   = $queryHandlerLoader;
+        $this->eventListenerLoader = $eventListenerLoader;
+        $this->queryHandlerLoader = $queryHandlerLoader;
     }
 
     /**
@@ -180,18 +181,18 @@ abstract class AbstractBus implements BusInterface
 
         return true;
     }
-    
+
     /**
      * @param string $queryClass
-     * @param mixed  $callableOrDefinition
+     * @param mixed $callableOrDefinition
      * @return mixed
      */
     public function mapQuery($queryClass, $callableOrDefinition)
     {
-        if (!isset($this->commandHandlerMap[$queryClass])) {
-            $this->commandHandlerMap[$queryClass] = array();
+        if (!isset($this->queryHandlerMap[$queryClass])) {
+            $this->queryHandlerMap[$queryClass] = array();
         }
-        $this->commandHandlerMap[$queryClass][] = $callableOrDefinition;
+        $this->queryHandlerMap[$queryClass][] = $callableOrDefinition;
         return true;
     }
 
@@ -205,10 +206,10 @@ abstract class AbstractBus implements BusInterface
 
     /**
      * Execute the query and return the result
-     * 
+     *
      * The bus loops over the QueryHandlerMap until a valid result is returned (not null)
      * by a handler or each handler has executed the query
-     *  
+     *
      * @param QueryInterface $query
      * @return mixed
      * @throws BusException
@@ -233,14 +234,14 @@ abstract class AbstractBus implements BusInterface
         if (!isset($this->queryHandlerMap[$queryClass])) {
             return false;
         }
-        
+
         $result = null;
 
         foreach ($this->queryHandlerMap[$queryClass] as $i => $callableOrDefinition) {
 
             if (is_callable($callableOrDefinition)) {
                 $result = call_user_func($callableOrDefinition, $query, $this->gate);
-                
+
                 if (!is_null($result)) {
                     break;
                 }

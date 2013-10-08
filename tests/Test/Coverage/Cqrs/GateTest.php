@@ -10,8 +10,8 @@ namespace Test\Coverage\Cqrs;
 
 use Cqrs\Command\ClassMapCommandHandlerLoader;
 use Cqrs\Event\ClassMapEventListenerLoader;
-use Cqrs\Query\ClassMapQueryHandlerLoader;
 use Cqrs\Gate;
+use Cqrs\Query\ClassMapQueryHandlerLoader;
 use Test\Coverage\Mock\Bus\MockBus;
 use Test\Coverage\Mock\Bus\MockFakeSystemBus;
 use Test\TestCase;

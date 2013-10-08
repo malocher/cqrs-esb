@@ -9,9 +9,10 @@
 namespace Cqrs\Event;
 
 use Cqrs\Message;
+
 /**
  * Description of QueryExecutedEvent
- * 
+ *
  * @author Alexander Miertsch <kontakt@codeliner.ws>
  * @copyright (c) 2013, Alexander Miertsch
  */
@@ -31,10 +32,10 @@ class QueryExecutedEvent extends Message implements EventInterface
      * @var string message class of the query class
      */
     protected $messageClass;
-    
+
     /**
      *
-     * @var mixed result of the query 
+     * @var mixed result of the query
      */
     protected $result;
 
@@ -97,20 +98,20 @@ class QueryExecutedEvent extends Message implements EventInterface
     {
         return $this->busName;
     }
-    
+
     /**
      * Set result of the query
-     * 
+     *
      * @param mixed $result
      */
     public function setResult($result)
     {
         $this->result = $result;
     }
-    
+
     /**
      * Get result of the query
-     * 
+     *
      * @return mixed
      */
     public function getResult()

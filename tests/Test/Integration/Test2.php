@@ -12,6 +12,7 @@ use Cqrs\Adapter\AnnotationAdapter;
 use Cqrs\Command\ClassMapCommandHandlerLoader;
 use Cqrs\Event\ClassMapEventListenerLoader;
 use Cqrs\Gate;
+use Cqrs\Query\ClassMapQueryHandlerLoader;
 use Test\Integration\Test2\Test2Bus;
 use Test\Integration\Test2\Test2Command;
 use Test\Integration\Test2\Test2Event;
@@ -49,7 +50,8 @@ class Test2 extends TestCase
         $this->gate = new Gate();
         $this->bus = new Test2Bus(
             new ClassMapCommandHandlerLoader(),
-            new ClassMapEventListenerLoader()
+            new ClassMapEventListenerLoader(),
+            new ClassMapQueryHandlerLoader()
         );
         $this->gate->attach($this->bus);
         $this->adapter = new AnnotationAdapter();

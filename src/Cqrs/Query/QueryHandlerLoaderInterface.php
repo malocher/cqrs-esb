@@ -10,7 +10,7 @@ namespace Cqrs\Query;
 
 /**
  * Interface QueryHandlerLoaderInterface
- * 
+ *
  * @author Alexander Miertsch <kontakt@codeliner.ws>
  */
 interface QueryHandlerLoaderInterface

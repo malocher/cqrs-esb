@@ -10,8 +10,8 @@ namespace Cqrs\Configuration;
 
 use Cqrs\Command\CommandHandlerLoaderInterface;
 use Cqrs\Event\EventListenerLoaderInterface;
-use Cqrs\Query\QueryHandlerLoaderInterface;
 use Cqrs\Gate;
+use Cqrs\Query\QueryHandlerLoaderInterface;
 
 /**
  * Class Setup
@@ -40,10 +40,10 @@ class Setup
      * @var EventListenerLoaderInterface
      */
     protected $eventListenerLoader;
-    
+
     /**
      *
-     * @var QueryHandlerLoaderInterface 
+     * @var QueryHandlerLoaderInterface
      */
     protected $queryHandlerLoader;
 
@@ -107,9 +107,9 @@ class Setup
     {
         return $this->eventListenerLoader;
     }
-    
+
     /**
-     * 
+     *
      * @return QueryHandlerLoaderInterface
      */
     public function getQueryHandlerLoader()
@@ -118,7 +118,7 @@ class Setup
     }
 
     /**
-     * 
+     *
      * @param QueryHandlerLoaderInterface $queryHandlerLoader
      */
     public function setQueryHandlerLoader(QueryHandlerLoaderInterface $queryHandlerLoader)
@@ -126,7 +126,7 @@ class Setup
         $this->queryHandlerLoader = $queryHandlerLoader;
     }
 
-    
+
     /**
      * initialize
      *
@@ -181,7 +181,7 @@ class Setup
         }
 
         $bus = new $busClass(
-            $this->getCommandHandlerLoader(), 
+            $this->getCommandHandlerLoader(),
             $this->getEventListenerLoader(),
             $this->getQueryHandlerLoader()
         );

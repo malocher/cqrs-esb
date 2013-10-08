@@ -13,8 +13,8 @@ use Cqrs\Bus\BusInterface;
 use Cqrs\Bus\SystemBus;
 use Cqrs\Command\ClassMapCommandHandlerLoader;
 use Cqrs\Event\ClassMapEventListenerLoader;
-use Cqrs\Query\ClassMapQueryHandlerLoader;
 use Cqrs\Gate\GateException;
+use Cqrs\Query\ClassMapQueryHandlerLoader;
 
 /**
  * Class Gate

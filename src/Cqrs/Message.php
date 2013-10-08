@@ -38,30 +38,30 @@ class Message
 
     /**
      * Constructor
-     * 
-     * @param mixed  $arguments
+     *
+     * @param mixed $arguments
      * @param string $id
-     * @param int    $timestamp
-     * @param float  $version
+     * @param int $timestamp
+     * @param float $version
      */
-    public function __construct($arguments = null, $id = null, $timestamp = null, $version=1.0)
+    public function __construct($arguments = null, $id = null, $timestamp = null, $version = 1.0)
     {
         if (!is_null($arguments)) {
             $this->arguments = $arguments;
         }
-        
+
         if (is_null($id)) {
             $this->id = uniqid();
         } else {
             $this->id = $id;
         }
-        
+
         if (is_null($timestamp)) {
             $this->timestamp = date_timestamp_get(date_create());
         } else {
             $this->timestamp = $timestamp;
         }
-        
+
         $this->version = $version;
     }
 

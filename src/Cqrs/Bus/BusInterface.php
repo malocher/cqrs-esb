@@ -12,9 +12,9 @@ use Cqrs\Command\CommandHandlerLoaderInterface;
 use Cqrs\Command\CommandInterface;
 use Cqrs\Event\EventInterface;
 use Cqrs\Event\EventListenerLoaderInterface;
-use Cqrs\Query\QueryInterface;
-use Cqrs\Query\QueryHandlerLoaderInterface;
 use Cqrs\Gate;
+use Cqrs\Query\QueryHandlerLoaderInterface;
+use Cqrs\Query\QueryInterface;
 
 /**
  * Interface BusInterface
@@ -94,7 +94,7 @@ interface BusInterface
      * @return mixed
      */
     public function invokeCommand(CommandInterface $command);
-    
+
     /**
      * Map a query to a query handler
      *
@@ -111,7 +111,7 @@ interface BusInterface
      * A callable gets two arguments the query to execute and the gate.
      * A normal class provided as definition should implement the \Cqrs\Adapter\AdapterTrait
      * and only gets the query as argument.
-     * 
+     *
      * Both (callable or definition) must return the result of the query.
      *
      * @param $commandClass
@@ -129,7 +129,7 @@ interface BusInterface
 
     /**
      * Hand over query to registered query handler(s) and return result
-     * 
+     *
      * The bus should loop over the QueryHandlerMap until a valid result is returned (not null)
      * by a handler or each handler has executed the query
      *

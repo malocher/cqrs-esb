@@ -7,10 +7,10 @@
  * file that was distributed with this source code.
  */
 namespace Cqrs\Bus;
-
 use Cqrs\Command\ClassMapCommandHandlerLoader;
 use Cqrs\Gate;
 use Cqrs\Gate\GateException;
+use Cqrs\Query\ClassMapQueryHandlerLoader;
 use Test\Integration\Test3\Test3Bus;
 use Test\Integration\Test3\Test3Command;
 use Test\Integration\Test3\Test3Event;
@@ -52,9 +52,10 @@ class Test3 extends TestCase
     protected function setUp()
     {
         $classMapCommandHandlerLoader = new ClassMapCommandHandlerLoader();
+        $classMapQueryHandlerLoader = new ClassMapQueryHandlerLoader();
         $this->test3EventListenerLoader = new Test3EventListenerLoader();
         $this->test3EventListenerLoader->setTest3EventListener(new Test3EventListener());
-        $this->bus = new Test3Bus($classMapCommandHandlerLoader, $this->test3EventListenerLoader);
+        $this->bus = new Test3Bus($classMapCommandHandlerLoader, $this->test3EventListenerLoader, $classMapQueryHandlerLoader);
         $this->gate = new Gate();
         try {
             $this->gate->attach($this->bus);

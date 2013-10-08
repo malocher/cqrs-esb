@@ -43,6 +43,44 @@ class ArrayMapAdapterTest extends TestCase implements AdapterInterfaceTest
         );
     }
 
+    public function testPipeWrongQuery()
+    {
+        $this->setExpectedException('Cqrs\Adapter\AdapterException');
+        $configuration = array(
+            'Test\Coverage\Mock\Query\NonExistentMockQuery' => array(
+                'alias' => 'Test\Coverage\Mock\Query\MockQueryHandler',
+                'method' => 'handleQuery'
+            )
+        );
+        $this->adapter->pipe($this->bus, $configuration);
+    }
+
+    public function testPipeProperQuery()
+    {
+        $configuration = array(
+            'Test\Coverage\Mock\Query\MockQuery' => array(
+                'alias' => 'Test\Coverage\Mock\Query\MockQueryHandler',
+                'method' => 'handleQuery'
+            )
+        );
+        $this->adapter->pipe($this->bus, $configuration);
+        $map = $this->bus->getQueryHandlerMap()['Test\Coverage\Mock\Query\MockQuery'];
+        $this->assertNotNull($map);
+        $this->assertEquals($configuration['Test\Coverage\Mock\Query\MockQuery']['alias'], $map[0]['alias']);
+    }
+
+    public function testPipeMockWrongQuery()
+    {
+        $this->setExpectedException('Cqrs\Adapter\AdapterException');
+        $configuration = array(
+            'Test\Coverage\Mock\Query\MockWrongQuery' => array(
+                'alias' => 'Test\Coverage\Mock\Query\MockQueryHandler',
+                'method' => 'handleQuery'
+            )
+        );
+        $this->adapter->pipe($this->bus, $configuration);
+    }
+
     public function testPipeWrongCommand()
     {
         $this->setExpectedException('Cqrs\Adapter\AdapterException');

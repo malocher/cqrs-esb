@@ -8,9 +8,10 @@
  */
 namespace Test\Coverage\Mock\Command;
 
-use Cqrs\Message;
 use Cqrs\Command\InvokeCommandCommand;
 use Cqrs\Event\CommandInvokedEvent;
+use Cqrs\Message;
+
 /**
  * Class MockCommandMonitor
  *
@@ -20,22 +21,22 @@ use Cqrs\Event\CommandInvokedEvent;
 class MockCommandMonitor
 {
     /**
-     * @var array[InvokeCommandCommand] 
+     * @var array[InvokeCommandCommand]
      */
     protected $invokeCommandCommands = array();
-    
+
     /**
      *
-     * @var array[CommandInvokedEvent] 
+     * @var array[CommandInvokedEvent]
      */
     protected $commandInvokedEvents = array();
 
 
     /**
      * Invoke acts as command handler and event listener on the system bus
-     * 
+     *
      * @param Message $message
-     * 
+     *
      * @return void
      */
     public function __invoke(Message $message)
@@ -45,21 +46,23 @@ class MockCommandMonitor
         } else if ($message instanceof CommandInvokedEvent) {
             $this->commandInvokedEvents[] = $message;
         }
-        
+
     }
-    
+
     /**
      * @return array[InvokeCommandCommand]
      */
-    public function getInvokeCommandCommands() {
+    public function getInvokeCommandCommands()
+    {
         return $this->invokeCommandCommands;
     }
-    
+
     /**
-     * 
+     *
      * @return array[CommandInvokedEvent]
      */
-    public function getCommandInvokedEvents() {
+    public function getCommandInvokedEvents()
+    {
         return $this->commandInvokedEvents;
     }
 }

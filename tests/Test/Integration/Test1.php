@@ -11,6 +11,7 @@ namespace Test\Integration;
 use Cqrs\Command\ClassMapCommandHandlerLoader;
 use Cqrs\Event\ClassMapEventListenerLoader;
 use Cqrs\Gate;
+use Cqrs\Query\ClassMapQueryHandlerLoader;
 use Test\Integration\Test1\Test1Bus;
 use Test\Integration\Test1\Test1Command;
 use Test\Integration\Test1\Test1Event;
@@ -44,7 +45,8 @@ class Test1 extends TestCase
         $this->gate = new Gate();
         $this->bus = new Test1Bus(
             new ClassMapCommandHandlerLoader(),
-            new ClassMapEventListenerLoader()
+            new ClassMapEventListenerLoader(),
+            new ClassMapQueryHandlerLoader()
         );
         $this->bus->mapCommand(
             'Test\Integration\Test1\Test1Command',

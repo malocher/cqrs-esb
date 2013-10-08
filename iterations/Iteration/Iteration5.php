@@ -13,9 +13,10 @@ use Cqrs\Command\ClassMapCommandHandlerLoader;
 use Cqrs\Configuration\Setup;
 use Cqrs\Event\ClassMapEventListenerLoader;
 use Cqrs\Gate;
+use Cqrs\Query\ClassMapQueryHandlerLoader;
 use Iteration\Iteration5\Iteration5Command;
 
-require dirname(dirname(__DIR__)). '/bootstrap.php';
+require dirname(dirname(__DIR__)) . '/bootstrap.php';
 
 /**
  * Class Iteration5
@@ -36,6 +37,7 @@ class Iteration5
         $setup->setGate(new Gate());
         $setup->setCommandHandlerLoader(new ClassMapCommandHandlerLoader());
         $setup->setEventListenerLoader(new ClassMapEventListenerLoader());
+        $setup->setQueryHandlerLoader(new ClassMapQueryHandlerLoader());
 
         // iteration 5
         $configuration = [

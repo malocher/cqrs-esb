@@ -12,10 +12,11 @@ namespace Iteration;
 use Cqrs\Command\ClassMapCommandHandlerLoader;
 use Cqrs\Event\ClassMapEventListenerLoader;
 use Cqrs\Gate;
+use Cqrs\Query\ClassMapQueryHandlerLoader;
 use Iteration\Iteration1\Iteration1Bus;
 use Iteration\Iteration1\Iteration1Command;
 
-require dirname(dirname(__DIR__)). '/bootstrap.php';
+require dirname(dirname(__DIR__)) . '/bootstrap.php';
 
 /**
  * Class Iteration1
@@ -53,7 +54,8 @@ class Iteration1
         // Create a bus and attach it to the gate
         $this->bus = new Iteration1Bus(
             new ClassMapCommandHandlerLoader(),
-            new ClassMapEventListenerLoader()
+            new ClassMapEventListenerLoader(),
+            new ClassMapQueryHandlerLoader()
         );
         $this->gate->attach($this->bus);
 

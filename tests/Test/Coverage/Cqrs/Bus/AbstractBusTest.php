@@ -14,10 +14,12 @@ use Cqrs\Command\ClassMapCommandHandlerLoader;
 use Cqrs\Command\CommandInterface;
 use Cqrs\Event\ClassMapEventListenerLoader;
 use Cqrs\Event\EventInterface;
-use Cqrs\Query\ClassMapQueryHandlerLoader;
 use Cqrs\Gate;
+use Cqrs\Query\ClassMapQueryHandlerLoader;
+use Cqrs\Query\QueryInterface;
 use Test\Coverage\Mock\Command\MockCommand;
 use Test\Coverage\Mock\Event\MockEvent;
+use Test\Coverage\Mock\Query\MockQuery;
 use Test\TestCase;
 
 /**
@@ -36,7 +38,7 @@ class AbstractBusTest extends TestCase implements BusInterfaceTest
     public function setUp()
     {
         $this->bus = $this->getMockForAbstractClass('Cqrs\Bus\AbstractBus', array(
-            new ClassMapCommandHandlerLoader(), 
+            new ClassMapCommandHandlerLoader(),
             new ClassMapEventListenerLoader(),
             new ClassMapQueryHandlerLoader()
         ));
@@ -59,6 +61,74 @@ class AbstractBusTest extends TestCase implements BusInterfaceTest
             $this->bus->setGate(new Gate());
         }
         $this->assertInstanceOf('Cqrs\Gate', $this->bus->getGate());
+    }
+
+    public function testMapQuery()
+    {
+        $this->bus->mapQuery('Test\Coverage\Mock\Query\MockQuery', function (QueryInterface $query) {
+        });
+        $this->assertNotNull($this->bus->getQueryHandlerMap()['Test\Coverage\Mock\Query\MockQuery']);
+    }
+
+    public function testGetQueryHandlerMap()
+    {
+        $this->bus->mapQuery('Test\Coverage\Mock\Query\MockQuery', function (QueryInterface $query) {
+        });
+        $this->assertEquals(1, count($this->bus->getQueryHandlerMap()));
+    }
+
+    public function testExecuteQuery()
+    {
+        $gate = new Gate();
+        $gate->attach($this->bus);
+        $this->bus->mapQuery('Test\Coverage\Mock\Query\MockQuery', function (MockQuery $query) {
+            $query->edit();
+            return array(1, 2, 3, 4, 5);
+        });
+        $mockQuery = new MockQuery();
+        $result = $this->bus->executeQuery($mockQuery);
+        $this->assertEquals($result, array(1, 2, 3, 4, 5));
+        $this->assertEquals(true, $mockQuery->isEdited());
+    }
+
+    public function testExecuteQueryNoResult()
+    {
+        $gate = new Gate();
+        $gate->attach($this->bus);
+        $this->bus->mapQuery('Test\Coverage\Mock\Query\MockQuery', function (MockQuery $query) {
+            $query->edit();
+            return null;
+        });
+        $mockQuery = new MockQuery();
+        $result = $this->bus->executeQuery($mockQuery);
+        $this->assertNull($result);
+        $this->assertEquals(true, $mockQuery->isEdited());
+    }
+
+    public function testExecuteQueryHandlerAnnotationAdapter()
+    {
+        $this->bus->setGate(new Gate());
+        $adapter = new AnnotationAdapter();
+        $adapter->pipe($this->bus, array('Test\Coverage\Mock\Query\MockCallbackQueryHandler'));
+        $mockQuery = new MockQuery();
+        $mockQuery->callback = function ($isEdited) {
+        };
+        $result = $this->bus->executeQuery($mockQuery);
+        $this->assertEquals($result, array(1, 2, 3, 4, 5));
+        $this->assertEquals(true, $mockQuery->isEdited());
+    }
+
+    public function testExecuteQueryHandlerNoAdapter()
+    {
+        $this->setExpectedException('Cqrs\Bus\BusException');
+        $this->bus->setGate(new Gate());
+        $adapter = new AnnotationAdapter();
+        $adapter->pipe($this->bus, array('Test\Coverage\Mock\Query\MockQueryHandlerNoAdapter'));
+        $mockQuery = new MockQuery();
+        $mockQuery->callback = function ($isEdited) {
+        };
+        $result = $this->bus->executeQuery($mockQuery);
+        $this->assertEquals($result, array(1, 2, 3, 4, 5));
     }
 
     public function testMapCommand()
