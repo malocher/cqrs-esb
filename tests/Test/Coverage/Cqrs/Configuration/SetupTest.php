@@ -13,6 +13,8 @@ use Cqrs\Configuration\Setup;
 use Cqrs\Event\ClassMapEventListenerLoader;
 use Cqrs\Gate;
 use Cqrs\Query\ClassMapQueryHandlerLoader;
+use Test\Coverage\Mock\Command\MockCommand;
+use Test\Coverage\Mock\Command\MockCommandMonitor;
 use Test\TestCase;
 
 /**
@@ -90,7 +92,7 @@ class SetupTest extends TestCase
 
     public function testInitialize()
     {
-        $monitor = new \Test\Coverage\Mock\Command\MockCommandMonitor();
+        $monitor = new MockCommandMonitor();
 
         $configuration = array(
             'adapters' => array(
@@ -124,7 +126,7 @@ class SetupTest extends TestCase
 
         $this->assertInstanceOf('Cqrs\Bus\SystemBus', $this->setup->getGate()->getSystemBus());
 
-        $mockCommand = new \Test\Coverage\Mock\Command\MockCommand();
+        $mockCommand = new MockCommand();
 
         $this->setup->getGate()->getBus('test-coverage-mock-bus')->invokeCommand($mockCommand);
 

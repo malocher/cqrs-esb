@@ -30,6 +30,7 @@ interface BusInterface
      *
      * @param CommandHandlerLoaderInterface $commandHandlerLoader
      * @param EventListenerLoaderInterface $eventListenerLoader
+     * @param QueryHandlerLoaderInterface $queryHandlerLoader
      */
     public function __construct(
         CommandHandlerLoaderInterface $commandHandlerLoader,
@@ -114,7 +115,7 @@ interface BusInterface
      *
      * Both (callable or definition) must return the result of the query.
      *
-     * @param $commandClass
+     * @param $queryClass
      * @param $callableOrDefinition
      * @return mixed
      */

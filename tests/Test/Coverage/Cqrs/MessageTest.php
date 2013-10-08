@@ -20,7 +20,7 @@ use Test\TestCase;
 class MessageTest extends TestCase
 {
     /**
-     * @var Message
+     * @var Message $message
      */
     protected $message;
 
