@@ -17,6 +17,7 @@ use Test\Coverage\Mock\Bus\MockAnotherBus;
 use Test\Coverage\Mock\Bus\MockBus;
 use Test\Coverage\Mock\Command\MockCommand;
 use Test\Coverage\Mock\Event\MockEvent;
+use Test\Coverage\Mock\Query\MockQuery;
 use Test\TestCase;
 
 /**
@@ -52,6 +53,31 @@ class AdapterTraitTest extends TestCase
         $gate = new Gate();
         $gate->attach($this->bus);
         $gate->attach($this->anotherBus);
+    }
+
+    /**
+     * @param MockQuery $query
+     * @return bool
+     */
+    public function executeQueryHandler(MockQuery $query)
+    {
+        $query->edit();
+        return $query->isEdited();
+    }
+
+    /**
+     *
+     */
+    public function testExecuteQuery()
+    {
+        $this->bus->mapQuery('Test\Coverage\Mock\Query\MockQuery', array(
+            'alias' => get_class($this),
+            'method' => 'executeQueryHandler'
+        ));
+        $query = new MockQuery();
+        $returnValue = $this->executeQuery($this->bus, $this, 'executeQueryHandler', $query);
+        $this->assertTrue($query->isEdited());
+        $this->assertTrue($returnValue);
     }
 
     /**
