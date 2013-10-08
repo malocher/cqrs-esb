@@ -65,8 +65,10 @@ Brainstorming:
 - the system bus is excluded from the transaction behavior, cause we want to monitor each event, also if a roleback is triggered and
   if you want to work with an event store, it should get the possibility to store the events during transaction
 
-- it could also be implemented through gate with systembus and ExecuteQueryCommand and QueryExecutedEvent
-  say QueryExecutedEvent fails somehow (via exception or false) it rolls back the command in reverse order from the failing event
+- it could also be implemented through gate with systembus and
+  those MetaCommands and Events ... say EventExecutedEvent fails
+  somehow (via exception or false) it rolls back the commands
+  from the queue in reverse order starting from the failing event
 
 
 20)
