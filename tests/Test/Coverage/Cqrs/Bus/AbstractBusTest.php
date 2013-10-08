@@ -105,6 +105,34 @@ class AbstractBusTest extends TestCase implements BusInterfaceTest
         $this->assertEquals(true, $mockQuery->isEdited());
     }
 
+    public function testArrayExecuteQuery()
+    {
+        $gate = new Gate();
+        $gate->attach($this->bus);
+        $this->bus->mapQuery('Test\Coverage\Mock\Query\MockQuery', array(
+            'alias' => 'Test\Coverage\Mock\Query\MockQueryHandler',
+            'method' => 'handleQuery'
+        ));
+        $mockQuery = new MockQuery();
+        $result = $this->bus->executeQuery($mockQuery);
+        $this->assertEquals($result, array(1, 2, 3, 4, 5));
+        $this->assertEquals(true, $mockQuery->isEdited());
+    }
+
+    public function testArrayExecuteQueryNoResult()
+    {
+        $gate = new Gate();
+        $gate->attach($this->bus);
+        $this->bus->mapQuery('Test\Coverage\Mock\Query\MockQuery', array(
+            'alias' => 'Test\Coverage\Mock\Query\MockQueryHandler',
+            'method' => 'handleQueryWithNoResult'
+        ));
+        $mockQuery = new MockQuery();
+        $result = $this->bus->executeQuery($mockQuery);
+        $this->assertNull($result);
+        $this->assertEquals(true, $mockQuery->isEdited());
+    }
+
     public function testExecuteQueryHandlerAnnotationAdapter()
     {
         $this->bus->setGate(new Gate());
