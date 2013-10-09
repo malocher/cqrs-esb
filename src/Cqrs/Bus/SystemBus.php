@@ -44,7 +44,7 @@ class SystemBus extends AbstractBus
             return false;
         }
 
-        foreach ($this->commandHandlerMap[$commandClass] as $i => $callableOrDefinition) {
+        foreach ($this->commandHandlerMap[$commandClass] as $callableOrDefinition) {
 
             // @todo how will this work with traits ?
             if (is_callable($callableOrDefinition)) {
@@ -83,7 +83,7 @@ class SystemBus extends AbstractBus
             return false;
         }
 
-        foreach ($this->eventListenerMap[$eventClass] as $i => $callableOrDefinition) {
+        foreach ($this->eventListenerMap[$eventClass] as $callableOrDefinition) {
 
             // @todo how will this work with traits ?
             if (is_callable($callableOrDefinition)) {

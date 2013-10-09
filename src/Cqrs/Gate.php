@@ -28,7 +28,7 @@ class Gate
     /**
      * Buses
      *
-     * @var array Bus
+     * @var AbstractBus[] $buses
      */
     private $buses;
 

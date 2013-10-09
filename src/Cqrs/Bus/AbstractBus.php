@@ -148,7 +148,7 @@ abstract class AbstractBus implements BusInterface
             return false;
         }
 
-        foreach ($this->commandHandlerMap[$commandClass] as $i => $callableOrDefinition) {
+        foreach ($this->commandHandlerMap[$commandClass] as $callableOrDefinition) {
 
             if (is_callable($callableOrDefinition)) {
                 call_user_func($callableOrDefinition, $command, $this->gate);
@@ -237,7 +237,7 @@ abstract class AbstractBus implements BusInterface
 
         $result = null;
 
-        foreach ($this->queryHandlerMap[$queryClass] as $i => $callableOrDefinition) {
+        foreach ($this->queryHandlerMap[$queryClass] as $callableOrDefinition) {
 
             if (is_callable($callableOrDefinition)) {
                 $result = call_user_func($callableOrDefinition, $query, $this->gate);
@@ -326,7 +326,7 @@ abstract class AbstractBus implements BusInterface
             return false;
         }
 
-        foreach ($this->eventListenerMap[$eventClass] as $i => $callableOrDefinition) {
+        foreach ($this->eventListenerMap[$eventClass] as $callableOrDefinition) {
             if (is_callable($callableOrDefinition)) {
                 call_user_func($callableOrDefinition, $event);
             }
