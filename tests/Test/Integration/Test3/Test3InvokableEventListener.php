@@ -26,8 +26,8 @@ class Test3InvokableEventListener
      */
     public function __invoke(Test3Event $event)
     {
-        $arguments = $event->getArguments();
-        $this->test3EventMessage = $arguments['message'];
+        $payload = $event->getPayload();
+        $this->test3EventMessage = $payload['message'];
     }
 
     /**

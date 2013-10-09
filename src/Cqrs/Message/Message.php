@@ -6,7 +6,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace Cqrs;
+namespace Cqrs\Message;
 
 /**
  * Class Message
@@ -32,22 +32,31 @@ class Message
     protected $version;
 
     /**
-     * @var array
+     * @var scalar|array
      */
-    protected $arguments;
+    protected $payload;
 
     /**
      * Constructor
      *
-     * @param mixed $arguments
+     * @param scalar|array|PayloadInterface $payload
      * @param string $id
      * @param int $timestamp
      * @param float $version
+     * @throws 
      */
-    public function __construct($arguments = null, $id = null, $timestamp = null, $version = 1.0)
+    public function __construct($payload = null, $id = null, $timestamp = null, $version = 1.0)
     {
-        if (!is_null($arguments)) {
-            $this->arguments = $arguments;
+        if (!is_null($payload)) {
+            if ($payload instanceof PayloadInterface) {
+                $this->payload = $payload->getArrayCopy();
+            } else if (is_array($payload) || is_scalar($payload)) {
+                $this->payload = $payload;
+            } else {
+                throw MessageException::payloadTypeError(
+                    'Payload must be a scalar value, an array or an instance of PayloadInterface'
+                );
+            }
         }
 
         if (is_null($id)) {
@@ -92,9 +101,9 @@ class Message
     /**
      * @return mixed
      */
-    public function getArguments()
+    public function getPayload()
     {
-        return $this->arguments;
+        return $this->payload;
     }
 
     /**

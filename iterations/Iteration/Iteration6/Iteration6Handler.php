@@ -30,7 +30,7 @@ class Iteration6Handler
     public function editCommand(Iteration6Command $command)
     {
         $command->edit();
-        print sprintf("%s says: %s ... Command\n", __METHOD__, $command->getArguments());
+        print sprintf("%s says: %s ... Command\n", __METHOD__, $command->getPayload());
         $event = new Iteration6Event('Welcome');
         $event->edit();
         $this->getBus()->publishEvent($event);
@@ -42,7 +42,7 @@ class Iteration6Handler
      */
     public function editEvent(Iteration6Event $event)
     {
-        print sprintf("%s says: %s ... Event\n", __METHOD__, $event->getArguments());
+        print sprintf("%s says: %s ... Event\n", __METHOD__, $event->getPayload());
     }
 
     /**
@@ -52,6 +52,6 @@ class Iteration6Handler
      */
     public function editQuery(Iteration6Query $query)
     {
-        return sprintf("%s says: %s ... Query\n", __METHOD__, $query->getArguments());
+        return sprintf("%s says: %s ... Query\n", __METHOD__, $query->getPayload());
     }
 }

@@ -9,7 +9,7 @@
 namespace Test\Coverage\Cqrs\Event;
 
 use Cqrs\Event\QueryExecutedEvent;
-use Test\Coverage\Cqrs\MessageTest;
+use Test\Coverage\Cqrs\Message\MessageTest;
 
 /**
  * Class QueryExecutedEvent

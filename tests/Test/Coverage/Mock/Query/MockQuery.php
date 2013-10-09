@@ -8,7 +8,7 @@
  */
 namespace Test\Coverage\Mock\Query;
 
-use Cqrs\Message;
+use Cqrs\Message\Message;
 use Cqrs\Query\QueryInterface;
 
 /**

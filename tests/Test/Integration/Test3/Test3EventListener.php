@@ -30,8 +30,8 @@ class Test3EventListener
      */
     public function onTest3(Test3Event $event)
     {
-        $arguments = $event->getArguments();
-        $this->test3EventMessage = $arguments['message'];
+        $payload = $event->getPayload();
+        $this->test3EventMessage = $payload['message'];
     }
 
     /**

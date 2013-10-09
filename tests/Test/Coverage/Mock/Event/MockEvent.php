@@ -9,7 +9,7 @@
 namespace Test\Coverage\Mock\Event;
 
 use Cqrs\Event\EventInterface;
-use Cqrs\Message;
+use Cqrs\Message\Message;
 
 /**
  * Class MockEvent

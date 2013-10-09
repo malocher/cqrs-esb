@@ -29,7 +29,7 @@ class Iteration1Handler
     public function editCommand(Iteration1Command $command)
     {
         $command->edit();
-        print sprintf("%s says: %s ... Command\n", __METHOD__, $command->getArguments());
+        print sprintf("%s says: %s ... Command\n", __METHOD__, $command->getPayload());
         $event = new Iteration1Event('Hello');
         $event->edit();
         $this->getBus()->publishEvent($event);
@@ -40,6 +40,6 @@ class Iteration1Handler
      */
     public function editEvent(Iteration1Event $event)
     {
-        print sprintf("%s says: %s ... Event\n", __METHOD__, $event->getArguments());
+        print sprintf("%s says: %s ... Event\n", __METHOD__, $event->getPayload());
     }
 }

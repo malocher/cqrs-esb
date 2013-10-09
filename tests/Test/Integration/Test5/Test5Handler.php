@@ -9,7 +9,7 @@
 namespace Test\Integration\Test5;
 
 use Cqrs\Adapter\AdapterTrait;
-use Cqrs\Message;
+use Cqrs\Message\Message;
 
 /**
  * Class Test5Handler

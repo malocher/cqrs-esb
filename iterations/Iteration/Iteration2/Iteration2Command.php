@@ -9,7 +9,7 @@
 namespace Iteration\Iteration2;
 
 use Cqrs\Command\CommandInterface;
-use Cqrs\Message;
+use Cqrs\Message\Message;
 
 /**
  * Class Iteration2Command

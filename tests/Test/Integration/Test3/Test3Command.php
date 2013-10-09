@@ -9,7 +9,7 @@
 namespace Test\Integration\Test3;
 
 use Cqrs\Command\CommandInterface;
-use Cqrs\Message;
+use Cqrs\Message\Message;
 
 /**
  * Class Test3Command

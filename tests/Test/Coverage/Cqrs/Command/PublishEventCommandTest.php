@@ -10,7 +10,7 @@
 namespace Test\Coverage\Cqrs\Command;
 
 use Cqrs\Command\PublishEventCommand;
-use Test\Coverage\Cqrs\MessageTest;
+use Test\Coverage\Cqrs\Message\MessageTest;
 
 /**
  * Class PublishEventCommandTest

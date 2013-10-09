@@ -8,7 +8,7 @@
  */
 namespace Iteration\Iteration6;
 
-use Cqrs\Message;
+use Cqrs\Message\Message;
 use Cqrs\Query\QueryInterface;
 
 /**

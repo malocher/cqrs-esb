@@ -9,7 +9,7 @@
 
 namespace Cqrs\Command;
 
-use Cqrs\Message;
+use Cqrs\Message\Message;
 
 /**
  * Class InvokeCommandCommand

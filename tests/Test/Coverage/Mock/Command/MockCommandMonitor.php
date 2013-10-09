@@ -10,7 +10,7 @@ namespace Test\Coverage\Mock\Command;
 
 use Cqrs\Command\InvokeCommandCommand;
 use Cqrs\Event\CommandInvokedEvent;
-use Cqrs\Message;
+use Cqrs\Message\Message;
 
 /**
  * Class MockCommandMonitor

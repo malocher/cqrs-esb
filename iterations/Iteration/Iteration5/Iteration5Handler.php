@@ -30,7 +30,7 @@ class Iteration5Handler
     public function editCommand(Iteration5Command $command)
     {
         $command->edit();
-        print sprintf("%s says: %s ... Command\n", __METHOD__, $command->getArguments());
+        print sprintf("%s says: %s ... Command\n", __METHOD__, $command->getPayload());
         $event = new Iteration5Event('Welcome');
         $event->edit();
         $this->getBus()->publishEvent($event);
@@ -42,6 +42,6 @@ class Iteration5Handler
      */
     public function editEvent(Iteration5Event $event)
     {
-        print sprintf("%s says: %s ... Event\n", __METHOD__, $event->getArguments());
+        print sprintf("%s says: %s ... Event\n", __METHOD__, $event->getPayload());
     }
 }

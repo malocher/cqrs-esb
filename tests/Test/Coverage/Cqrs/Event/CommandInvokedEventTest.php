@@ -10,7 +10,7 @@
 namespace Test\Coverage\Cqrs\Event;
 
 use Cqrs\Event\CommandInvokedEvent;
-use Test\Coverage\Cqrs\MessageTest;
+use Test\Coverage\Cqrs\Message\MessageTest;
 
 /**
  * Class CommandInvokedEventTest

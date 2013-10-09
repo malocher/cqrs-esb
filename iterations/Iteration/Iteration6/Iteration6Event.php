@@ -9,7 +9,7 @@
 namespace Iteration\Iteration6;
 
 use Cqrs\Event\EventInterface;
-use Cqrs\Message;
+use Cqrs\Message\Message;
 
 /**
  * Class Iteration6Event

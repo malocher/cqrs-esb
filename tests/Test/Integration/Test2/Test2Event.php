@@ -9,7 +9,7 @@
 namespace Test\Integration\Test2;
 
 use Cqrs\Event\EventInterface;
-use Cqrs\Message;
+use Cqrs\Message\Message;
 
 /**
  * Class Test2Event

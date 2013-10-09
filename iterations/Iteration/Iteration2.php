@@ -62,7 +62,7 @@ class Iteration2
             'Iteration\Iteration2\Iteration2Command',
             function (Iteration2Command $command) {
                 $command->edit();
-                print sprintf("%s says: %s ... Command\n", __METHOD__, $command->getArguments());
+                print sprintf("%s says: %s ... Command\n", __METHOD__, $command->getPayload());
                 $event = new Iteration2Event('Hello');
                 $event->edit();
                 $this->bus->publishEvent($event);
@@ -75,7 +75,7 @@ class Iteration2
             'Iteration\Iteration2\Iteration2Event',
             function (Iteration2Event $event) {
                 $event->edit();
-                print sprintf("%s says: %s ... Event\n", __METHOD__, $event->getArguments());
+                print sprintf("%s says: %s ... Event\n", __METHOD__, $event->getPayload());
             }
         );
 

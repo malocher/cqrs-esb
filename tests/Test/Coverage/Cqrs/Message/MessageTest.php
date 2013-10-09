@@ -6,10 +6,11 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace Test\Coverage\Cqrs;
+namespace Test\Coverage\Cqrs\Message;
 
-use Cqrs\Message;
+use Cqrs\Message\Message;
 use Test\TestCase;
+use Test\Coverage\Mock\Message\PayloadMock;
 
 /**
  * Class MessageTest
@@ -27,13 +28,31 @@ class MessageTest extends TestCase
     public function testConstructed()
     {
         $this->message = new Message();
-        $this->assertInstanceOf('Cqrs\Message', $this->message);
+        $this->assertInstanceOf('Cqrs\Message\Message', $this->message);
     }
 
-    public function testConstructedWithArguments()
+    public function testConstructedWithArrayPayload()
     {
         $this->message = new Message(array(1, 2, 3, 4, 5));
-        $this->assertInstanceOf('Cqrs\Message', $this->message);
+        $this->assertInstanceOf('Cqrs\Message\Message', $this->message);
+    }
+    
+    public function testConstructedWithPayloadInterface()
+    {
+        $payload = new PayloadMock();
+        
+        $payload->name = 'John Doe';
+        
+        $this->message = new Message($payload);
+        $this->assertInstanceOf('Cqrs\Message\Message', $this->message);
+        $this->assertEquals(['name' => 'John Doe'], $this->message->getPayload());
+    }
+    
+    public function testFailedConstructWithWrongPayloadType()
+    {
+        $this->setExpectedException('Cqrs\Message\MessageException');
+        $wrongPayload = new \stdClass();
+        $message = new Message($wrongPayload);
     }
 
     public function testGetId()
@@ -76,13 +95,19 @@ class MessageTest extends TestCase
         $this->assertEquals(2.0, $this->message->getVersion());
     }
 
-    public function testGetArguments()
+    public function testGetPayload()
     {
-        $this->message = new Message();
+        $this->message = new Message('string payload');
+        
+        $this->assertEquals('string payload', $this->message->getPayload());
+        
+        /*
+         * This is a realy cool test :-)
         if (is_null($this->message->getArguments())) {
             $this->assertNull($this->message->getArguments());
         } else {
             $this->assertNotNull($this->message->getArguments());
         }
+         */
     }
 }

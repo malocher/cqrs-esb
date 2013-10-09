@@ -8,7 +8,7 @@
  */
 namespace Cqrs\Event;
 
-use Cqrs\Message;
+use Cqrs\Message\Message;
 
 /**
  * Description of QueryExecutedEvent

@@ -9,7 +9,7 @@
 
 namespace Cqrs\Event;
 
-use Cqrs\Message;
+use Cqrs\Message\Message;
 
 /**
  * Class CommandInvokedEvent
