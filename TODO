@@ -35,13 +35,6 @@ If you want to work with specific buses, f.e. a seperate QueryBus you only need 
 
 What do you think?
 
-
-15)
-Rename property $arguments to $payload (for Commands, Events and Queries)
-
-16)
-Write UnitTests for new query stuff
-
 17)
 Add Query Annotation
 
