@@ -27,4 +27,25 @@ class BusException extends \Exception
         return new self('[Trait Error] ' . $message . "\n");
     }
 
+    /**
+     * Creates a new BusException describing a default bus error.
+     *
+     * @param string $message Exception message
+     * @return BusException
+     */
+    public static function defaultBusError($message)
+    {
+        return new self('[Default Bus Error] ' . $message . "\n");
+    }
+    
+    /**
+     * Creates a new BusException describing a bus not exist error.
+     *
+     * @param string $message Exception message
+     * @return BusException
+     */
+    public static function busNotExistError($message)
+    {
+        return new self('[Bus Not Exist Error] ' . $message . "\n");
+    }
 }

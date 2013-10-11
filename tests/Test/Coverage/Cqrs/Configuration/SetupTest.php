@@ -15,6 +15,7 @@ use Cqrs\Gate;
 use Cqrs\Query\ClassMapQueryHandlerLoader;
 use Test\Coverage\Mock\Command\MockCommand;
 use Test\Coverage\Mock\Command\MockCommandMonitor;
+use Test\Coverage\Mock\Event\MockEvent;
 use Test\TestCase;
 
 /**
@@ -95,6 +96,7 @@ class SetupTest extends TestCase
         $monitor = new MockCommandMonitor();
 
         $configuration = array(
+            'default_bus' => 'test-coverage-mock-bus',
             'adapters' => array(
                 array(
                     'class' => 'Cqrs\Adapter\ArrayMapAdapter',
@@ -103,6 +105,12 @@ class SetupTest extends TestCase
                             'Test\Coverage\Mock\Command\MockCommand' => array(
                                 'alias' => 'Test\Coverage\Mock\Command\MockCommandHandler',
                                 'method' => 'handleCommand'
+                            )
+                        ),
+                        'Test\Coverage\Mock\Bus\MockAnotherBus' => array(
+                            'Test\Coverage\Mock\Event\MockEvent' => array(
+                                'alias' => 'Test\Coverage\Mock\Event\MockEventHandler',
+                                'method' => 'handleEvent'
                             )
                         ),
                         'Cqrs\Bus\SystemBus' => array(
@@ -137,6 +145,15 @@ class SetupTest extends TestCase
 
         $this->assertEquals('Test\Coverage\Mock\Command\MockCommand', $invokeCommandCommand->getMessageClass());
         $this->assertEquals('Test\Coverage\Mock\Command\MockCommand', $commandInvokedEvent->getMessageClass());
+        
+        //test setup multiple buses
+        $mockEvent = new MockEvent();
+        
+        $this->setup->getGate()->getBus('test-coverage-mock-another-bus')->publishEvent($mockEvent);
+        $this->assertTrue($mockEvent->isEdited());
+        
+        //Test setup the default bus corectly
+        $this->assertInstanceOf('Test\Coverage\Mock\Bus\MockBus', $this->setup->getGate()->getBus());
     }
 
     public function testInitializeWithoutGate()

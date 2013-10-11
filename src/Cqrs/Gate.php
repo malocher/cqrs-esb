@@ -31,6 +31,22 @@ class Gate
      * @var AbstractBus[] $buses
      */
     private $buses;
+    
+    /**
+     * Name of the default bus that should be returned when {@see getBus} is called
+     * 
+     * @var string
+     */
+    private $defaultBusName;
+    
+    /**
+     * System bus
+     * 
+     * If activated, meta commands and events are send over it
+     * 
+     * @var type 
+     */
+    private $systemBus;
 
     /**
      * Private constructor
@@ -95,6 +111,11 @@ class Gate
      */
     public function detach(BusInterface $bus)
     {
+        if ($bus == $this->systemBus) {
+            $this->systemBus = null;
+            return;
+        }
+        
         if (isset($this->buses[$bus->getName()])) {
             $this->buses[$bus->getName()] = null;
             unset($this->buses[$bus->getName()]);
@@ -120,29 +141,81 @@ class Gate
     public function attach(BusInterface $bus)
     {
         $bus->setGate($this);
-        if (isset($this->buses[$bus->getName()])) {
-            switch ($bus->getName()) {
-                case AbstractBus::SYSTEMBUS:
-                    throw GateException::attachError(sprintf('Bus <%s> is reserved!', $bus->getName()));
-                default:
-                    throw GateException::attachError(sprintf('Bus <%s> is already attached!', $bus->getName()));
+        
+        if ($bus->getName() == AbstractBus::SYSTEMBUS) {
+            if (!$bus instanceof SystemBus) {
+                throw GateException::attachError(sprintf('Bus <%s> is reserved!', $bus->getName()));
             }
+            
+            if (!is_null($this->systemBus)) {
+                throw GateException::attachError('SystemBus is already attached!');
+            }
+            
+            $this->systemBus = $bus;
+            return;
         }
+        
+        if (isset($this->buses[$bus->getName()])) {
+            throw GateException::attachError(sprintf('Bus <%s> is already attached!', $bus->getName()));
+        }
+        
         $this->buses[$bus->getName()] = $bus;
     }
 
     /**
-     * get bus
+     * get bus by name
+     * 
+     * If no name is provided, the gate tries to find a default bus:
+     *   1. you can set a default bus via {@see setDefaultBusName}
+     *   2. if only one bus is attached, it is treated as default bus
      *
      * @param string $name
-     * @return BusInterface
+     * @return BusInterface|null If the system bus is requested but not enabled, method returns null
+     * @throws Bus\BusException If default bus can not be detected or bus not exists
      */
-    public function getBus($name)
+    public function getBus($name = null)
     {
-        if (!isset($this->buses[$name])) {
-            return null;
+        if ($name == AbstractBus::SYSTEMBUS) {
+            return $this->systemBus;
         }
+        
+        if (is_null($name)) {
+            if (!is_null($this->defaultBusName)) {
+                $name = $this->defaultBusName;
+            } else if (count($this->buses) == 1) {
+                return current($this->buses);
+            } else {
+                throw Bus\BusException::defaultBusError(
+                    'Default bus can not be detected. Please set the default bus or provide a bus name'
+                );
+            }
+        } 
+        
+        if (!isset($this->buses[$name])) {
+            throw Bus\BusException::busNotExistError(
+                sprintf(
+                    'The bus <%s> can not be found',
+                    $name
+                )
+            );
+        }
+
         return $this->buses[$name];
+         
+    }
+    
+    /**
+     * Set name of the default bus
+     * 
+     * If you have more than one bus attached to the gate,
+     * you can set one as default, this bus is then returned when you call
+     * {@see getBus} without providing a bus name
+     * 
+     * @param string $busName
+     * @return void
+     */
+    public function setDefaultBusName($busName) {
+        $this->defaultBusName = $busName;
     }
 
 }

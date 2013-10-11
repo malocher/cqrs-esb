@@ -57,12 +57,9 @@ class GateTest extends TestCase
     {
         $this->gate->enableSystemBus();
         $this->gate->reset();
-        $attachedBuses = $this->gate->attachedBuses();
-        $this->assertEquals(1, count($attachedBuses));
+        $this->assertInstanceOf('Cqrs\Bus\SystemBus', $this->gate->getSystemBus());
         $this->gate->disableSystemBus();
-        $this->gate->reset();
-        $attachedBuses = $this->gate->attachedBuses();
-        $this->assertEquals(0, count($attachedBuses));
+        $this->assertNull($this->gate->getSystemBus());
     }
 
     public function testEnableSystemBus()
@@ -108,17 +105,16 @@ class GateTest extends TestCase
 
     public function testDetach()
     {
-        $mockBus = $this->gate->getBus('test-coverage-mock-bus');
-        if (is_null($mockBus)) {
-            $mockBus = new MockBus(
-                new ClassMapCommandHandlerLoader(),
-                new ClassMapEventListenerLoader(),
-                new ClassMapQueryHandlerLoader()
-            );
-            $this->gate->attach($mockBus);
-        }
+        $this->setExpectedException('Cqrs\Bus\BusException');
+        $mockBus = new MockBus(
+            new ClassMapCommandHandlerLoader(),
+            new ClassMapEventListenerLoader(),
+            new ClassMapQueryHandlerLoader()
+        );
+        $this->gate->attach($mockBus);
+        
         $this->gate->detach($mockBus);
-        $this->assertNull($this->gate->getBus('test-coverage-mock-bus'));
+        $this->gate->getBus('test-coverage-mock-bus');
     }
 
     public function testAttachedBuses()
@@ -161,20 +157,83 @@ class GateTest extends TestCase
     }
 
     public function testGetBus()
-    {
-        $mockBus = $this->gate->getBus('test-coverage-mock-bus');
-        if (is_null($mockBus)) {
-            $mockBus = new MockBus(
-                new ClassMapCommandHandlerLoader(),
-                new ClassMapEventListenerLoader(),
-                new ClassMapQueryHandlerLoader()
-            );
-            $this->gate->attach($mockBus);
-        }
+    {        
+        $mockBus = new MockBus(
+            new ClassMapCommandHandlerLoader(),
+            new ClassMapEventListenerLoader(),
+            new ClassMapQueryHandlerLoader()
+        );
+        
+        $this->gate->attach($mockBus);
+        
         $this->assertEquals(
             $this->gate->getBus('test-coverage-mock-bus'),
             $mockBus
         );
     }
-
+    
+    public function testGetBus_oneBusIsDefault()
+    {
+        $mockBus = new MockBus(
+            new ClassMapCommandHandlerLoader(),
+            new ClassMapEventListenerLoader(),
+            new ClassMapQueryHandlerLoader()
+        );
+        
+        $this->gate->attach($mockBus);
+        
+        $this->assertEquals(
+            $this->gate->getBus(),
+            $mockBus
+        );
+    }
+    
+    public function testGetBus_DefaultBusSet()
+    {
+        $mockBus = new MockBus(
+            new ClassMapCommandHandlerLoader(),
+            new ClassMapEventListenerLoader(),
+            new ClassMapQueryHandlerLoader()
+        );
+        
+        $anotherBus = new \Test\Coverage\Mock\Bus\MockAnotherBus(
+            new ClassMapCommandHandlerLoader(),
+            new ClassMapEventListenerLoader(),
+            new ClassMapQueryHandlerLoader()
+        );
+        
+        $this->gate->attach($mockBus);
+        $this->gate->attach($anotherBus);
+        $this->gate->setDefaultBusName($mockBus->getName());
+        
+        $this->assertEquals(
+            $this->gate->getBus(),
+            $mockBus
+        );
+    }
+    
+    public function testGetBus_ErrorWhenNoDefaultBusIsDefined()
+    {
+        $this->setExpectedException('Cqrs\Bus\BusException');
+        
+        $mockBus = new MockBus(
+            new ClassMapCommandHandlerLoader(),
+            new ClassMapEventListenerLoader(),
+            new ClassMapQueryHandlerLoader()
+        );
+        
+        $anotherBus = new \Test\Coverage\Mock\Bus\MockAnotherBus(
+            new ClassMapCommandHandlerLoader(),
+            new ClassMapEventListenerLoader(),
+            new ClassMapQueryHandlerLoader()
+        );
+        
+        $this->gate->attach($mockBus);
+        $this->gate->attach($anotherBus);
+                
+        $this->assertEquals(
+            $this->gate->getBus(),
+            $mockBus
+        );
+    }
 }

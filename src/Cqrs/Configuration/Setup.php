@@ -139,6 +139,10 @@ class Setup
         if (is_null($this->gate)) {
             throw ConfigurationException::initializeError('Gate not initialized. Create a new Gate() and pass it to setGate()');
         }
+        
+        if (isset($configuration['default_bus'])) {
+            $this->gate->setDefaultBusName($configuration['default_bus']);
+        }
 
         foreach ($configuration['adapters'] as $adapterConfiguration) {
             $adapter = $this->loadAdapter($adapterConfiguration);
