@@ -46,7 +46,13 @@ Check, implement and test handling of transactions:
 When and how should a transaction be started?
 If a transaction fails, no Events should be published!
 
-Brainstorming:
+After thinking and reading about cqrs transaction handling more in detail, I suggest we don't integrate a transaction hanlding in
+the cqrs library. If atomic commands or any other kind of transaction is needed, you could implement a special TransactionBus or something
+like this to fit your needs. We can provide examples, that work with normal RDBMS transactions, Unit of Works, etc. to show
+ways of how you achive transactional consistency or eventual consistency.
+
+
+Brainstorming (outdated, it is only here as reminder):
 
 - new Methods in BusInterface: activateEventQueue(); deactivateEventQueue(); queueEvent(EventInterface $event); dequeueEvents(); dropEvents();
 - CQRS-Transactions are handled via Gate: beginTransaction(); roleback(); commit();
