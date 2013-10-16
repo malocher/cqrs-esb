@@ -46,7 +46,13 @@ Check, implement and test handling of transactions:
 When and how should a transaction be started?
 If a transaction fails, no Events should be published!
 
-Brainstorming:
+After thinking and reading about cqrs transaction handling more in detail, I suggest we don't integrate a transaction hanlding in
+the cqrs library. If atomic commands or any other kind of transaction is needed, you could implement a special TransactionBus or something
+like this to fit your needs. We can provide examples, that work with normal RDBMS transactions, Unit of Works, etc. to show
+ways of how you achive transactional consistency or eventual consistency.
+
+
+Brainstorming (outdated, it is only here as reminder):
 
 - new Methods in BusInterface: activateEventQueue(); deactivateEventQueue(); queueEvent(EventInterface $event); dequeueEvents(); dropEvents();
 - CQRS-Transactions are handled via Gate: beginTransaction(); roleback(); commit();
@@ -57,6 +63,21 @@ Brainstorming:
 - in both cases (commit and roleback), the Gate calls deactivateEventQueue() on each Bus
 - the system bus is excluded from the transaction behavior, cause we want to monitor each event, also if a roleback is triggered and
   if you want to work with an event store, it should get the possibility to store the events during transaction
+- Gate can work with 2 phase commits and you can configure which bus should dequeue it's events in which phase. With this implementation you can
+  handle following scenario:
+    You use a RDBMS and also make use of database transactions. This infrastructure is out of scope for cqrs, but you must combine it.
+    Write your own TransactionManager, that starts both transactions, the database and the cqrs transaction.
+    Make use of two cqrs buses, an internal and an external one.
+    Configure the gate to dequeue the internal bus in phase 1 and the external bus in phase 2.
+    Invoke a Command on the internal bus to change a domain state.
+    Publish Event on the internal bus and on the external bus.
+    Then commit your cqrs command transaction by only call $gate->commit(Gate::COMMIT_PHASE_1);
+    Now a repository should write the state change to database, by listening on the event on the internal bus.
+    If everything works as espected, continue by invoking next command and repeat the previous steps.
+    If your Unit of Work is done, call commit on the TransactionManager, so that it calls commit on the RDBMS and on the 
+    cqrs gate. Calling a normal commit on the cqrs gate includes the phase 2 and so all events are dequeued on the external bus and
+    published for external consumers
+    
 
 - it could also be implemented through gate with systembus and
   those MetaCommands and Events ... say EventExecutedEvent fails
