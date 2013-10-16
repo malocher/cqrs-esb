@@ -13,6 +13,6 @@ If you want to use crafics/cqrs-php in a ZF2 project, check out the [codeliner/z
 
 Sample Application
 -------------------
-You can find a sample application with annotated sourcecode on [codeliner/zf2-cqrs-sample])(https://github.com/codeliner/zf2-cqrs-sample)
+You can find a sample application with annotated sourcecode on [codeliner/zf2-cqrs-sample](https://github.com/codeliner/zf2-cqrs-sample)
 
 
