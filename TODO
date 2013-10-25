@@ -41,6 +41,28 @@ Add Query Annotation
 18)
 Find a solution to decouple system bus setup from hardcoded dependency to ClassMapLoaders
 
+20)
+Implement ConventionAdapter
+
+21)
+Add Iteration7 - Multiple buses
+
+22)
+Add Iteration8 - ConventionAdapter
+
+
+23)
+Find an own vendor name, to manage all parts under one name
+
+Suggestions:
+Malocher -> german word for worker, is available on github, sounds ok: Malocher Frameowrk, Malocher/cqrs or we give each part
+part/library the name of a mechanical art like Malocher/Schmied = Malocher/cqrs, Malocher/Maler = Malocher/ddd, ... 
+
+
+
+
+_______________________________________________________________________________________________
+
 19)
 Check, implement and test handling of transactions:
 When and how should a transaction be started?
@@ -85,11 +107,4 @@ Brainstorming (outdated, it is only here as reminder):
   from the queue in reverse order starting from the failing event
 
 
-20)
-Implement ConventionAdapter
 
-21)
-Add Iteration7 - Multiple buses
-
-22)
-Add Iteration8 - ConventionAdapter
