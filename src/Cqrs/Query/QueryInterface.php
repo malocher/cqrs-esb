@@ -16,16 +16,6 @@ namespace Cqrs\Query;
 interface QueryInterface
 {
     /**
-     * Constructor
-     *
-     * @param scalar|array|PayloadInterface $payload
-     * @param string $id
-     * @param int $timestamp
-     * @param float $version
-     */
-    public function __construct($payload = null, $id = null, $timestamp = null, $version = 1.0);
-
-    /**
      * Get arguments of the query as array
      *
      * @return array List of arguments
