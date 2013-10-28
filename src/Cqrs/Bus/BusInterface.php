@@ -8,12 +8,9 @@
  */
 namespace Cqrs\Bus;
 
-use Cqrs\Command\CommandHandlerLoaderInterface;
+use Cqrs\Gate;
 use Cqrs\Command\CommandInterface;
 use Cqrs\Event\EventInterface;
-use Cqrs\Event\EventListenerLoaderInterface;
-use Cqrs\Gate;
-use Cqrs\Query\QueryHandlerLoaderInterface;
 use Cqrs\Query\QueryInterface;
 
 /**
@@ -25,18 +22,6 @@ use Cqrs\Query\QueryInterface;
  */
 interface BusInterface
 {
-    /**
-     * Constructor
-     *
-     * @param CommandHandlerLoaderInterface $commandHandlerLoader
-     * @param EventListenerLoaderInterface $eventListenerLoader
-     * @param QueryHandlerLoaderInterface $queryHandlerLoader
-     */
-    public function __construct(
-        CommandHandlerLoaderInterface $commandHandlerLoader,
-        EventListenerLoaderInterface $eventListenerLoader,
-        QueryHandlerLoaderInterface $queryHandlerLoader);
-
     /**
      * Get the name of the bus
      *
