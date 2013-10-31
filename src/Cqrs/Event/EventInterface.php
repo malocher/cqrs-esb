@@ -19,21 +19,21 @@ namespace Cqrs\Event;
 interface EventInterface
 {
     /**
-     * Get arguments of the command as array
+     * Get arguments of the event as array
      *
      * @return array List of arguments
      */
     public function getPayload();
 
     /**
-     * Get version of the command
+     * Get version of the event
      *
      * @return int Version number
      */
     public function getVersion();
 
     /**
-     * Get id of the command
+     * Get id of the event
      * Id is a unique identifier of this command
      *
      * @return string id
@@ -41,7 +41,7 @@ interface EventInterface
     public function getId();
 
     /**
-     * Get timestamp of the command
+     * Get timestamp of the event
      *
      * @return string id
      */
