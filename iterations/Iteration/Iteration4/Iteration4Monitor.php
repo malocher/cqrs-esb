@@ -38,12 +38,12 @@ class Iteration4Monitor
             $command->getMessageClass(),
             $command->getBusName()
         );
-        print sprintf("id:%s, edited:%s, ts:%s, version:%s, arguments:%s \n",
+        print sprintf("id:%s, edited:%s, ts:%s, version:%s, payload:%s \n",
             $command->getMessageVars()['id'],
             $command->getMessageVars()['edited'],
             $command->getMessageVars()['timestamp'],
             $command->getMessageVars()['version'],
-            $command->getMessageVars()['arguments']
+            $command->getMessageVars()['payload']
         );
         print"---- monitoring ends ------\n";
     }
@@ -59,12 +59,12 @@ class Iteration4Monitor
             $command->getMessageClass(),
             $command->getBusName()
         );
-        print sprintf("id:%s, edited:%s, ts:%s, version:%s, arguments:%s \n",
+        print sprintf("id:%s, edited:%s, ts:%s, version:%s, payload:%s \n",
             $command->getMessageVars()['id'],
             $command->getMessageVars()['edited'],
             $command->getMessageVars()['timestamp'],
             $command->getMessageVars()['version'],
-            $command->getMessageVars()['arguments']
+            $command->getMessageVars()['payload']
         );
         print"---- monitoring ends ------\n";
     }
@@ -80,12 +80,12 @@ class Iteration4Monitor
             $event->getMessageClass(),
             $event->getBusName()
         );
-        print sprintf("id:%s, edited:%s, ts:%s, version:%s, arguments:%s \n",
+        print sprintf("id:%s, edited:%s, ts:%s, version:%s, payload:%s \n",
             $event->getMessageVars()['id'],
             $event->getMessageVars()['edited'],
             $event->getMessageVars()['timestamp'],
             $event->getMessageVars()['version'],
-            $event->getMessageVars()['arguments']
+            $event->getMessageVars()['payload']
         );
         print"---- monitoring ends ------\n";
     }
@@ -101,12 +101,12 @@ class Iteration4Monitor
             $event->getMessageClass(),
             $event->getBusName()
         );
-        print sprintf("id:%s, edited:%s, ts:%s, version:%s, arguments:%s \n",
+        print sprintf("id:%s, edited:%s, ts:%s, version:%s, payload:%s \n",
             $event->getMessageVars()['id'],
             $event->getMessageVars()['edited'],
             $event->getMessageVars()['timestamp'],
             $event->getMessageVars()['version'],
-            $event->getMessageVars()['arguments']
+            $event->getMessageVars()['payload']
         );
         print"---- monitoring ends ------\n";
     }
