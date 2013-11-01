@@ -46,10 +46,6 @@ class Iteration6Handler
     }
 
     /**
-     * @query Iteration\Iteration6\Iteration6Query
-     * @param Iteration6Query $query
-     * @return string
-     *
      * Because of eventual consistency, it is possible that the information that the UI retrieves
      * from the read side is not yet fully consistent with changes that have just been made on the
      * write side (perhaps by another user of the system).
@@ -67,6 +63,10 @@ class Iteration6Handler
      * of the aggregate and, if they are different, it can raise a concurrency error and reject the change.
      *
      * „Exploring CQRS and Event Sourcing.“
+     *
+     * @query Iteration\Iteration6\Iteration6Query
+     * @param Iteration6Query $query
+     * @return string
      */
     public function editQuery(Iteration6Query $query)
     {

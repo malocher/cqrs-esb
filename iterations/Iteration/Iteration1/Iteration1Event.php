@@ -14,6 +14,9 @@ use Cqrs\Message\Message;
 /**
  * Class Iteration1Event
  *
+ * Events in event sourcing should capture the business intent
+ * in addition to the change in state of the aggregate.
+ *
  * @author Alexander Miertsch <kontakt@codeliner.ws>
  * @author Manfred Weber <crafics@php.net>
  * @package Iteration\Iteration1
