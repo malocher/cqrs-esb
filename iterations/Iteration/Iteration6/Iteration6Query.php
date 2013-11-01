@@ -14,6 +14,9 @@ use Cqrs\Query\QueryInterface;
 /**
  * Class Iteration6Query
  *
+ * The Version property refers to the version of the aggregate.
+ * The version is incremented whenever the aggregate receives a new event.
+ *
  * @author Manfred Weber <crafics@php.net>
  * @package Iteration\Iteration6
  */
