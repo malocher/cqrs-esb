@@ -46,7 +46,9 @@ class Iteration6Handler
     }
 
     /**
-     * Because of eventual consistency, it is possible that the information that the UI retrieves
+     * a sample query handler with no sense - a query handler never updates or insert - queries are read only
+     *
+     * „Because of eventual consistency, it is possible that the information that the UI retrieves
      * from the read side is not yet fully consistent with changes that have just been made on the
      * write side (perhaps by another user of the system).
      *
@@ -60,9 +62,10 @@ class Iteration6Handler
      * it in the command that it sends to the write model.
      *
      * The write model can compare the version number in the command with the current version number
-     * of the aggregate and, if they are different, it can raise a concurrency error and reject the change.
+     * of the aggregate and, if they are different, it can raise a concurrency error and reject the change.“
      *
      * „Exploring CQRS and Event Sourcing.“
+     * iBooks. https://itunes.apple.com/WebObjects/MZStore.woa/wa/viewBook?id=85A96D9C4AEBE2F2D588B4683CCF608E
      *
      * @query Iteration\Iteration6\Iteration6Query
      * @param Iteration6Query $query

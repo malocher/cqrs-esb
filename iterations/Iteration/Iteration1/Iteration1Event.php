@@ -14,8 +14,24 @@ use Cqrs\Message\Message;
 /**
  * Class Iteration1Event
  *
+ * „Events can play two different roles in a CQRS implementation.
+ * Event sourcing. As described previously, event sourcing is an approach to persisting
+ * the state of aggregate instances by saving the stream of events in order
+ * to record changes in the state of the aggregate.
+ *
+ * Communication and Integration. You can also use events to communicate between
+ * aggregates or process managers in the same or in different bounded contexts.
+ *
+ * Events publish to subscribers information about something that has happened.
+ *
+ * One event can play both roles: an aggregate may raise an event to record a state change
+ * and to notify an aggregate in another bounded context of the change.
+
  * Events in event sourcing should capture the business intent
- * in addition to the change in state of the aggregate.
+ * in addition to the change in state of the aggregate.“
+ *
+ * „Exploring CQRS and Event Sourcing.“
+ * iBooks. https://itunes.apple.com/WebObjects/MZStore.woa/wa/viewBook?id=85A96D9C4AEBE2F2D588B4683CCF608E
  *
  * @author Alexander Miertsch <kontakt@codeliner.ws>
  * @author Manfred Weber <crafics@php.net>

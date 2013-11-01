@@ -15,7 +15,7 @@ use Cqrs\Adapter\AdapterTrait;
  *
  * Note the use of the AdapterTrait which loosely couples this file with the cqrs package
  *
- * Command handler perform the following tasks:
+ * „Command handler perform the following tasks:
  *
  * 1. It receives a command instance from the messaging infrastructure.
  * 2. It validates that the command is a valid command.
@@ -25,6 +25,7 @@ use Cqrs\Adapter\AdapterTrait;
  * 5. It persists the new state of the aggregate to storage.“
  *
  * „Exploring CQRS and Event Sourcing.“
+ * iBooks. https://itunes.apple.com/WebObjects/MZStore.woa/wa/viewBook?id=85A96D9C4AEBE2F2D588B4683CCF608E
  *
  * @author Alexander Miertsch <kontakt@codeliner.ws>
  * @author Manfred Weber <crafics@php.net>
