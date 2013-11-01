@@ -48,12 +48,15 @@ class Iteration1Handler
     }
 
     /**
-     * Events are published to multiple recipients, typically aggregate instances or process managers.
+     * „Events are published to multiple recipients, typically aggregate instances or process managers.
      * The Event handler performs the following tasks:
      *
      * 1. It receives an Event instance from the messaging infrastructure.
      * 2. It locates the aggregate or process manager instance that is the target of the event.
-     *    This may involve creating a new ag
+     *    This may involve creating a new aggregate instance or locating an existing instance.
+     * 3. It invokes the appropriate method on the aggregate or process manager instance,
+     *    passing in any parameters from the event.
+     * 4. It persists the new state of the aggregate or process manager to storage.“
      *
      * „Exploring CQRS and Event Sourcing.“
      * iBooks. https://itunes.apple.com/WebObjects/MZStore.woa/wa/viewBook?id=85A96D9C4AEBE2F2D588B4683CCF608E
