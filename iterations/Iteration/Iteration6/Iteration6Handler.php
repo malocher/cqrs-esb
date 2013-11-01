@@ -49,6 +49,24 @@ class Iteration6Handler
      * @query Iteration\Iteration6\Iteration6Query
      * @param Iteration6Query $query
      * @return string
+     *
+     * Because of eventual consistency, it is possible that the information that the UI retrieves
+     * from the read side is not yet fully consistent with changes that have just been made on the
+     * write side (perhaps by another user of the system).
+     *
+     * This raises the possibility that the command that is sent to update the list of attendees
+     * results in an inconsistent change to the write model.
+     * For example, someone else could have deleted the order, or already modified the list of attendees.
+     *
+     * A solution to this problem is to use version numbers in the read model and the commands.
+     * Whenever the write model sends details of a change to the read model, it includes the current version
+     * number of the aggregate. When the UI queries the read model, it receives the version number and includes
+     * it in the command that it sends to the write model.
+     *
+     * The write model can compare the version number in the command with the current version number
+     * of the aggregate and, if they are different, it can raise a concurrency error and reject the change.
+     *
+     * „Exploring CQRS and Event Sourcing.“
      */
     public function editQuery(Iteration6Query $query)
     {

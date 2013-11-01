@@ -34,6 +34,8 @@ class Iteration1Handler
      *    This may involve creating a new aggregate instance or locating an existing instance.
      * 4. It invokes the appropriate method on the aggregate instance, passing in any parameters from the command.
      * 5. It persists the new state of the aggregate to storage.“
+     *
+     * „Exploring CQRS and Event Sourcing.“
      */
     public function editCommand(Iteration1Command $command)
     {
