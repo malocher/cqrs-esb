@@ -58,8 +58,8 @@ Suggestions:
 Malocher -> german word for worker, is available on github, sounds ok: Malocher Frameowrk, Malocher/cqrs or we give each part
 part/library the name of a mechanical art like Malocher/Schmied = Malocher/cqrs, Malocher/Maler = Malocher/ddd, ... 
 
-
-
+24)
+Add generic query object (like IQueryable) and single ViewRepository to simplify ReadModel
 
 _______________________________________________________________________________________________
 
