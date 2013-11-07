@@ -37,11 +37,11 @@ class AbstractBusTest extends TestCase implements BusInterfaceTest
 
     public function setUp()
     {
-        $this->bus = $this->getMockForAbstractClass('Cqrs\Bus\AbstractBus', array(
-            new ClassMapCommandHandlerLoader(),
-            new ClassMapEventListenerLoader(),
-            new ClassMapQueryHandlerLoader()
-        ));
+        $this->bus = $this->getMockForAbstractClass('Cqrs\Bus\AbstractBus');
+        
+        $this->bus->setCommandHandlerLoader(new ClassMapCommandHandlerLoader());
+        $this->bus->setEventListenerLoader(new ClassMapEventListenerLoader());
+        $this->bus->setQueryHandlerLoader(new ClassMapQueryHandlerLoader());
     }
 
     public function testConstructed()

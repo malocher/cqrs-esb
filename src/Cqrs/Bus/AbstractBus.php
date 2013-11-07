@@ -9,6 +9,7 @@
 namespace Cqrs\Bus;
 
 use Cqrs\Command\CommandHandlerLoaderInterface;
+use Cqrs\Command\CommandHandlerLoaderAwareInterface;
 use Cqrs\Command\CommandInterface;
 use Cqrs\Command\ExecuteQueryCommand;
 use Cqrs\Command\InvokeCommandCommand;
@@ -16,10 +17,12 @@ use Cqrs\Command\PublishEventCommand;
 use Cqrs\Event\CommandInvokedEvent;
 use Cqrs\Event\EventInterface;
 use Cqrs\Event\EventListenerLoaderInterface;
+use Cqrs\Event\EventListenerLoaderAwareInterface;
 use Cqrs\Event\EventPublishedEvent;
 use Cqrs\Event\QueryExecutedEvent;
 use Cqrs\Gate;
 use Cqrs\Query\QueryHandlerLoaderInterface;
+use Cqrs\Query\QueryHandlerLoaderAwareInterface;
 use Cqrs\Query\QueryInterface;
 
 /**
@@ -28,7 +31,11 @@ use Cqrs\Query\QueryInterface;
  * @author Alexander Miertsch <kontakt@codeliner.ws>
  * @package Cqrs\Bus
  */
-abstract class AbstractBus implements BusInterface
+abstract class AbstractBus 
+    implements BusInterface, 
+    CommandHandlerLoaderAwareInterface, 
+    QueryHandlerLoaderAwareInterface,
+    EventListenerLoaderAwareInterface
 {
     const SYSTEMBUS = 'system-bus';
 
@@ -69,22 +76,6 @@ abstract class AbstractBus implements BusInterface
     protected $gate;
 
     /**
-     * @param CommandHandlerLoaderInterface $commandHandlerLoader
-     * @param EventListenerLoaderInterface $eventListenerLoader
-     * @param QueryHandlerLoaderInterface $queryHandlerLoader
-     */
-    public function __construct(
-        CommandHandlerLoaderInterface $commandHandlerLoader,
-        EventListenerLoaderInterface $eventListenerLoader,
-        QueryHandlerLoaderInterface $queryHandlerLoader)
-    {
-
-        $this->commandHandlerLoader = $commandHandlerLoader;
-        $this->eventListenerLoader = $eventListenerLoader;
-        $this->queryHandlerLoader = $queryHandlerLoader;
-    }
-
-    /**
      * @param Gate $gate
      */
     public function setGate(Gate $gate)
@@ -98,6 +89,33 @@ abstract class AbstractBus implements BusInterface
     public function getGate()
     {
         return $this->gate;
+    }
+    
+    /**
+     * 
+     * @param CommandHandlerLoaderInterface $commandHandlerLoader
+     */
+    public function setCommandHandlerLoader(CommandHandlerLoaderInterface $commandHandlerLoader)
+    {
+        $this->commandHandlerLoader = $commandHandlerLoader;
+    }
+    
+    /**
+     * 
+     * @param QueryHandlerLoaderInterface $queryHandlerLoader
+     */
+    public function setQueryHandlerLoader(QueryHandlerLoaderInterface $queryHandlerLoader)
+    {
+        $this->queryHandlerLoader = $queryHandlerLoader;
+    }
+    
+    /**
+     * 
+     * @param EventListenerLoaderInterface $eventListenerLoader
+     */
+    public function setEventListenerLoader(EventListenerLoaderInterface $eventListenerLoader)
+    {
+        $this->eventListenerLoader = $eventListenerLoader;
     }
 
     /**
@@ -155,6 +173,14 @@ abstract class AbstractBus implements BusInterface
             }
 
             if (is_array($callableOrDefinition)) {
+                if (is_null($this->commandHandlerLoader)) {
+                    throw BusException::loaderNotExistError(
+                        sprintf(
+                            'Can not load the command handler <%s>. No CommandHandlerLoader found.',
+                            $callableOrDefinition['alias']
+                        )
+                    );
+                }
                 $commandHandler = $this->commandHandlerLoader->getCommandHandler($callableOrDefinition['alias']);
                 $method = $callableOrDefinition['method'];
 
@@ -248,6 +274,14 @@ abstract class AbstractBus implements BusInterface
             }
 
             if (is_array($callableOrDefinition)) {
+                if (is_null($this->queryHandlerLoader)) {
+                    throw BusException::loaderNotExistError(
+                        sprintf(
+                            'Can not load the query handler <%s>. No QueryHandlerLoader found.',
+                            $callableOrDefinition['alias']
+                        )
+                    );
+                }
                 $queryHandler = $this->queryHandlerLoader->getQueryHandler($callableOrDefinition['alias']);
                 $method = $callableOrDefinition['method'];
 
@@ -332,6 +366,14 @@ abstract class AbstractBus implements BusInterface
             }
 
             if (is_array($callableOrDefinition)) {
+                if (is_null($this->eventListenerLoader)) {
+                    throw BusException::loaderNotExistError(
+                        sprintf(
+                            'Can not load the event listener <%s>. No EventListenerLoader found.',
+                            $callableOrDefinition['alias']
+                        )
+                    );
+                }
                 $eventListener = $this->eventListenerLoader->getEventListener($callableOrDefinition['alias']);
                 $method = $callableOrDefinition['method'];
 

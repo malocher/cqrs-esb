@@ -76,11 +76,12 @@ class Gate
     public function enableSystemBus()
     {
         if (is_null($this->getBus(AbstractBus::SYSTEMBUS))) {
-            $systemBus = new SystemBus(
-                new ClassMapCommandHandlerLoader(),
-                new ClassMapEventListenerLoader(),
-                new ClassMapQueryHandlerLoader()
-            );
+            $systemBus = new SystemBus();
+            
+            $systemBus->setCommandHandlerLoader(new ClassMapCommandHandlerLoader());
+            $systemBus->setQueryHandlerLoader(new ClassMapQueryHandlerLoader());
+            $systemBus->setEventListenerLoader(new ClassMapEventListenerLoader());
+            
             $this->attach($systemBus);
         }
     }

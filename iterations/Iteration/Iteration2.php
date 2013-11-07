@@ -49,11 +49,12 @@ class Iteration2
         $this->gate = new Gate();
 
         // Create a bus and attach it to the gate
-        $this->bus = new Iteration2Bus(
-            new ClassMapCommandHandlerLoader(),
-            new ClassMapEventListenerLoader(),
-            new ClassMapQueryHandlerLoader()
-        );
+        $this->bus = new Iteration2Bus();
+        
+        $this->bus->setCommandHandlerLoader(new ClassMapCommandHandlerLoader());
+        $this->bus->setEventListenerLoader(new ClassMapEventListenerLoader());
+        $this->bus->setQueryHandlerLoader(new ClassMapQueryHandlerLoader());
+        
         $this->gate->attach($this->bus);
 
         // Map a command to a handler

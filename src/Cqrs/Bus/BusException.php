@@ -48,4 +48,15 @@ class BusException extends \Exception
     {
         return new self('[Bus Not Exist Error] ' . $message . "\n");
     }
+    
+    /**
+     * Creates a new BusException describing a loader not exist error.
+     *
+     * @param string $message Exception message
+     * @return BusException
+     */
+    public static function loaderNotExistError($message)
+    {
+        return new self('[Loader Not Exist Error] ' . $message . "\n");
+    }
 }

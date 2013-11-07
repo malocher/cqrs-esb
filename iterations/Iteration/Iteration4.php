@@ -49,11 +49,12 @@ class Iteration4
         $this->gate = new Gate();
 
         // Create a bus and attach it to the gate
-        $this->bus = new Iteration4Bus(
-            new ClassMapCommandHandlerLoader(),
-            new ClassMapEventListenerLoader(),
-            new ClassMapQueryHandlerLoader()
-        );
+        $this->bus = new Iteration4Bus();
+        
+        $this->bus->setCommandHandlerLoader(new ClassMapCommandHandlerLoader());
+        $this->bus->setEventListenerLoader(new ClassMapEventListenerLoader());
+        $this->bus->setQueryHandlerLoader(new ClassMapQueryHandlerLoader());
+        
         $this->gate->attach($this->bus);
 
         // Use of AnnotationAdapter, adapters always us pipe

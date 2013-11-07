@@ -9,9 +9,12 @@
 namespace Cqrs\Configuration;
 
 use Cqrs\Command\CommandHandlerLoaderInterface;
+use Cqrs\Command\CommandHandlerLoaderAwareInterface;
 use Cqrs\Event\EventListenerLoaderInterface;
-use Cqrs\Gate;
+use Cqrs\Event\EventListenerLoaderAwareInterface;
 use Cqrs\Query\QueryHandlerLoaderInterface;
+use Cqrs\Query\QueryHandlerLoaderAwareInterface;
+use Cqrs\Gate;
 
 /**
  * Class Setup
@@ -177,18 +180,35 @@ class Setup
      */
     protected function loadBus($busClass)
     {
-        if (is_null($this->getCommandHandlerLoader())) {
-            throw ConfigurationException::initializeError('CommandHandlerLoaderInterface not initialized. Create a new CommandHandlerLoader() and pass it to setCommandHandlerLoader()');
-        }
-        if (is_null($this->getEventListenerLoader())) {
-            throw ConfigurationException::initializeError('EventListenerLoaderInterface not initialized. Create a new EventListenerLoader() and pass it to setEventListenerLoader()');
-        }
+        
+        
 
-        $bus = new $busClass(
-            $this->getCommandHandlerLoader(),
-            $this->getEventListenerLoader(),
-            $this->getQueryHandlerLoader()
-        );
+        $bus = new $busClass();
+        
+        if ($bus instanceof CommandHandlerLoaderAwareInterface) {
+            if (is_null($this->getCommandHandlerLoader())) {
+                throw ConfigurationException::initializeError('CommandHandlerLoaderInterface not initialized. Create a new CommandHandlerLoader() and pass it to setCommandHandlerLoader()');
+            }
+            
+            $bus->setCommandHandlerLoader($this->commandHandlerLoader);
+        }
+        
+        if ($bus instanceof EventListenerLoaderAwareInterface) {
+            if (is_null($this->getEventListenerLoader())) {
+                throw ConfigurationException::initializeError('EventListenerLoaderInterface not initialized. Create a new EventListenerLoader() and pass it to setEventListenerLoader()');
+            }
+            
+            $bus->setEventListenerLoader($this->eventListenerLoader);
+        }
+        
+        if ($bus instanceof QueryHandlerLoaderAwareInterface) {
+            if (is_null($this->getQueryHandlerLoader())) {
+                throw ConfigurationException::initializeError('QueryHandlerLoaderInterface not initialized. Create a new QueryHandlerLoader() and pass it to setQueryHandlerLoader()');
+            }
+            
+            $bus->setQueryHandlerLoader($this->queryHandlerLoader);
+        }
+        
         $this->gate->attach($bus);
         return $bus;
     }
