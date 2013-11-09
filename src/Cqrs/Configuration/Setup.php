@@ -147,8 +147,8 @@ class Setup
             $this->gate->setDefaultBusName($configuration['default_bus']);
         }
 
-        foreach ($configuration['adapters'] as $adapterConfiguration) {
-            $adapter = $this->loadAdapter($adapterConfiguration);
+        foreach ($configuration['adapters'] as $adapterClass => $adapterConfiguration) {
+            $adapter = $this->loadAdapter($adapterClass, $adapterConfiguration);
 
             foreach ($adapterConfiguration['buses'] as $busClass => $busAdapterConfiguration) {
                 $bus = $this->loadBus($busClass);
@@ -160,12 +160,12 @@ class Setup
     /**
      * load adapter
      *
-     * @param array $configuration
+     * @param string $adapterClass
+     * @param array  $configuration
      * @return mixed
      */
-    protected function loadAdapter(array $configuration)
+    protected function loadAdapter($adapterClass, array $configuration)
     {
-        $adapterClass = $configuration['class'];
         $config = isset($configuration['options']) ? $configuration['options'] : null;
 
         return new $adapterClass($config);
@@ -180,9 +180,6 @@ class Setup
      */
     protected function loadBus($busClass)
     {
-        
-        
-
         $bus = new $busClass();
         
         if ($bus instanceof CommandHandlerLoaderAwareInterface) {

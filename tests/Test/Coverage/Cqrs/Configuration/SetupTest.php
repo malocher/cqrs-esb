@@ -98,8 +98,7 @@ class SetupTest extends TestCase
         $configuration = array(
             'default_bus' => 'test-coverage-mock-bus',
             'adapters' => array(
-                array(
-                    'class' => 'Cqrs\Adapter\ArrayMapAdapter',
+                'Cqrs\Adapter\ArrayMapAdapter' => array(
                     'buses' => array(
                         'Test\Coverage\Mock\Bus\MockBus' => array(
                             'Test\Coverage\Mock\Command\MockCommand' => array(
@@ -168,8 +167,7 @@ class SetupTest extends TestCase
         $configuration = array(
             'enable_system_bus' => true,
             'adapters' => array(
-                array(
-                    'class' => 'Cqrs\Adapter\ArrayMapAdapter',
+                'Cqrs\Adapter\ArrayMapAdapter' => array(
                     'buses' => array(
                         'Test\Coverage\Mock\Bus\MockBus' => array(
                             'Test\Coverage\Mock\Command\MockCommand' => array(
@@ -192,8 +190,7 @@ class SetupTest extends TestCase
         $configuration = array(
             'enable_system_bus' => true,
             'adapters' => array(
-                array(
-                    'class' => 'Cqrs\Adapter\ArrayMapAdapter',
+                'Cqrs\Adapter\ArrayMapAdapter' => array(
                     'buses' => array(
                         'Test\Coverage\Mock\Bus\MockBus' => array(
                             'Test\Coverage\Mock\Command\MockCommand' => array(

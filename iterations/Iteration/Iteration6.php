@@ -43,8 +43,7 @@ class Iteration6
         // iteration 6
         $configuration = [
             'adapters' => [
-                [
-                    'class' => 'Cqrs\Adapter\AnnotationAdapter',
+                'Cqrs\Adapter\AnnotationAdapter' => [ 
                     'buses' => [
                         'Iteration\Iteration6\Iteration6Bus' => [
                             'Iteration\Iteration6\Iteration6Handler'

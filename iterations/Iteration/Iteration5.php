@@ -42,8 +42,7 @@ class Iteration5
         // iteration 5
         $configuration = [
             'adapters' => [
-                [
-                    'class' => 'Cqrs\Adapter\AnnotationAdapter',
+                'Cqrs\Adapter\AnnotationAdapter' => [
                     'buses' => [
                         'Iteration\Iteration5\Iteration5Bus' => [
                             'Iteration\Iteration5\Iteration5Handler'
