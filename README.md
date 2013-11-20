@@ -3,7 +3,7 @@ cqrs-php
 This package helps implementing the Command Query Responsibility Segregation (CQRS) principles for php applications.
 CQRS plays well with Domain Driven Design (DDD) or traditional MVC patterns.
 
-https://travis-ci.org/crafics/cqrs-php.png?branch=master
+[![Build Status](https://travis-ci.org/crafics/cqrs-php.png?branch=master)](https://travis-ci.org/crafics/cqrs-php)
 
 ## Iterations
 
