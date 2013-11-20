@@ -55,12 +55,12 @@ class Test3 extends TestCase
         $classMapQueryHandlerLoader = new ClassMapQueryHandlerLoader();
         $this->test3EventListenerLoader = new Test3EventListenerLoader();
         $this->test3EventListenerLoader->setTest3EventListener(new Test3EventListener());
+
+
         $this->bus = new Test3Bus();
-        
         $this->bus->setCommandHandlerLoader($classMapCommandHandlerLoader);
         $this->bus->setEventListenerLoader($this->test3EventListenerLoader);
         $this->bus->setQueryHandlerLoader($classMapQueryHandlerLoader);
-        
         $this->gate = new Gate();
         try {
             $this->gate->attach($this->bus);

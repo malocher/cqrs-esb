@@ -40,20 +40,20 @@ class Test4 extends TestCase
 
     public function testInitializeCommand()
     {
-        $configuration = array(
-            'adapters' => array(
-                'Cqrs\Adapter\ArrayMapAdapter' => array(
-                    'buses' => array(
-                        'Test\Integration\Test4\Test4Bus' => array(
-                            'Test\Integration\Test4\Test4Command' => array(
+        $configuration = [
+            'adapters' => [
+                'Cqrs\Adapter\ArrayMapAdapter' => [
+                    'buses' => [
+                        'Test\Integration\Test4\Test4Bus' => [
+                            'Test\Integration\Test4\Test4Command' => [
                                 'alias' => 'Test\Integration\Test4\Test4CommandHandler',
                                 'method' => 'handleCommand'
-                            )
-                        )
-                    )
-                ),
-            ),
-        );
+                            ]
+                        ]
+                    ]
+                ],
+            ],
+        ];
         $this->object->initialize($configuration);
         $mockCommand = new Test4Command();
         $this->object->getGate()->getBus('test-integration-test4-bus')->invokeCommand($mockCommand);
