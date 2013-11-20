@@ -206,14 +206,28 @@ class SetupTest extends TestCase
         $this->setup->setCommandHandlerLoader(new ClassMapCommandHandlerLoader());
         $this->setup->initialize($configuration);
     }
-
-    /*
-    protected function testLoadAdapter(array $configuration)
+    
+    public function testInitializeWithoutQuerytHandlerLoader()
     {
+        $this->setExpectedException('Cqrs\Configuration\ConfigurationException');
+        $configuration = array(
+            'enable_system_bus' => true,
+            'adapters' => array(
+                'Cqrs\Adapter\ArrayMapAdapter' => array(
+                    'buses' => array(
+                        'Test\Coverage\Mock\Bus\MockBus' => array(
+                            'Test\Coverage\Mock\Query\MockQuery' => array(
+                                'alias' => 'Test\Coverage\Mock\Query\MockQueryHandler',
+                                'method' => 'handleQuery'
+                            )
+                        )
+                    )
+                ),
+            ),
+        );
+        $this->setup->setGate(new Gate());
+        $this->setup->setCommandHandlerLoader(new ClassMapCommandHandlerLoader());
+        $this->setup->setEventListenerLoader(new ClassMapEventListenerLoader());
+        $this->setup->initialize($configuration);
     }
-
-    protected function testLoadBus($busClass)
-    {
-    }
-    */
 }

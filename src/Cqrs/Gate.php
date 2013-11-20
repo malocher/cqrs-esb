@@ -62,9 +62,6 @@ class Gate
     public function reset()
     {
         foreach ($this->buses as $bus) {
-            if ($bus->getName() === AbstractBus::SYSTEMBUS) {
-                continue;
-            }
             $this->detach($bus);
         }
         return $this;

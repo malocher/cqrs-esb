@@ -10,6 +10,7 @@ namespace Test\Coverage\Cqrs;
 
 use Cqrs\Command\ClassMapCommandHandlerLoader;
 use Cqrs\Event\ClassMapEventListenerLoader;
+use Cqrs\Bus\SystemBus;
 use Cqrs\Gate;
 use Cqrs\Query\ClassMapQueryHandlerLoader;
 use Test\Coverage\Mock\Bus\MockBus;
@@ -42,11 +43,11 @@ class GateTest extends TestCase
 
     public function testReset()
     {
-        $mockBus = new MockBus(
-            new ClassMapCommandHandlerLoader(),
-            new ClassMapEventListenerLoader(),
-            new ClassMapQueryHandlerLoader()
-        );
+        $mockBus = new MockBus();
+        $mockBus->setCommandHandlerLoader(new ClassMapCommandHandlerLoader());
+        $mockBus->setEventListenerLoader(new ClassMapEventListenerLoader());
+        $mockBus->setQueryHandlerLoader(new ClassMapQueryHandlerLoader());
+        
         $this->gate->attach($mockBus);
         $this->gate->reset();
         $attachedBuses = $this->gate->attachedBuses();
@@ -85,12 +86,15 @@ class GateTest extends TestCase
     {
         $this->setExpectedException('Cqrs\Gate\GateException');
         $this->gate->enableSystemBus();
-        $mockFakeSystemBus = new MockFakeSystemBus(
-            new ClassMapCommandHandlerLoader(),
-            new ClassMapEventListenerLoader(),
-            new ClassMapQueryHandlerLoader()
-        );
+        $mockFakeSystemBus = new MockFakeSystemBus();
         $this->gate->attach($mockFakeSystemBus);
+    }
+    
+    public function testAttachDuplicateSystemBus()
+    {
+        $this->setExpectedException('Cqrs\Gate\GateException');
+        $this->gate->enableSystemBus();
+        $this->gate->attach(new SystemBus());
     }
 
     public function testDisableSystemBus()

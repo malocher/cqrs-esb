@@ -85,7 +85,7 @@ class AbstractBusTest extends TestCase implements BusInterfaceTest
             $query->edit();
             return array(1, 2, 3, 4, 5);
         });
-        $mockQuery = new MockQuery();
+        $mockQuery = new MockQuery();        
         $result = $this->bus->executeQuery($mockQuery);
         $this->assertEquals($result, array(1, 2, 3, 4, 5));
         $this->assertEquals(true, $mockQuery->isEdited());
@@ -158,6 +158,21 @@ class AbstractBusTest extends TestCase implements BusInterfaceTest
         $result = $this->bus->executeQuery($mockQuery);
         $this->assertEquals($result, array(1, 2, 3, 4, 5));
     }
+    
+    public function testExcecuteQueryHandlerNoQueryHandlerLoader()
+    {
+        $this->setExpectedException('Cqrs\Bus\BusException');
+        
+        $bus = $this->getMockForAbstractClass('Cqrs\Bus\AbstractBus'); 
+        
+        $bus->setGate(new Gate());
+        $bus->mapQuery('Test\Coverage\Mock\Query\MockQuery', array(
+            'alias' => 'Test\Coverage\Mock\Query\MockQueryHandler',
+            'method' => 'handleQueryWithNoResult'
+        ));
+        $mockQuery = new MockQuery();
+        $result = $bus->executeQuery($mockQuery);
+    }
 
     public function testMapCommand()
     {
@@ -207,6 +222,21 @@ class AbstractBusTest extends TestCase implements BusInterfaceTest
         $mockCommand->callback = function ($isEdited) {
         };
         $this->bus->invokeCommand($mockCommand);
+    }
+    
+    public function testInvokeCommandHanlderNoCommandHandlerLoader()
+    {        
+        $this->setExpectedException('Cqrs\Bus\BusException');
+        
+        $bus = $this->getMockForAbstractClass('Cqrs\Bus\AbstractBus'); 
+        
+        $bus->setGate(new Gate());
+        $bus->mapCommand('Test\Coverage\Mock\Command\MockCommand', array(
+            'alias' => 'Test\Coverage\Mock\Command\MockCommandHandler',
+            'method' => 'handleCommand'
+        ));
+        $mockCommand = new MockCommand();
+        $bus->invokeCommand($mockCommand);    
     }
 
     public function testRegisterEventListener()
@@ -272,5 +302,20 @@ class AbstractBusTest extends TestCase implements BusInterfaceTest
         $this->bus->setGate(new Gate());
         $mockEvent = new MockEvent();
         $this->assertFalse($this->bus->publishEvent($mockEvent));
+    }
+    
+    public function testPublishEventHandlerNoEventHandlerLoader()
+    {
+        $this->setExpectedException('Cqrs\Bus\BusException');
+        
+        $bus = $this->getMockForAbstractClass('Cqrs\Bus\AbstractBus'); 
+        
+        $bus->setGate(new Gate());
+        $bus->registerEventListener('Test\Coverage\Mock\Event\MockEvent', array(
+            'alias' => 'Test\Coverage\Mock\Event\MockEventHandler',
+            'method' => 'handleEvent'
+        ));
+        $mockEvent = new MockEvent();
+        $bus->publishEvent($mockEvent);    
     }
 }
