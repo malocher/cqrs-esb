@@ -42,8 +42,7 @@ class Test4 extends TestCase
     {
         $configuration = array(
             'adapters' => array(
-                array(
-                    'class' => 'Cqrs\Adapter\ArrayMapAdapter',
+                'Cqrs\Adapter\ArrayMapAdapter' => array(
                     'buses' => array(
                         'Test\Integration\Test4\Test4Bus' => array(
                             'Test\Integration\Test4\Test4Command' => array(
@@ -65,8 +64,7 @@ class Test4 extends TestCase
     {
         $configuration = array(
             'adapters' => array(
-                array(
-                    'class' => 'Cqrs\Adapter\ArrayMapAdapter',
+                'Cqrs\Adapter\ArrayMapAdapter' => array(
                     'buses' => array(
                         'Test\Integration\Test4\Test4Bus' => array(
                             'Test\Integration\Test4\Test4Event' => function (Test4Event $event) {

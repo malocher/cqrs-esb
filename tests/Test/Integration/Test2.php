@@ -48,11 +48,12 @@ class Test2 extends TestCase
     protected function setUp()
     {
         $this->gate = new Gate();
-        $this->bus = new Test2Bus(
-            new ClassMapCommandHandlerLoader(),
-            new ClassMapEventListenerLoader(),
-            new ClassMapQueryHandlerLoader()
-        );
+        $this->bus = new Test2Bus();
+        
+        $this->bus->setCommandHandlerLoader(new ClassMapCommandHandlerLoader());
+        $this->bus->setEventListenerLoader(new ClassMapEventListenerLoader());
+        $this->bus->setQueryHandlerLoader(new ClassMapQueryHandlerLoader());
+        
         $this->gate->attach($this->bus);
         $this->adapter = new AnnotationAdapter();
     }

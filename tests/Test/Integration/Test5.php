@@ -42,8 +42,7 @@ class Test5 extends TestCase
     {
         $configuration = array(
             'adapters' => array(
-                array(
-                    'class' => 'Cqrs\Adapter\AnnotationAdapter',
+                'Cqrs\Adapter\AnnotationAdapter' => array(
                     'buses' => array(
                         'Test\Integration\Test5\Test5Bus' => array(
                             'Test\Integration\Test5\Test5Handler'

@@ -43,11 +43,12 @@ class Test1 extends TestCase
     protected function setUp()
     {
         $this->gate = new Gate();
-        $this->bus = new Test1Bus(
-            new ClassMapCommandHandlerLoader(),
-            new ClassMapEventListenerLoader(),
-            new ClassMapQueryHandlerLoader()
-        );
+        $this->bus = new Test1Bus();
+        
+        $this->bus->setCommandHandlerLoader(new ClassMapCommandHandlerLoader());
+        $this->bus->setEventListenerLoader(new ClassMapEventListenerLoader());
+        $this->bus->setQueryHandlerLoader(new ClassMapQueryHandlerLoader());
+        
         $this->bus->mapCommand(
             'Test\Integration\Test1\Test1Command',
             array(
