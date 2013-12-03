@@ -73,7 +73,7 @@ class Integration2Test extends TestCase
     }
 
     /**
-     *
+     * Second Test
      */
     public function test2()
     {
