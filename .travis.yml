@@ -4,6 +4,8 @@ php:
   - 5.5
 
 before_script:
+  - php composer.phar self-update
+  - php composer.phar update
   - curl -s http://getcomposer.org/installer | php
   - php composer.phar install --dev --no-interaction --prefer-source
 
