@@ -3,15 +3,15 @@ cqrs-php
 This package helps implementing the Command Query Responsibility Segregation (CQRS) principles for php applications.
 CQRS plays well with Domain Driven Design (DDD) or traditional MVC patterns.
 
-[![Build Status](https://travis-ci.org/crafics/cqrs-php.png?branch=master)](https://travis-ci.org/crafics/cqrs-php)
+[![Build Status](https://travis-ci.org/Malocher/cqrs-esb.png?branch=master)](https://travis-ci.org/Malocher/cqrs-esb)
 
 ## Iterations
 
-https://github.com/crafics/cqrs-php/tree/master/iterations/Iteration
+https://github.com/Malocher/cqrs-esb/tree/master/iterations/Iteration
 
 Zend Framework 2 Integration
 -----------------------------
-If you want to use crafics/cqrs-php in a ZF2 project, check out the [codeliner/zf2-cqrs-module](https://github.com/codeliner/zf2-cqrs-module).
+If you want to use Malocher/cqrs-esb in a ZF2 project, check out the [codeliner/zf2-cqrs-module](https://github.com/codeliner/zf2-cqrs-module).
 
 Sample Application
 -------------------
