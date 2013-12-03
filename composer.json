@@ -26,6 +26,6 @@
         "phpunit/phpunit": "3.7.*"
     },
     "autoload": {
-        "psr-0": { "Test\\": "tests/","Iteration\\": "iterations/","Malocher\\Cqrs\\": "src/" }
+        "psr-0": { "Malocher\\Test\\": "tests/","Iteration\\": "iterations/","Malocher\\Cqrs\\": "src/" }
     }
 }
