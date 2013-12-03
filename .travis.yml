@@ -9,3 +9,6 @@ before_script:
 
 script:
   - php vendor/bin/phpunit -c phpunit.xml
+
+after_script:
+  - php vendor/bin/coveralls -v
