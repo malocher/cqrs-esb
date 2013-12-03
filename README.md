@@ -1,6 +1,6 @@
 cqrs-esb
 ========
-This package helps implementing the Command Query Responsibility Segregation (CQRS) principles for php applications.
+This package implements the service bus architecture and Command Query Responsibility Segregation (CQRS) principles for php applications.
 CQRS plays well with Domain Driven Design (DDD) or traditional MVC patterns.
 
 [![Build Status](https://travis-ci.org/Malocher/cqrs-esb.png?branch=master)](https://travis-ci.org/Malocher/cqrs-esb)
