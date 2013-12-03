@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit bootstrap="bootstrap.php"
+    colors="true"
+    convertErrorsToExceptions="true"
+    convertNoticesToExceptions="true"
+    convertWarningsToExceptions="true"
+    stopOnFailure="true">
+    <testsuites>
+        <testsuite name="Coverage">
+            <directory>./tests/Malocher/Test/Coverage/</directory>
+        </testsuite>
+        <testsuite name="Integration">
+            <directory>./tests/Malocher/Test/Integration/</directory>
+        </testsuite>
+    </testsuites>
+    <logging>
+        <log type="coverage-clover" target="build/logs/clover.xml"/>
+    </logging>
+</phpunit>
