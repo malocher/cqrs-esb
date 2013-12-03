@@ -6,8 +6,11 @@
     convertWarningsToExceptions="true"
     stopOnFailure="true">
     <testsuites>
-        <testsuite name="Cqrs Test Suite">
-            <directory>./tests/</directory>
+        <testsuite name="Coverage">
+            <directory>./tests/Malocher/Test/Coverage/</directory>
+        </testsuite>
+        <testsuite name="Integration">
+            <directory>./tests/Malocher/Test/Integration/</directory>
         </testsuite>
     </testsuites>
 </phpunit>
