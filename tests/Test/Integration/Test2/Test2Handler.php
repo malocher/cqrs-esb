@@ -8,7 +8,7 @@
  */
 namespace Test\Integration\Test2;
 
-use Cqrs\Adapter\AdapterTrait;
+use Malocher\Cqrs\Adapter\AdapterTrait;
 
 /**
  * Class Test2Handler

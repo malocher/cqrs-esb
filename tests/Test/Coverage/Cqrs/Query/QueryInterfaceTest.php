@@ -12,7 +12,7 @@ namespace Test\Coverage\Cqrs\Query;
  * Class QueryInterfaceTest
  *
  * @author Manfred Weber <crafics@php.net>
- * @package Test\Cqrs\Query
+ * @package Test\Malocher\Cqrs\Query
  */
 interface QueryInterfaceTest
 {

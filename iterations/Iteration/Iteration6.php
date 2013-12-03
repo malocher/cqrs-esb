@@ -9,11 +9,11 @@
 
 namespace Iteration;
 
-use Cqrs\Command\ClassMapCommandHandlerLoader;
-use Cqrs\Configuration\Setup;
-use Cqrs\Event\ClassMapEventListenerLoader;
-use Cqrs\Gate;
-use Cqrs\Query\ClassMapQueryHandlerLoader;
+use Malocher\Cqrs\Command\ClassMapCommandHandlerLoader;
+use Malocher\Cqrs\Configuration\Setup;
+use Malocher\Cqrs\Event\ClassMapEventListenerLoader;
+use Malocher\Cqrs\Gate;
+use Malocher\Cqrs\Query\ClassMapQueryHandlerLoader;
 use Iteration\Iteration6\Iteration6Command;
 use Iteration\Iteration6\Iteration6Query;
 
@@ -43,12 +43,12 @@ class Iteration6
         // iteration 6
         $configuration = [
             'adapters' => [
-                'Cqrs\Adapter\AnnotationAdapter' => [ 
+                'Malocher\Cqrs\Adapter\AnnotationAdapter' => [ 
                     'buses' => [
                         'Iteration\Iteration6\Iteration6Bus' => [
                             'Iteration\Iteration6\Iteration6Handler'
                         ],
-                        'Cqrs\Bus\SystemBus' => [
+                        'Malocher\Cqrs\Bus\SystemBus' => [
                             'Iteration\Iteration6\Iteration6Monitor'
                         ]
                     ]

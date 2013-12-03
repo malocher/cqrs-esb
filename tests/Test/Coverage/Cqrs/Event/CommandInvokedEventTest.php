@@ -9,7 +9,7 @@
 
 namespace Test\Coverage\Cqrs\Event;
 
-use Cqrs\Event\CommandInvokedEvent;
+use Malocher\Cqrs\Event\CommandInvokedEvent;
 use Test\Coverage\Cqrs\Message\MessageTest;
 
 /**

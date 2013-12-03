@@ -8,7 +8,7 @@
  */
 namespace Test\Coverage\Cqrs\Message;
 
-use Cqrs\Message\Message;
+use Malocher\Cqrs\Message\Message;
 use Test\TestCase;
 use Test\Coverage\Mock\Message\PayloadMock;
 
@@ -28,13 +28,13 @@ class MessageTest extends TestCase
     public function testConstructed()
     {
         $this->message = new Message();
-        $this->assertInstanceOf('Cqrs\Message\Message', $this->message);
+        $this->assertInstanceOf('Malocher\Cqrs\Message\Message', $this->message);
     }
 
     public function testConstructedWithArrayPayload()
     {
         $this->message = new Message(array(1, 2, 3, 4, 5));
-        $this->assertInstanceOf('Cqrs\Message\Message', $this->message);
+        $this->assertInstanceOf('Malocher\Cqrs\Message\Message', $this->message);
     }
     
     public function testConstructedWithPayloadInterface()
@@ -44,13 +44,13 @@ class MessageTest extends TestCase
         $payload->name = 'John Doe';
         
         $this->message = new Message($payload);
-        $this->assertInstanceOf('Cqrs\Message\Message', $this->message);
+        $this->assertInstanceOf('Malocher\Cqrs\Message\Message', $this->message);
         $this->assertEquals(['name' => 'John Doe'], $this->message->getPayload());
     }
     
     public function testFailedConstructWithWrongPayloadType()
     {
-        $this->setExpectedException('Cqrs\Message\MessageException');
+        $this->setExpectedException('Malocher\Cqrs\Message\MessageException');
         $wrongPayload = new \stdClass();
         $message = new Message($wrongPayload);
     }

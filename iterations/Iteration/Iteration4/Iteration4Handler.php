@@ -8,7 +8,7 @@
  */
 namespace Iteration\Iteration4;
 
-use Cqrs\Adapter\AdapterTrait;
+use Malocher\Cqrs\Adapter\AdapterTrait;
 
 /**
  * Class Iteration4Handler

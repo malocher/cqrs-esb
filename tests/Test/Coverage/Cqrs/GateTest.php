@@ -8,11 +8,11 @@
  */
 namespace Test\Coverage\Cqrs;
 
-use Cqrs\Command\ClassMapCommandHandlerLoader;
-use Cqrs\Event\ClassMapEventListenerLoader;
-use Cqrs\Bus\SystemBus;
-use Cqrs\Gate;
-use Cqrs\Query\ClassMapQueryHandlerLoader;
+use Malocher\Cqrs\Command\ClassMapCommandHandlerLoader;
+use Malocher\Cqrs\Event\ClassMapEventListenerLoader;
+use Malocher\Cqrs\Bus\SystemBus;
+use Malocher\Cqrs\Gate;
+use Malocher\Cqrs\Query\ClassMapQueryHandlerLoader;
 use Test\Coverage\Mock\Bus\MockBus;
 use Test\Coverage\Mock\Bus\MockFakeSystemBus;
 use Test\TestCase;
@@ -38,7 +38,7 @@ class GateTest extends TestCase
 
     public function testConstructed()
     {
-        $this->assertInstanceOf('Cqrs\Gate', $this->gate);
+        $this->assertInstanceOf('Malocher\Cqrs\Gate', $this->gate);
     }
 
     public function testReset()
@@ -58,7 +58,7 @@ class GateTest extends TestCase
     {
         $this->gate->enableSystemBus();
         $this->gate->reset();
-        $this->assertInstanceOf('Cqrs\Bus\SystemBus', $this->gate->getSystemBus());
+        $this->assertInstanceOf('Malocher\Cqrs\Bus\SystemBus', $this->gate->getSystemBus());
         $this->gate->disableSystemBus();
         $this->assertNull($this->gate->getSystemBus());
     }
@@ -67,13 +67,13 @@ class GateTest extends TestCase
     {
         $this->gate->enableSystemBus();
         $systemBus = $this->gate->getSystemBus();
-        $this->assertInstanceOf('Cqrs\Bus\SystemBus', $systemBus);
+        $this->assertInstanceOf('Malocher\Cqrs\Bus\SystemBus', $systemBus);
     }
 
     public function testGetSystemBus()
     {
         $this->gate->enableSystemBus();
-        $this->assertInstanceOf('Cqrs\Bus\SystemBus', $this->gate->getSystemBus());
+        $this->assertInstanceOf('Malocher\Cqrs\Bus\SystemBus', $this->gate->getSystemBus());
     }
 
     public function testGetNonInitializedSystemBus()
@@ -84,7 +84,7 @@ class GateTest extends TestCase
 
     public function testAttachFakeSystemBus()
     {
-        $this->setExpectedException('Cqrs\Gate\GateException');
+        $this->setExpectedException('Malocher\Cqrs\Gate\GateException');
         $this->gate->enableSystemBus();
         $mockFakeSystemBus = new MockFakeSystemBus();
         $this->gate->attach($mockFakeSystemBus);
@@ -92,7 +92,7 @@ class GateTest extends TestCase
     
     public function testAttachDuplicateSystemBus()
     {
-        $this->setExpectedException('Cqrs\Gate\GateException');
+        $this->setExpectedException('Malocher\Cqrs\Gate\GateException');
         $this->gate->enableSystemBus();
         $this->gate->attach(new SystemBus());
     }
@@ -109,7 +109,7 @@ class GateTest extends TestCase
 
     public function testDetach()
     {
-        $this->setExpectedException('Cqrs\Bus\BusException');
+        $this->setExpectedException('Malocher\Cqrs\Bus\BusException');
         $mockBus = new MockBus(
             new ClassMapCommandHandlerLoader(),
             new ClassMapEventListenerLoader(),
@@ -150,7 +150,7 @@ class GateTest extends TestCase
 
     public function testAttachSameBusTwice()
     {
-        $this->setExpectedException('Cqrs\Gate\GateException');
+        $this->setExpectedException('Malocher\Cqrs\Gate\GateException');
         $mockBus = new MockBus(
             new ClassMapCommandHandlerLoader(),
             new ClassMapEventListenerLoader(),
@@ -218,7 +218,7 @@ class GateTest extends TestCase
     
     public function testGetBus_ErrorWhenNoDefaultBusIsDefined()
     {
-        $this->setExpectedException('Cqrs\Bus\BusException');
+        $this->setExpectedException('Malocher\Cqrs\Bus\BusException');
         
         $mockBus = new MockBus(
             new ClassMapCommandHandlerLoader(),

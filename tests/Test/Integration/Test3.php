@@ -6,11 +6,11 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace Cqrs\Bus;
-use Cqrs\Command\ClassMapCommandHandlerLoader;
-use Cqrs\Gate;
-use Cqrs\Gate\GateException;
-use Cqrs\Query\ClassMapQueryHandlerLoader;
+namespace Malocher\Cqrs\Bus;
+use Malocher\Cqrs\Command\ClassMapCommandHandlerLoader;
+use Malocher\Cqrs\Gate;
+use Malocher\Cqrs\Gate\GateException;
+use Malocher\Cqrs\Query\ClassMapQueryHandlerLoader;
 use Test\Integration\Test3\Test3Bus;
 use Test\Integration\Test3\Test3Command;
 use Test\Integration\Test3\Test3Event;
@@ -24,7 +24,7 @@ use Test\TestCase;
  * Class Test3
  *
  * @author Manfred Weber <crafics@php.net>
- * @package Cqrs\Bus
+ * @package Malocher\Cqrs\Bus
  */
 class Test3 extends TestCase
 {

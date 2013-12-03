@@ -8,7 +8,7 @@
  */
 namespace Iteration\Iteration6;
 
-use Cqrs\Adapter\AdapterTrait;
+use Malocher\Cqrs\Adapter\AdapterTrait;
 
 /**
  * Class Iteration6Handler

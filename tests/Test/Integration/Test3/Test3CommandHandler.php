@@ -8,8 +8,8 @@
  */
 namespace Test\Integration\Test3;
 
-use Cqrs\Adapter\AdapterTrait;
-use Cqrs\Command\CommandInterface;
+use Malocher\Cqrs\Adapter\AdapterTrait;
+use Malocher\Cqrs\Command\CommandInterface;
 
 /**
  * Class Test3CommandHandler

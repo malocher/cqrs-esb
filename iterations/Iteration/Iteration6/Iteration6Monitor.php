@@ -8,13 +8,13 @@
  */
 namespace Iteration\Iteration6;
 
-use Cqrs\Adapter\AdapterTrait;
-use Cqrs\Command\ExecuteQueryCommand;
-use Cqrs\Command\InvokeCommandCommand;
-use Cqrs\Command\PublishEventCommand;
-use Cqrs\Event\CommandInvokedEvent;
-use Cqrs\Event\EventPublishedEvent;
-use Cqrs\Event\QueryExecutedEvent;
+use Malocher\Cqrs\Adapter\AdapterTrait;
+use Malocher\Cqrs\Command\ExecuteQueryCommand;
+use Malocher\Cqrs\Command\InvokeCommandCommand;
+use Malocher\Cqrs\Command\PublishEventCommand;
+use Malocher\Cqrs\Event\CommandInvokedEvent;
+use Malocher\Cqrs\Event\EventPublishedEvent;
+use Malocher\Cqrs\Event\QueryExecutedEvent;
 
 /**
  * Class Iteration6Monitor
@@ -30,7 +30,7 @@ class Iteration6Monitor
     use AdapterTrait;
 
     /**
-     * @command Cqrs\Command\InvokeCommandCommand
+     * @command Malocher\Cqrs\Command\InvokeCommandCommand
      * @param InvokeCommandCommand $command
      */
     public function invokeCommandHandler(InvokeCommandCommand $command)
@@ -51,7 +51,7 @@ class Iteration6Monitor
     }
 
     /**
-     * @command Cqrs\Command\PublishEventCommand
+     * @command Malocher\Cqrs\Command\PublishEventCommand
      * @param PublishEventCommand $command
      */
     public function publishEventHandler(PublishEventCommand $command)
@@ -72,7 +72,7 @@ class Iteration6Monitor
     }
 
     /**
-     * @command Cqrs\Command\ExecuteQueryCommand
+     * @command Malocher\Cqrs\Command\ExecuteQueryCommand
      * @param ExecuteQueryCommand $command
      */
     public function executeQueryHandler(ExecuteQueryCommand $command)
@@ -93,7 +93,7 @@ class Iteration6Monitor
     }
 
     /**
-     * @event Cqrs\Event\CommandInvokedEvent
+     * @event Malocher\Cqrs\Event\CommandInvokedEvent
      * @param CommandInvokedEvent $event
      */
     public function commandInvokedHandler(CommandInvokedEvent $event)
@@ -114,7 +114,7 @@ class Iteration6Monitor
     }
 
     /**
-     * @event Cqrs\Event\EventPublishedEvent
+     * @event Malocher\Cqrs\Event\EventPublishedEvent
      * @param EventPublishedEvent $event
      */
     public function eventPublishedHandler(EventPublishedEvent $event)
@@ -135,7 +135,7 @@ class Iteration6Monitor
     }
 
     /**
-     * @event Cqrs\Event\QueryExecutedEvent
+     * @event Malocher\Cqrs\Event\QueryExecutedEvent
      * @param QueryExecutedEvent $event
      */
     public function queryExecutedHandler(QueryExecutedEvent $event)

@@ -8,8 +8,8 @@
  */
 namespace Test\Coverage\Mock\Command;
 
-use Cqrs\Adapter\AdapterTrait;
-use Cqrs\Command\CommandInterface;
+use Malocher\Cqrs\Adapter\AdapterTrait;
+use Malocher\Cqrs\Command\CommandInterface;
 
 /**
  * Class MockCommandHandler

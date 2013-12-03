@@ -9,7 +9,7 @@
 
 namespace Test\Coverage\Cqrs\Command;
 
-use Cqrs\Command\ExecuteQueryCommand;
+use Malocher\Cqrs\Command\ExecuteQueryCommand;
 use Test\Coverage\Cqrs\Message\MessageTest;
 
 /**

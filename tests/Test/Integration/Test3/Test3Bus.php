@@ -8,7 +8,7 @@
  */
 namespace Test\Integration\Test3;
 
-use Cqrs\Bus\AbstractBus;
+use Malocher\Cqrs\Bus\AbstractBus;
 
 /**
  * Class Test3Bus

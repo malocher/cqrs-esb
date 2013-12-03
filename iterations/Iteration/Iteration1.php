@@ -9,10 +9,10 @@
 
 namespace Iteration;
 
-use Cqrs\Command\ClassMapCommandHandlerLoader;
-use Cqrs\Event\ClassMapEventListenerLoader;
-use Cqrs\Gate;
-use Cqrs\Query\ClassMapQueryHandlerLoader;
+use Malocher\Cqrs\Command\ClassMapCommandHandlerLoader;
+use Malocher\Cqrs\Event\ClassMapEventListenerLoader;
+use Malocher\Cqrs\Gate;
+use Malocher\Cqrs\Query\ClassMapQueryHandlerLoader;
 use Iteration\Iteration1\Iteration1Bus;
 use Iteration\Iteration1\Iteration1Command;
 

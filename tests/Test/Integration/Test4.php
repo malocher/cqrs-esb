@@ -6,12 +6,12 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace Cqrs\Configuration;
+namespace Malocher\Cqrs\Configuration;
 
-use Cqrs\Command\ClassMapCommandHandlerLoader;
-use Cqrs\Event\ClassMapEventListenerLoader;
-use Cqrs\Gate;
-use Cqrs\Query\ClassMapQueryHandlerLoader;
+use Malocher\Cqrs\Command\ClassMapCommandHandlerLoader;
+use Malocher\Cqrs\Event\ClassMapEventListenerLoader;
+use Malocher\Cqrs\Gate;
+use Malocher\Cqrs\Query\ClassMapQueryHandlerLoader;
 use Test\Integration\Test4\Test4Command;
 use Test\Integration\Test4\Test4Event;
 use Test\TestCase;
@@ -20,7 +20,7 @@ use Test\TestCase;
  * Class Test4
  *
  * @author Alexander Miertsch <kontakt@codeliner.ws>
- * @package Cqrs\Configuration
+ * @package Malocher\Cqrs\Configuration
  */
 class Test4 extends TestCase
 {
@@ -42,7 +42,7 @@ class Test4 extends TestCase
     {
         $configuration = [
             'adapters' => [
-                'Cqrs\Adapter\ArrayMapAdapter' => [
+                'Malocher\Cqrs\Adapter\ArrayMapAdapter' => [
                     'buses' => [
                         'Test\Integration\Test4\Test4Bus' => [
                             'Test\Integration\Test4\Test4Command' => [
@@ -64,7 +64,7 @@ class Test4 extends TestCase
     {
         $configuration = array(
             'adapters' => array(
-                'Cqrs\Adapter\ArrayMapAdapter' => array(
+                'Malocher\Cqrs\Adapter\ArrayMapAdapter' => array(
                     'buses' => array(
                         'Test\Integration\Test4\Test4Bus' => array(
                             'Test\Integration\Test4\Test4Event' => function (Test4Event $event) {

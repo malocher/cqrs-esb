@@ -8,7 +8,7 @@
  */
 namespace Test\Coverage\Cqrs\Event;
 
-use Cqrs\Event\ClassMapEventListenerLoader;
+use Malocher\Cqrs\Event\ClassMapEventListenerLoader;
 use Test\TestCase;
 
 /**
@@ -31,7 +31,7 @@ class ClassMapEventListenerLoaderTest extends TestCase implements EventListenerL
 
     public function testConstructed()
     {
-        $this->assertInstanceOf('Cqrs\Event\ClassMapEventListenerLoader', $this->loader);
+        $this->assertInstanceOf('Malocher\Cqrs\Event\ClassMapEventListenerLoader', $this->loader);
     }
 
     public function testGetExistingEventListener()
@@ -43,7 +43,7 @@ class ClassMapEventListenerLoaderTest extends TestCase implements EventListenerL
 
     public function testGetNonExistingEventListener()
     {
-        $this->setExpectedException('Cqrs\Event\EventException');
+        $this->setExpectedException('Malocher\Cqrs\Event\EventException');
         $alias = 'Test\Coverage\Mock\Event\NotExisting_MockEvent';
         $this->loader->getEventListener($alias);
     }

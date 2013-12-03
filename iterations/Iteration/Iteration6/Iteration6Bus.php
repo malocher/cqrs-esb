@@ -8,7 +8,7 @@
  */
 namespace Iteration\Iteration6;
 
-use Cqrs\Bus\AbstractBus;
+use Malocher\Cqrs\Bus\AbstractBus;
 
 /**
  * Class Iteration6Bus

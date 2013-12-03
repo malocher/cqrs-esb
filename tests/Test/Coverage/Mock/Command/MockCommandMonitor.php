@@ -8,9 +8,9 @@
  */
 namespace Test\Coverage\Mock\Command;
 
-use Cqrs\Command\InvokeCommandCommand;
-use Cqrs\Event\CommandInvokedEvent;
-use Cqrs\Message\Message;
+use Malocher\Cqrs\Command\InvokeCommandCommand;
+use Malocher\Cqrs\Event\CommandInvokedEvent;
+use Malocher\Cqrs\Message\Message;
 
 /**
  * Class MockCommandMonitor

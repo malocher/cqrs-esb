@@ -9,7 +9,7 @@
 
 namespace Test\Coverage\Cqrs\Command;
 
-use Cqrs\Command\InvokeCommandCommand;
+use Malocher\Cqrs\Command\InvokeCommandCommand;
 use Test\Coverage\Cqrs\Message\MessageTest;
 
 /**

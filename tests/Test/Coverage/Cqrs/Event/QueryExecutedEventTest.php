@@ -8,7 +8,7 @@
  */
 namespace Test\Coverage\Cqrs\Event;
 
-use Cqrs\Event\QueryExecutedEvent;
+use Malocher\Cqrs\Event\QueryExecutedEvent;
 use Test\Coverage\Cqrs\Message\MessageTest;
 
 /**

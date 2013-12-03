@@ -8,8 +8,8 @@
  */
 namespace Test\Coverage\Mock\Query;
 
-use Cqrs\Adapter\AdapterTrait;
-use Cqrs\Query\QueryInterface;
+use Malocher\Cqrs\Adapter\AdapterTrait;
+use Malocher\Cqrs\Query\QueryInterface;
 
 /**
  * Class MockQueryHandlerWrongAnnotations

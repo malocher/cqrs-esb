@@ -8,8 +8,8 @@
  */
 namespace Iteration\Iteration2;
 
-use Cqrs\Event\EventInterface;
-use Cqrs\Message\Message;
+use Malocher\Cqrs\Event\EventInterface;
+use Malocher\Cqrs\Message\Message;
 
 /**
  * Class Iteration2Event

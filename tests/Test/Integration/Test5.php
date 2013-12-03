@@ -6,12 +6,12 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace Cqrs\Configuration;
+namespace Malocher\Cqrs\Configuration;
 
-use Cqrs\Command\ClassMapCommandHandlerLoader;
-use Cqrs\Event\ClassMapEventListenerLoader;
-use Cqrs\Gate;
-use Cqrs\Query\ClassMapQueryHandlerLoader;
+use Malocher\Cqrs\Command\ClassMapCommandHandlerLoader;
+use Malocher\Cqrs\Event\ClassMapEventListenerLoader;
+use Malocher\Cqrs\Gate;
+use Malocher\Cqrs\Query\ClassMapQueryHandlerLoader;
 use Test\Integration\Test5\Test5Command;
 use Test\Integration\Test5\Test5Event;
 use Test\TestCase;
@@ -20,7 +20,7 @@ use Test\TestCase;
  * Class Test5
  *
  * @author Manfred Weber <crafics@php.net>
- * @package Cqrs\Configuration
+ * @package Malocher\Cqrs\Configuration
  */
 class Test5 extends TestCase
 {
@@ -42,7 +42,7 @@ class Test5 extends TestCase
     {
         $configuration = array(
             'adapters' => array(
-                'Cqrs\Adapter\AnnotationAdapter' => array(
+                'Malocher\Cqrs\Adapter\AnnotationAdapter' => array(
                     'buses' => array(
                         'Test\Integration\Test5\Test5Bus' => array(
                             'Test\Integration\Test5\Test5Handler'

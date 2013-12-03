@@ -8,7 +8,7 @@
  */
 namespace Test\Coverage\Mock\Message;
 
-use Cqrs\Message\PayloadInterface;
+use Malocher\Cqrs\Message\PayloadInterface;
 /**
  *  PayloadMock
  * 

@@ -8,8 +8,8 @@
  */
 namespace Iteration\Iteration6;
 
-use Cqrs\Message\Message;
-use Cqrs\Query\QueryInterface;
+use Malocher\Cqrs\Message\Message;
+use Malocher\Cqrs\Query\QueryInterface;
 
 /**
  * Class Iteration6Query

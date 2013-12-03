@@ -8,7 +8,7 @@
  */
 namespace Test\Coverage\Cqrs\Command;
 
-use Cqrs\Command\ClassMapCommandHandlerLoader;
+use Malocher\Cqrs\Command\ClassMapCommandHandlerLoader;
 use Test\TestCase;
 
 /**
@@ -31,7 +31,7 @@ class ClassMapCommandHandlerLoaderTest extends TestCase implements CommandHandle
 
     public function testConstructed()
     {
-        $this->assertInstanceOf('Cqrs\Command\ClassMapCommandHandlerLoader', $this->loader);
+        $this->assertInstanceOf('Malocher\Cqrs\Command\ClassMapCommandHandlerLoader', $this->loader);
     }
 
     public function testGetExistingCommandListener()
@@ -43,7 +43,7 @@ class ClassMapCommandHandlerLoaderTest extends TestCase implements CommandHandle
 
     public function testGetNonExistingCommandListener()
     {
-        $this->setExpectedException('Cqrs\Command\CommandException');
+        $this->setExpectedException('Malocher\Cqrs\Command\CommandException');
         $alias = 'Test\Coverage\Mock\Command\NotExisting_MockCommand';
         $this->loader->getCommandHandler($alias);
     }

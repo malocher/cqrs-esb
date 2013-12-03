@@ -9,11 +9,11 @@
 
 namespace Iteration;
 
-use Cqrs\Command\ClassMapCommandHandlerLoader;
-use Cqrs\Configuration\Setup;
-use Cqrs\Event\ClassMapEventListenerLoader;
-use Cqrs\Gate;
-use Cqrs\Query\ClassMapQueryHandlerLoader;
+use Malocher\Cqrs\Command\ClassMapCommandHandlerLoader;
+use Malocher\Cqrs\Configuration\Setup;
+use Malocher\Cqrs\Event\ClassMapEventListenerLoader;
+use Malocher\Cqrs\Gate;
+use Malocher\Cqrs\Query\ClassMapQueryHandlerLoader;
 use Iteration\Iteration5\Iteration5Command;
 
 require dirname(dirname(__DIR__)) . '/bootstrap.php';
@@ -42,12 +42,12 @@ class Iteration5
         // iteration 5
         $configuration = [
             'adapters' => [
-                'Cqrs\Adapter\AnnotationAdapter' => [
+                'Malocher\Cqrs\Adapter\AnnotationAdapter' => [
                     'buses' => [
                         'Iteration\Iteration5\Iteration5Bus' => [
                             'Iteration\Iteration5\Iteration5Handler'
                         ],
-                        'Cqrs\Bus\SystemBus' => [
+                        'Malocher\Cqrs\Bus\SystemBus' => [
                             'Iteration\Iteration5\Iteration5Monitor'
                         ]
                     ]

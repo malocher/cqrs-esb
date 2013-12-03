@@ -8,7 +8,7 @@
  */
 namespace Test\Coverage\Mock\Query;
 
-use Cqrs\Adapter\AdapterTrait;
+use Malocher\Cqrs\Adapter\AdapterTrait;
 
 /**
  * Class MockCallbackQueryHandler

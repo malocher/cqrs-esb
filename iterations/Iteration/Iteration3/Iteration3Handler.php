@@ -8,7 +8,7 @@
  */
 namespace Iteration\Iteration3;
 
-use Cqrs\Adapter\AdapterTrait;
+use Malocher\Cqrs\Adapter\AdapterTrait;
 
 /**
  * Class Iteration3Handler

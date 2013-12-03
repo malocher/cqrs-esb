@@ -8,7 +8,7 @@
  */
 namespace Iteration\Iteration5;
 
-use Cqrs\Adapter\AdapterTrait;
+use Malocher\Cqrs\Adapter\AdapterTrait;
 
 /**
  * Class Iteration5Handler

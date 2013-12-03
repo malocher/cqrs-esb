@@ -8,8 +8,8 @@
  */
 namespace Test\Integration\Test1;
 
-use Cqrs\Command\CommandInterface;
-use Cqrs\Message\Message;
+use Malocher\Cqrs\Command\CommandInterface;
+use Malocher\Cqrs\Message\Message;
 
 /**
  * Class Test1Command

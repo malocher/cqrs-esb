@@ -9,11 +9,11 @@
 
 namespace Iteration;
 
-use Cqrs\Adapter\AnnotationAdapter;
-use Cqrs\Command\ClassMapCommandHandlerLoader;
-use Cqrs\Event\ClassMapEventListenerLoader;
-use Cqrs\Gate;
-use Cqrs\Query\ClassMapQueryHandlerLoader;
+use Malocher\Cqrs\Adapter\AnnotationAdapter;
+use Malocher\Cqrs\Command\ClassMapCommandHandlerLoader;
+use Malocher\Cqrs\Event\ClassMapEventListenerLoader;
+use Malocher\Cqrs\Gate;
+use Malocher\Cqrs\Query\ClassMapQueryHandlerLoader;
 use Iteration\Iteration4\Iteration4Bus;
 use Iteration\Iteration4\Iteration4Command;
 

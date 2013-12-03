@@ -8,8 +8,8 @@
  */
 namespace Iteration\Iteration6;
 
-use Cqrs\Command\CommandInterface;
-use Cqrs\Message\Message;
+use Malocher\Cqrs\Command\CommandInterface;
+use Malocher\Cqrs\Message\Message;
 
 /**
  * Class Iteration6Command

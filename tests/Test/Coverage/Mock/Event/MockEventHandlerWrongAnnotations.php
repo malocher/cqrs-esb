@@ -8,8 +8,8 @@
  */
 namespace Test\Coverage\Mock\Event;
 
-use Cqrs\Adapter\AdapterTrait;
-use Cqrs\Event\EventInterface;
+use Malocher\Cqrs\Adapter\AdapterTrait;
+use Malocher\Cqrs\Event\EventInterface;
 
 /**
  * Class MockEventHandlerWrongAnnotations

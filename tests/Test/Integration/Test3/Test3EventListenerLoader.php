@@ -8,7 +8,7 @@
  */
 namespace Test\Integration\Test3;
 
-use Cqrs\Event\EventListenerLoaderInterface;
+use Malocher\Cqrs\Event\EventListenerLoaderInterface;
 
 /**
  * Class Test3EventListenerLoader

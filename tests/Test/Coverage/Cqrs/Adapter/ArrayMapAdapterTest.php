@@ -8,10 +8,10 @@
  */
 namespace Test\Coverage\Cqrs\Adapter;
 
-use Cqrs\Adapter\ArrayMapAdapter;
-use Cqrs\Command\ClassMapCommandHandlerLoader;
-use Cqrs\Event\ClassMapEventListenerLoader;
-use Cqrs\Query\ClassMapQueryHandlerLoader;
+use Malocher\Cqrs\Adapter\ArrayMapAdapter;
+use Malocher\Cqrs\Command\ClassMapCommandHandlerLoader;
+use Malocher\Cqrs\Event\ClassMapEventListenerLoader;
+use Malocher\Cqrs\Query\ClassMapQueryHandlerLoader;
 use Test\Coverage\Mock\Bus\MockBus;
 use Test\TestCase;
 
@@ -45,7 +45,7 @@ class ArrayMapAdapterTest extends TestCase implements AdapterInterfaceTest
 
     public function testPipeWrongQuery()
     {
-        $this->setExpectedException('Cqrs\Adapter\AdapterException');
+        $this->setExpectedException('Malocher\Cqrs\Adapter\AdapterException');
         $configuration = array(
             'Test\Coverage\Mock\Query\NonExistentMockQuery' => array(
                 'alias' => 'Test\Coverage\Mock\Query\MockQueryHandler',
@@ -71,7 +71,7 @@ class ArrayMapAdapterTest extends TestCase implements AdapterInterfaceTest
 
     public function testPipeMockWrongQuery()
     {
-        $this->setExpectedException('Cqrs\Adapter\AdapterException');
+        $this->setExpectedException('Malocher\Cqrs\Adapter\AdapterException');
         $configuration = array(
             'Test\Coverage\Mock\Query\MockWrongQuery' => array(
                 'alias' => 'Test\Coverage\Mock\Query\MockQueryHandler',
@@ -83,7 +83,7 @@ class ArrayMapAdapterTest extends TestCase implements AdapterInterfaceTest
 
     public function testPipeWrongCommand()
     {
-        $this->setExpectedException('Cqrs\Adapter\AdapterException');
+        $this->setExpectedException('Malocher\Cqrs\Adapter\AdapterException');
         $configuration = array(
             'Test\Coverage\Mock\Command\NonExistentMockCommand' => array(
                 'alias' => 'Test\Coverage\Mock\Command\MockCommandHandler',
@@ -109,7 +109,7 @@ class ArrayMapAdapterTest extends TestCase implements AdapterInterfaceTest
 
     public function testPipeMockWrongCommand()
     {
-        $this->setExpectedException('Cqrs\Adapter\AdapterException');
+        $this->setExpectedException('Malocher\Cqrs\Adapter\AdapterException');
         $configuration = array(
             'Test\Coverage\Mock\Command\MockWrongCommand' => array(
                 'alias' => 'Test\Coverage\Mock\Command\MockCommandHandler',
@@ -121,7 +121,7 @@ class ArrayMapAdapterTest extends TestCase implements AdapterInterfaceTest
 
     public function testPipeWrongEvent()
     {
-        $this->setExpectedException('Cqrs\Adapter\AdapterException');
+        $this->setExpectedException('Malocher\Cqrs\Adapter\AdapterException');
         $configuration = array(
             'Test\Coverage\Mock\Event\NonExistentMockEvent' => array(
                 'alias' => 'Test\Coverage\Mock\Event\MockEventHandler',
@@ -147,7 +147,7 @@ class ArrayMapAdapterTest extends TestCase implements AdapterInterfaceTest
 
     public function testPipeMockWrongEvent()
     {
-        $this->setExpectedException('Cqrs\Adapter\AdapterException');
+        $this->setExpectedException('Malocher\Cqrs\Adapter\AdapterException');
         $configuration = array(
             'Test\Coverage\Mock\Event\MockWrongEvent' => array(
                 'alias' => 'Test\Coverage\Mock\Event\MockEventHandler',

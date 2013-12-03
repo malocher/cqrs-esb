@@ -8,11 +8,11 @@
  */
 namespace Iteration\Iteration4;
 
-use Cqrs\Adapter\AdapterTrait;
-use Cqrs\Command\InvokeCommandCommand;
-use Cqrs\Command\PublishEventCommand;
-use Cqrs\Event\CommandInvokedEvent;
-use Cqrs\Event\EventPublishedEvent;
+use Malocher\Cqrs\Adapter\AdapterTrait;
+use Malocher\Cqrs\Command\InvokeCommandCommand;
+use Malocher\Cqrs\Command\PublishEventCommand;
+use Malocher\Cqrs\Event\CommandInvokedEvent;
+use Malocher\Cqrs\Event\EventPublishedEvent;
 
 /**
  * Class Iteration4Monitor
@@ -28,7 +28,7 @@ class Iteration4Monitor
     use AdapterTrait;
 
     /**
-     * @command Cqrs\Command\InvokeCommandCommand
+     * @command Malocher\Cqrs\Command\InvokeCommandCommand
      * @param InvokeCommandCommand $command
      */
     public function invokeCommandHandler(InvokeCommandCommand $command)
@@ -49,7 +49,7 @@ class Iteration4Monitor
     }
 
     /**
-     * @command Cqrs\Command\PublishEventCommand
+     * @command Malocher\Cqrs\Command\PublishEventCommand
      * @param PublishEventCommand $command
      */
     public function publishEventHandler(PublishEventCommand $command)
@@ -70,7 +70,7 @@ class Iteration4Monitor
     }
 
     /**
-     * @event Cqrs\Event\CommandInvokedEvent
+     * @event Malocher\Cqrs\Event\CommandInvokedEvent
      * @param CommandInvokedEvent $event
      */
     public function commandInvokedHandler(CommandInvokedEvent $event)
@@ -91,7 +91,7 @@ class Iteration4Monitor
     }
 
     /**
-     * @event Cqrs\Event\EventPublishedEvent
+     * @event Malocher\Cqrs\Event\EventPublishedEvent
      * @param EventPublishedEvent $event
      */
     public function eventPublishedHandler(EventPublishedEvent $event)

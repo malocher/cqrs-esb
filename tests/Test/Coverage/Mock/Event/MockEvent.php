@@ -8,8 +8,8 @@
  */
 namespace Test\Coverage\Mock\Event;
 
-use Cqrs\Event\EventInterface;
-use Cqrs\Message\Message;
+use Malocher\Cqrs\Event\EventInterface;
+use Malocher\Cqrs\Message\Message;
 
 /**
  * Class MockEvent

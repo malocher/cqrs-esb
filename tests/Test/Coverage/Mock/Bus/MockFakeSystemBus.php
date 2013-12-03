@@ -8,7 +8,7 @@
  */
 namespace Test\Coverage\Mock\Bus;
 
-use Cqrs\Bus\AbstractBus;
+use Malocher\Cqrs\Bus\AbstractBus;
 
 /**
  * Class MockFakeSystemBus

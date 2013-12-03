@@ -8,11 +8,11 @@
  */
 namespace Test\Coverage\Cqrs\Configuration;
 
-use Cqrs\Command\ClassMapCommandHandlerLoader;
-use Cqrs\Configuration\Setup;
-use Cqrs\Event\ClassMapEventListenerLoader;
-use Cqrs\Gate;
-use Cqrs\Query\ClassMapQueryHandlerLoader;
+use Malocher\Cqrs\Command\ClassMapCommandHandlerLoader;
+use Malocher\Cqrs\Configuration\Setup;
+use Malocher\Cqrs\Event\ClassMapEventListenerLoader;
+use Malocher\Cqrs\Gate;
+use Malocher\Cqrs\Query\ClassMapQueryHandlerLoader;
 use Test\Coverage\Mock\Command\MockCommand;
 use Test\Coverage\Mock\Command\MockCommandMonitor;
 use Test\Coverage\Mock\Event\MockEvent;
@@ -38,7 +38,7 @@ class SetupTest extends TestCase
 
     public function testConstructed()
     {
-        $this->assertInstanceOf('Cqrs\Configuration\Setup', $this->setup);
+        $this->assertInstanceOf('Malocher\Cqrs\Configuration\Setup', $this->setup);
     }
 
     public function testSetGate()
@@ -46,7 +46,7 @@ class SetupTest extends TestCase
         $gate = new Gate();
         $this->setup->setGate($gate);
         $this->assertEquals($gate, $this->setup->getGate());
-        $this->assertInstanceOf('Cqrs\Gate', $this->setup->getGate());
+        $this->assertInstanceOf('Malocher\Cqrs\Gate', $this->setup->getGate());
     }
 
     public function testGetGate()
@@ -54,13 +54,13 @@ class SetupTest extends TestCase
         if (is_null($this->setup->getGate())) {
             $this->setup->setGate(new Gate());
         }
-        $this->assertInstanceOf('Cqrs\Gate', $this->setup->getGate());
+        $this->assertInstanceOf('Malocher\Cqrs\Gate', $this->setup->getGate());
     }
 
     public function testSetCommandHandlerLoader()
     {
         $this->setup->setCommandHandlerLoader(new ClassMapCommandHandlerLoader());
-        $this->assertInstanceOf('Cqrs\Command\ClassMapCommandHandlerLoader', $this->setup->getCommandHandlerLoader());
+        $this->assertInstanceOf('Malocher\Cqrs\Command\ClassMapCommandHandlerLoader', $this->setup->getCommandHandlerLoader());
     }
 
     public function testGetCommandHandlerLoader()
@@ -68,13 +68,13 @@ class SetupTest extends TestCase
         if (is_null($this->setup->getCommandHandlerLoader())) {
             $this->setup->setCommandHandlerLoader(new ClassMapCommandHandlerLoader());
         }
-        $this->assertInstanceOf('Cqrs\Command\ClassMapCommandHandlerLoader', $this->setup->getCommandHandlerLoader());
+        $this->assertInstanceOf('Malocher\Cqrs\Command\ClassMapCommandHandlerLoader', $this->setup->getCommandHandlerLoader());
     }
 
     public function testSetEventListenerLoader()
     {
         $this->setup->setEventListenerLoader(new ClassMapEventListenerLoader());
-        $this->assertInstanceOf('Cqrs\Event\ClassMapEventListenerLoader', $this->setup->getEventListenerLoader());
+        $this->assertInstanceOf('Malocher\Cqrs\Event\ClassMapEventListenerLoader', $this->setup->getEventListenerLoader());
     }
 
     public function testGetEventListenerLoader()
@@ -82,13 +82,13 @@ class SetupTest extends TestCase
         if (is_null($this->setup->getEventListenerLoader())) {
             $this->setup->setEventListenerLoader(new ClassMapEventListenerLoader());
         }
-        $this->assertInstanceOf('Cqrs\Event\ClassMapEventListenerLoader', $this->setup->getEventListenerLoader());
+        $this->assertInstanceOf('Malocher\Cqrs\Event\ClassMapEventListenerLoader', $this->setup->getEventListenerLoader());
     }
 
     public function testSetGetQueryHandlerLoader()
     {
         $this->setup->setQueryHandlerLoader(new ClassMapQueryHandlerLoader());
-        $this->assertInstanceOf('Cqrs\Query\QueryHandlerLoaderInterface', $this->setup->getQueryHandlerLoader());
+        $this->assertInstanceOf('Malocher\Cqrs\Query\QueryHandlerLoaderInterface', $this->setup->getQueryHandlerLoader());
     }
 
     public function testInitialize()
@@ -98,7 +98,7 @@ class SetupTest extends TestCase
         $configuration = array(
             'default_bus' => 'test-coverage-mock-bus',
             'adapters' => array(
-                'Cqrs\Adapter\ArrayMapAdapter' => array(
+                'Malocher\Cqrs\Adapter\ArrayMapAdapter' => array(
                     'buses' => array(
                         'Test\Coverage\Mock\Bus\MockBus' => array(
                             'Test\Coverage\Mock\Command\MockCommand' => array(
@@ -112,9 +112,9 @@ class SetupTest extends TestCase
                                 'method' => 'handleEvent'
                             )
                         ),
-                        'Cqrs\Bus\SystemBus' => array(
-                            'Cqrs\Command\InvokeCommandCommand' => $monitor,
-                            'Cqrs\Event\CommandInvokedEvent' => $monitor,
+                        'Malocher\Cqrs\Bus\SystemBus' => array(
+                            'Malocher\Cqrs\Command\InvokeCommandCommand' => $monitor,
+                            'Malocher\Cqrs\Event\CommandInvokedEvent' => $monitor,
                         )
                     )
                 ),
@@ -126,12 +126,12 @@ class SetupTest extends TestCase
         $this->setup->setQueryHandlerLoader(new ClassMapQueryHandlerLoader());
         $this->setup->initialize($configuration);
 
-        $this->assertInstanceOf('Cqrs\Gate', $this->setup->getGate());
-        $this->assertInstanceOf('Cqrs\Command\CommandHandlerLoaderInterface', $this->setup->getCommandHandlerLoader());
-        $this->assertInstanceOf('Cqrs\Event\EventListenerLoaderInterface', $this->setup->getEventListenerLoader());
-        $this->assertInstanceOf('Cqrs\Bus\BusInterface', $this->setup->getGate()->getBus('test-coverage-mock-bus'));
+        $this->assertInstanceOf('Malocher\Cqrs\Gate', $this->setup->getGate());
+        $this->assertInstanceOf('Malocher\Cqrs\Command\CommandHandlerLoaderInterface', $this->setup->getCommandHandlerLoader());
+        $this->assertInstanceOf('Malocher\Cqrs\Event\EventListenerLoaderInterface', $this->setup->getEventListenerLoader());
+        $this->assertInstanceOf('Malocher\Cqrs\Bus\BusInterface', $this->setup->getGate()->getBus('test-coverage-mock-bus'));
 
-        $this->assertInstanceOf('Cqrs\Bus\SystemBus', $this->setup->getGate()->getSystemBus());
+        $this->assertInstanceOf('Malocher\Cqrs\Bus\SystemBus', $this->setup->getGate()->getSystemBus());
 
         $mockCommand = new MockCommand();
 
@@ -152,22 +152,22 @@ class SetupTest extends TestCase
         $this->assertTrue($mockEvent->isEdited());
         
         //Test setup the default bus corectly
-        $this->assertInstanceOf('Cqrs\Bus\BusInterface', $this->setup->getGate()->getBus());
+        $this->assertInstanceOf('Malocher\Cqrs\Bus\BusInterface', $this->setup->getGate()->getBus());
     }
 
     public function testInitializeWithoutGate()
     {
-        $this->setExpectedException('Cqrs\Configuration\ConfigurationException');
+        $this->setExpectedException('Malocher\Cqrs\Configuration\ConfigurationException');
         $this->setup->initialize(array());
     }
 
     public function testInitializeWithoutCommandHandlerLoader()
     {
-        $this->setExpectedException('Cqrs\Configuration\ConfigurationException');
+        $this->setExpectedException('Malocher\Cqrs\Configuration\ConfigurationException');
         $configuration = array(
             'enable_system_bus' => true,
             'adapters' => array(
-                'Cqrs\Adapter\ArrayMapAdapter' => array(
+                'Malocher\Cqrs\Adapter\ArrayMapAdapter' => array(
                     'buses' => array(
                         'Test\Coverage\Mock\Bus\MockBus' => array(
                             'Test\Coverage\Mock\Command\MockCommand' => array(
@@ -186,11 +186,11 @@ class SetupTest extends TestCase
 
     public function testInitializeWithoutEventHandlerLoader()
     {
-        $this->setExpectedException('Cqrs\Configuration\ConfigurationException');
+        $this->setExpectedException('Malocher\Cqrs\Configuration\ConfigurationException');
         $configuration = array(
             'enable_system_bus' => true,
             'adapters' => array(
-                'Cqrs\Adapter\ArrayMapAdapter' => array(
+                'Malocher\Cqrs\Adapter\ArrayMapAdapter' => array(
                     'buses' => array(
                         'Test\Coverage\Mock\Bus\MockBus' => array(
                             'Test\Coverage\Mock\Command\MockCommand' => array(
@@ -209,11 +209,11 @@ class SetupTest extends TestCase
     
     public function testInitializeWithoutQuerytHandlerLoader()
     {
-        $this->setExpectedException('Cqrs\Configuration\ConfigurationException');
+        $this->setExpectedException('Malocher\Cqrs\Configuration\ConfigurationException');
         $configuration = array(
             'enable_system_bus' => true,
             'adapters' => array(
-                'Cqrs\Adapter\ArrayMapAdapter' => array(
+                'Malocher\Cqrs\Adapter\ArrayMapAdapter' => array(
                     'buses' => array(
                         'Test\Coverage\Mock\Bus\MockBus' => array(
                             'Test\Coverage\Mock\Query\MockQuery' => array(

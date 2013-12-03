@@ -8,8 +8,8 @@
  */
 namespace Test\Integration\Test5;
 
-use Cqrs\Adapter\AdapterTrait;
-use Cqrs\Message\Message;
+use Malocher\Cqrs\Adapter\AdapterTrait;
+use Malocher\Cqrs\Message\Message;
 
 /**
  * Class Test5Handler

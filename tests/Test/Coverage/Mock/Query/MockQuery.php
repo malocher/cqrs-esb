@@ -8,8 +8,8 @@
  */
 namespace Test\Coverage\Mock\Query;
 
-use Cqrs\Message\Message;
-use Cqrs\Query\QueryInterface;
+use Malocher\Cqrs\Message\Message;
+use Malocher\Cqrs\Query\QueryInterface;
 
 /**
  * Class MockQuery

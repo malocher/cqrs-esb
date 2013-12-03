@@ -8,15 +8,15 @@
  */
 namespace Test\Coverage\Cqrs\Bus;
 
-use Cqrs\Adapter\AnnotationAdapter;
-use Cqrs\Bus\AbstractBus;
-use Cqrs\Command\ClassMapCommandHandlerLoader;
-use Cqrs\Command\CommandInterface;
-use Cqrs\Event\ClassMapEventListenerLoader;
-use Cqrs\Event\EventInterface;
-use Cqrs\Gate;
-use Cqrs\Query\ClassMapQueryHandlerLoader;
-use Cqrs\Query\QueryInterface;
+use Malocher\Cqrs\Adapter\AnnotationAdapter;
+use Malocher\Cqrs\Bus\AbstractBus;
+use Malocher\Cqrs\Command\ClassMapCommandHandlerLoader;
+use Malocher\Cqrs\Command\CommandInterface;
+use Malocher\Cqrs\Event\ClassMapEventListenerLoader;
+use Malocher\Cqrs\Event\EventInterface;
+use Malocher\Cqrs\Gate;
+use Malocher\Cqrs\Query\ClassMapQueryHandlerLoader;
+use Malocher\Cqrs\Query\QueryInterface;
 use Test\Coverage\Mock\Command\MockCommand;
 use Test\Coverage\Mock\Event\MockEvent;
 use Test\Coverage\Mock\Query\MockQuery;
@@ -37,7 +37,7 @@ class AbstractBusTest extends TestCase implements BusInterfaceTest
 
     public function setUp()
     {
-        $this->bus = $this->getMockForAbstractClass('Cqrs\Bus\AbstractBus');
+        $this->bus = $this->getMockForAbstractClass('Malocher\Cqrs\Bus\AbstractBus');
         
         $this->bus->setCommandHandlerLoader(new ClassMapCommandHandlerLoader());
         $this->bus->setEventListenerLoader(new ClassMapEventListenerLoader());
@@ -46,13 +46,13 @@ class AbstractBusTest extends TestCase implements BusInterfaceTest
 
     public function testConstructed()
     {
-        $this->assertInstanceOf('Cqrs\Bus\AbstractBus', $this->bus);
+        $this->assertInstanceOf('Malocher\Cqrs\Bus\AbstractBus', $this->bus);
     }
 
     public function testSetGate()
     {
         $this->bus->setGate(new Gate());
-        $this->assertInstanceOf('Cqrs\Gate', $this->bus->getGate());
+        $this->assertInstanceOf('Malocher\Cqrs\Gate', $this->bus->getGate());
     }
 
     public function testGetGate()
@@ -60,7 +60,7 @@ class AbstractBusTest extends TestCase implements BusInterfaceTest
         if (is_null($this->bus->getGate())) {
             $this->bus->setGate(new Gate());
         }
-        $this->assertInstanceOf('Cqrs\Gate', $this->bus->getGate());
+        $this->assertInstanceOf('Malocher\Cqrs\Gate', $this->bus->getGate());
     }
 
     public function testMapQuery()
@@ -148,7 +148,7 @@ class AbstractBusTest extends TestCase implements BusInterfaceTest
 
     public function testExecuteQueryHandlerNoAdapter()
     {
-        $this->setExpectedException('Cqrs\Bus\BusException');
+        $this->setExpectedException('Malocher\Cqrs\Bus\BusException');
         $this->bus->setGate(new Gate());
         $adapter = new AnnotationAdapter();
         $adapter->pipe($this->bus, array('Test\Coverage\Mock\Query\MockQueryHandlerNoAdapter'));
@@ -161,9 +161,9 @@ class AbstractBusTest extends TestCase implements BusInterfaceTest
     
     public function testExcecuteQueryHandlerNoQueryHandlerLoader()
     {
-        $this->setExpectedException('Cqrs\Bus\BusException');
+        $this->setExpectedException('Malocher\Cqrs\Bus\BusException');
         
-        $bus = $this->getMockForAbstractClass('Cqrs\Bus\AbstractBus'); 
+        $bus = $this->getMockForAbstractClass('Malocher\Cqrs\Bus\AbstractBus'); 
         
         $bus->setGate(new Gate());
         $bus->mapQuery('Test\Coverage\Mock\Query\MockQuery', array(
@@ -214,7 +214,7 @@ class AbstractBusTest extends TestCase implements BusInterfaceTest
 
     public function testInvokeCommandHandlerNoAdapter()
     {
-        $this->setExpectedException('Cqrs\Bus\BusException');
+        $this->setExpectedException('Malocher\Cqrs\Bus\BusException');
         $this->bus->setGate(new Gate());
         $adapter = new AnnotationAdapter();
         $adapter->pipe($this->bus, array('Test\Coverage\Mock\Command\MockCommandHandlerNoAdapter'));
@@ -226,9 +226,9 @@ class AbstractBusTest extends TestCase implements BusInterfaceTest
     
     public function testInvokeCommandHanlderNoCommandHandlerLoader()
     {        
-        $this->setExpectedException('Cqrs\Bus\BusException');
+        $this->setExpectedException('Malocher\Cqrs\Bus\BusException');
         
-        $bus = $this->getMockForAbstractClass('Cqrs\Bus\AbstractBus'); 
+        $bus = $this->getMockForAbstractClass('Malocher\Cqrs\Bus\AbstractBus'); 
         
         $bus->setGate(new Gate());
         $bus->mapCommand('Test\Coverage\Mock\Command\MockCommand', array(
@@ -279,7 +279,7 @@ class AbstractBusTest extends TestCase implements BusInterfaceTest
 
     public function testPublishEventHandlerNoAdapter()
     {
-        $this->setExpectedException('Cqrs\Bus\BusException');
+        $this->setExpectedException('Malocher\Cqrs\Bus\BusException');
         $this->bus->setGate(new Gate());
         $adapter = new AnnotationAdapter();
         $adapter->pipe($this->bus, array('Test\Coverage\Mock\Event\MockEventHandlerNoAdapter'));
@@ -306,9 +306,9 @@ class AbstractBusTest extends TestCase implements BusInterfaceTest
     
     public function testPublishEventHandlerNoEventHandlerLoader()
     {
-        $this->setExpectedException('Cqrs\Bus\BusException');
+        $this->setExpectedException('Malocher\Cqrs\Bus\BusException');
         
-        $bus = $this->getMockForAbstractClass('Cqrs\Bus\AbstractBus'); 
+        $bus = $this->getMockForAbstractClass('Malocher\Cqrs\Bus\AbstractBus'); 
         
         $bus->setGate(new Gate());
         $bus->registerEventListener('Test\Coverage\Mock\Event\MockEvent', array(

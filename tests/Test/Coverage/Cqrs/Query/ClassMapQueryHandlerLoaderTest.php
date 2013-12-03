@@ -8,14 +8,14 @@
  */
 namespace Test\Coverage\Cqrs\Query;
 
-use Cqrs\Query\ClassMapQueryHandlerLoader;
+use Malocher\Cqrs\Query\ClassMapQueryHandlerLoader;
 use Test\TestCase;
 
 /**
  * Class ClassMapQueryHandlerLoaderTest
  *
  * @author Manfred Weber <crafics@php.net>
- * @package Test\Cqrs\Query
+ * @package Test\Malocher\Cqrs\Query
  */
 class ClassMapQueryHandlerLoaderTest extends TestCase implements QueryHandlerLoaderInterfaceTest
 {
@@ -31,7 +31,7 @@ class ClassMapQueryHandlerLoaderTest extends TestCase implements QueryHandlerLoa
 
     public function testConstructed()
     {
-        $this->assertInstanceOf('Cqrs\Query\ClassMapQueryHandlerLoader', $this->loader);
+        $this->assertInstanceOf('Malocher\Cqrs\Query\ClassMapQueryHandlerLoader', $this->loader);
     }
 
     public function testGetExistingQueryHandler()
@@ -43,7 +43,7 @@ class ClassMapQueryHandlerLoaderTest extends TestCase implements QueryHandlerLoa
 
     public function testGetNonExistingQueryHandler()
     {
-        $this->setExpectedException('Cqrs\Query\QueryException');
+        $this->setExpectedException('Malocher\Cqrs\Query\QueryException');
         $alias = 'Test\Coverage\Mock\Query\NotExisting_MockQuery';
         $this->loader->getQueryHandler($alias);
     }

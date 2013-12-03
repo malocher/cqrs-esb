@@ -8,11 +8,11 @@
  */
 namespace Test\Integration;
 
-use Cqrs\Adapter\AnnotationAdapter;
-use Cqrs\Command\ClassMapCommandHandlerLoader;
-use Cqrs\Event\ClassMapEventListenerLoader;
-use Cqrs\Gate;
-use Cqrs\Query\ClassMapQueryHandlerLoader;
+use Malocher\Cqrs\Adapter\AnnotationAdapter;
+use Malocher\Cqrs\Command\ClassMapCommandHandlerLoader;
+use Malocher\Cqrs\Event\ClassMapEventListenerLoader;
+use Malocher\Cqrs\Gate;
+use Malocher\Cqrs\Query\ClassMapQueryHandlerLoader;
 use Test\Integration\Test2\Test2Bus;
 use Test\Integration\Test2\Test2Command;
 use Test\Integration\Test2\Test2Event;
