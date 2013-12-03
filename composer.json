@@ -1,9 +1,9 @@
 {
-    "name": "crafics/cqrs-php",
-    "description": "PHP CQRS Framework",
+    "name": "Malocher/cqrs-esb",
+    "description": "PHP CQRS ESB Framework",
     "type": "library",
     "license": "BSD-3-Clause",
-    "homepage": "https://github.com/crafics/cqrs-php/",
+    "homepage": "https://github.com/Malocher/cqrs-esb/",
     "authors": [
         {
             "name": "Alexander Miertsch",
@@ -19,6 +19,7 @@
     "keywords": [
         "php",
         "cqrs",
+        "esb",
         "framework"
     ],
     "require-dev": {
