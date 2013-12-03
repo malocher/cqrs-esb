@@ -16,6 +16,12 @@ namespace Malocher\Test;
  */
 abstract class TestCase extends \PHPUnit_Framework_TestCase
 {
-
-
+    protected function getRootDirName()
+    {
+        $pathToDir = dirname(realpath(__DIR__ . '/../../'));
+        
+        $pathToDir  = trim(strrchr($pathToDir, '/'), '/');
+        
+        return $pathToDir;
+    }
 }
