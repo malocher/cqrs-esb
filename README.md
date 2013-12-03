@@ -1,4 +1,4 @@
-cqrs-php
+cqrs-esb
 ========
 This package helps implementing the Command Query Responsibility Segregation (CQRS) principles for php applications.
 CQRS plays well with Domain Driven Design (DDD) or traditional MVC patterns.
@@ -7,7 +7,7 @@ CQRS plays well with Domain Driven Design (DDD) or traditional MVC patterns.
 
 ## Iterations
 
-https://github.com/Malocher/cqrs-esb/tree/master/iterations/Iteration
+https://github.com/malocher/cqrs-esb/tree/master/iterations/Iteration
 
 Zend Framework 2 Integration
 -----------------------------
