@@ -69,11 +69,19 @@ class BusProxy implements BusInterface
     {
         return $this->gate;
     }
-    
+
     /**
      * {@inheritDoc}
      */
-    public function getName() 
+    public function getBus()
+    {
+        return $this->bus;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getName()
     {
         return $this->bus->getName();
     }
