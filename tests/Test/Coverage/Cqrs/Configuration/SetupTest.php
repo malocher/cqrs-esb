@@ -129,7 +129,7 @@ class SetupTest extends TestCase
         $this->assertInstanceOf('Cqrs\Gate', $this->setup->getGate());
         $this->assertInstanceOf('Cqrs\Command\CommandHandlerLoaderInterface', $this->setup->getCommandHandlerLoader());
         $this->assertInstanceOf('Cqrs\Event\EventListenerLoaderInterface', $this->setup->getEventListenerLoader());
-        $this->assertInstanceOf('Test\Coverage\Mock\Bus\MockBus', $this->setup->getGate()->getBus('test-coverage-mock-bus'));
+        $this->assertInstanceOf('Cqrs\Bus\BusInterface', $this->setup->getGate()->getBus('test-coverage-mock-bus'));
 
         $this->assertInstanceOf('Cqrs\Bus\SystemBus', $this->setup->getGate()->getSystemBus());
 
@@ -152,7 +152,7 @@ class SetupTest extends TestCase
         $this->assertTrue($mockEvent->isEdited());
         
         //Test setup the default bus corectly
-        $this->assertInstanceOf('Test\Coverage\Mock\Bus\MockBus', $this->setup->getGate()->getBus());
+        $this->assertInstanceOf('Cqrs\Bus\BusInterface', $this->setup->getGate()->getBus());
     }
 
     public function testInitializeWithoutGate()

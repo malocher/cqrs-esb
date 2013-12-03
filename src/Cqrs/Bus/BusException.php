@@ -31,11 +31,12 @@ class BusException extends \Exception
      * Creates a new BusException describing a default bus error.
      *
      * @param string $message Exception message
+     * @param \Exception $previousException  
      * @return BusException
      */
-    public static function defaultBusError($message)
+    public static function defaultBusError($message, \Exception $previousException = null)
     {
-        return new self('[Default Bus Error] ' . $message . "\n");
+        return new self('[Default Bus Error] ' . $message . "\n", $previousException);
     }
     
     /**

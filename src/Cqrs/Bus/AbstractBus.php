@@ -11,15 +11,9 @@ namespace Cqrs\Bus;
 use Cqrs\Command\CommandHandlerLoaderInterface;
 use Cqrs\Command\CommandHandlerLoaderAwareInterface;
 use Cqrs\Command\CommandInterface;
-use Cqrs\Command\ExecuteQueryCommand;
-use Cqrs\Command\InvokeCommandCommand;
-use Cqrs\Command\PublishEventCommand;
-use Cqrs\Event\CommandInvokedEvent;
 use Cqrs\Event\EventInterface;
 use Cqrs\Event\EventListenerLoaderInterface;
 use Cqrs\Event\EventListenerLoaderAwareInterface;
-use Cqrs\Event\EventPublishedEvent;
-use Cqrs\Event\QueryExecutedEvent;
 use Cqrs\Gate;
 use Cqrs\Query\QueryHandlerLoaderInterface;
 use Cqrs\Query\QueryHandlerLoaderAwareInterface;
@@ -148,20 +142,7 @@ abstract class AbstractBus
     public function invokeCommand(CommandInterface $command)
     {
         $commandClass = get_class($command);
-
-        // InvokeCommandCommand first! Because a commandClass _IS_ actually invoked.
-        if (!is_null($this->gate->getSystemBus())) {
-            $invokeCommandCommand = new InvokeCommandCommand();
-            $invokeCommandCommand->setMessageClass(get_class($command));
-            $invokeCommandCommand->setMessageVars($command->getMessageVars());
-            $invokeCommandCommand->setBusName($this->getName());
-            $this->gate->getSystemBus()->invokeCommand($invokeCommandCommand);
-        }
-
-        // Check if command exists after invoking the InvokeCommandCommand because
-        // the InvokeCommandCommand tells that a command is invoked but does not care
-        // if it succeeded. Later the CommandInvokedEvent can be used to check if a
-        // command succeeded.
+        
         if (!isset($this->commandHandlerMap[$commandClass])) {
             return false;
         }
@@ -192,17 +173,6 @@ abstract class AbstractBus
                 }
                 $commandHandler->executeCommand($this, $commandHandler, $method, $command);
             }
-        }
-
-        // Dispatch the CommandInvokedEvent here! If for example a command could not be invoked
-        // because it does not exist in the commandHandlerMap[<empty>] this Event would never
-        // be dispatched!
-        if (!is_null($this->gate->getSystemBus())) {
-            $commandInvokedEvent = new CommandInvokedEvent();
-            $commandInvokedEvent->setMessageClass(get_class($command));
-            $commandInvokedEvent->setMessageVars($command->getMessageVars());
-            $commandInvokedEvent->setBusName($this->getName());
-            $this->gate->getSystemBus()->publishEvent($commandInvokedEvent);
         }
 
         return true;
@@ -243,15 +213,6 @@ abstract class AbstractBus
     public function executeQuery(QueryInterface $query)
     {
         $queryClass = get_class($query);
-
-        // ExecuteQueryCommand first! Because a queryClass _IS_ actually invoked.
-        if (!is_null($this->gate->getSystemBus())) {
-            $executeQueryCommand = new ExecuteQueryCommand();
-            $executeQueryCommand->setMessageClass(get_class($query));
-            $executeQueryCommand->setMessageVars($query->getMessageVars());
-            $executeQueryCommand->setBusName($this->getName());
-            $this->gate->getSystemBus()->invokeCommand($executeQueryCommand);
-        }
 
         // Check if query exists after invoking the ExecuteQueryCommand because
         // the ExecuteQueryCommand tells that a query is executed but does not care
@@ -297,19 +258,7 @@ abstract class AbstractBus
                 }
             }
         }
-
-        // Dispatch the QueryExecutedEvent here! If for example a query could not be executed
-        // because it does not exist in the queryHandlerMap[<empty>] this Event would never
-        // be dispatched!
-        if (!is_null($this->gate->getSystemBus())) {
-            $queryExecutedEvent = new QueryExecutedEvent();
-            $queryExecutedEvent->setMessageClass(get_class($query));
-            $queryExecutedEvent->setMessageVars($query->getMessageVars());
-            $queryExecutedEvent->setBusName($this->getName());
-            $queryExecutedEvent->setResult($result);
-            $this->gate->getSystemBus()->publishEvent($queryExecutedEvent);
-        }
-
+        
         return $result;
     }
 
@@ -344,18 +293,6 @@ abstract class AbstractBus
     {
         $eventClass = get_class($event);
 
-        // Check if event exists after invoking the PublishEventCommand because
-        // the PublishEventCommand tells that a event is dispatched but does not care
-        // if it succeeded. Later the EventPublishedEvent can be used to check if a
-        // event succeeded.
-        if (!is_null($this->gate->getSystemBus())) {
-            $publishEventCommand = new PublishEventCommand();
-            $publishEventCommand->setMessageClass(get_class($event));
-            $publishEventCommand->setMessageVars($event->getMessageVars());
-            $publishEventCommand->setBusName($this->getName());
-            $this->gate->getSystemBus()->invokeCommand($publishEventCommand);
-        }
-
         if (!isset($this->eventListenerMap[$eventClass])) {
             return false;
         }
@@ -385,17 +322,6 @@ abstract class AbstractBus
                 }
                 $eventListener->executeEvent($this, $eventListener, $method, $event);
             }
-        }
-
-        // Dispatch the EventPublishedEvent here! If for example a event could not be dispatched
-        // because it does not exist in the eventListenerMap[<empty>] this Event would never
-        // be dispatched!
-        if (!is_null($this->gate->getSystemBus())) {
-            $eventPublishedEvent = new EventPublishedEvent();
-            $eventPublishedEvent->setMessageClass(get_class($event));
-            $eventPublishedEvent->setMessageVars($event->getMessageVars());
-            $eventPublishedEvent->setBusName($this->getName());
-            $this->gate->getSystemBus()->publishEvent($eventPublishedEvent);
         }
 
         return true;

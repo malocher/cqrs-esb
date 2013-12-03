@@ -132,6 +132,6 @@ class AdapterTraitTest extends TestCase
         $bus = $this->getBus();
         $this->assertEquals($this->bus, $bus);
         $anotherBus = $this->getBus('test-coverage-mock-another-bus');
-        $this->assertEquals($this->anotherBus, $anotherBus);
+        $this->assertEquals($this->anotherBus->getName(), $anotherBus->getName());
     }
 }

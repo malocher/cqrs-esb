@@ -143,8 +143,8 @@ class GateTest extends TestCase
         );
         $this->gate->attach($mockBus);
         $this->assertEquals(
-            $this->gate->getBus('test-coverage-mock-bus'),
-            $mockBus
+            $this->gate->getBus('test-coverage-mock-bus')->getName(),
+            $mockBus->getName()
         );
     }
 
@@ -171,8 +171,8 @@ class GateTest extends TestCase
         $this->gate->attach($mockBus);
         
         $this->assertEquals(
-            $this->gate->getBus('test-coverage-mock-bus'),
-            $mockBus
+            $this->gate->getBus('test-coverage-mock-bus')->getName(),
+            $mockBus->getName()
         );
     }
     
@@ -187,8 +187,8 @@ class GateTest extends TestCase
         $this->gate->attach($mockBus);
         
         $this->assertEquals(
-            $this->gate->getBus(),
-            $mockBus
+            $this->gate->getBus()->getName(),
+            $mockBus->getName()
         );
     }
     
@@ -211,8 +211,8 @@ class GateTest extends TestCase
         $this->gate->setDefaultBusName($mockBus->getName());
         
         $this->assertEquals(
-            $this->gate->getBus(),
-            $mockBus
+            $this->gate->getBus()->getName(),
+            $mockBus->getName()
         );
     }
     

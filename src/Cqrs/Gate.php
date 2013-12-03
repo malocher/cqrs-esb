@@ -8,6 +8,7 @@
  */
 namespace Cqrs;
 
+use Cqrs\Gate\BusProxy;
 use Cqrs\Bus\AbstractBus;
 use Cqrs\Bus\BusInterface;
 use Cqrs\Bus\SystemBus;
@@ -157,7 +158,10 @@ class Gate
             throw GateException::attachError(sprintf('Bus <%s> is already attached!', $bus->getName()));
         }
         
-        $this->buses[$bus->getName()] = $bus;
+        $proxy = new BusProxy($bus);
+        $proxy->setGate($this);
+        
+        $this->buses[$bus->getName()] = $proxy;
     }
 
     /**

@@ -82,7 +82,7 @@ class SystemBusTest extends AbstractBusTest
             $this->commandInvokedEvent = $event;
         });
         $mockCommand = new MockCommand();
-        $this->bus->invokeCommand($mockCommand);
+        $gate->getBus($this->bus->getName())->invokeCommand($mockCommand);
         $this->assertEquals(true, $mockCommand->isEdited());
         $this->assertInstanceOf('Cqrs\Command\InvokeCommandCommand', $this->invokeCommandCommand);
         $this->assertInstanceOf('Cqrs\Event\CommandInvokedEvent', $this->commandInvokedEvent);
@@ -105,7 +105,7 @@ class SystemBusTest extends AbstractBusTest
             $this->queryExecutedEvent = $event;
         });
         $mockQuery = new MockQuery();
-        $this->bus->executeQuery($mockQuery);
+        $gate->getBus($this->bus->getName())->executeQuery($mockQuery);
         $this->assertEquals(true, $mockQuery->isEdited());
         $this->assertInstanceOf('Cqrs\Command\ExecuteQueryCommand', $this->executeQueryCommand);
         $this->assertInstanceOf('Cqrs\Event\QueryExecutedEvent', $this->queryExecutedEvent);
@@ -128,7 +128,7 @@ class SystemBusTest extends AbstractBusTest
             $this->eventPublishedEvent = $event;
         });
         $mockEvent = new MockEvent();
-        $this->bus->publishEvent($mockEvent);
+        $gate->getBus($this->bus->getName())->publishEvent($mockEvent);
         $this->assertEquals(true, $mockEvent->isEdited());
         $this->assertInstanceOf('Cqrs\Command\PublishEventCommand', $this->publishEventCommand);
         $this->assertInstanceOf('Cqrs\Event\EventPublishedEvent', $this->eventPublishedEvent);
@@ -222,7 +222,7 @@ class SystemBusTest extends AbstractBusTest
             array('alias' => 'Test\Coverage\Mock\Event\MockEventHandler', 'method' => 'handleEvent')
         );
         $mockQuery = new MockQuery();
-        $result = $this->bus->executeQuery($mockQuery);
+        $result = $gate->getBus($this->bus->getName())->executeQuery($mockQuery);
         $this->assertEquals(array(1, 2, 3, 4, 5), $result);
     }
 
@@ -245,7 +245,7 @@ class SystemBusTest extends AbstractBusTest
             array('alias' => 'Test\Coverage\Mock\Event\MockEventHandler', 'method' => 'handleEvent')
         );
         $mockCommand = new MockCommand();
-        $this->bus->invokeCommand($mockCommand);
+        $gate->getBus($this->bus->getName())->invokeCommand($mockCommand);
     }
 
     public function testArrayMapPublishEventMissingAdapterTrait()
@@ -267,7 +267,7 @@ class SystemBusTest extends AbstractBusTest
             array('alias' => 'Test\Coverage\Mock\Event\MockEventHandlerNoAdapter', 'method' => 'handleEvent')
         );
         $mockEvent = new MockEvent();
-        $this->bus->publishEvent($mockEvent);
+        $gate->getBus($this->bus->getName())->publishEvent($mockEvent);
     }
 
     public function testExecuteNonMappedQuery()
