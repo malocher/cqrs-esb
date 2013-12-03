@@ -1,5 +1,5 @@
 {
-    "name": "Malocher/cqrs-esb",
+    "name": "malocher/cqrs-esb",
     "description": "PHP CQRS ESB Framework",
     "type": "library",
     "license": "BSD-3-Clause",
