@@ -18,6 +18,7 @@ use Malocher\Cqrs\Gate;
 use Malocher\Cqrs\Query\ClassMapQueryHandlerLoader;
 use Malocher\Cqrs\Query\QueryInterface;
 use Malocher\Test\Coverage\Cqrs\Bus\BusInterfaceTest;
+use Malocher\Test\Coverage\Mock\Bus\MockBus;
 use Malocher\Test\Coverage\Mock\Command\MockCommand;
 use Malocher\Test\Coverage\Mock\Event\MockEvent;
 use Malocher\Test\Coverage\Mock\Query\MockQuery;
@@ -38,7 +39,7 @@ class BusProxyTest extends TestCase implements BusInterfaceTest
 
     public function setUp()
     {
-        $bus = $this->getMockForAbstractClass('Malocher\Test\Coverage\Mock\Bus\MockBus');
+        $bus = new MockBus();
         $bus->setCommandHandlerLoader(new ClassMapCommandHandlerLoader());
         $bus->setEventListenerLoader(new ClassMapEventListenerLoader());
         $bus->setQueryHandlerLoader(new ClassMapQueryHandlerLoader());
@@ -180,16 +181,14 @@ class BusProxyTest extends TestCase implements BusInterfaceTest
     public function testExcecuteQueryHandlerNoQueryHandlerLoader()
     {
         $this->setExpectedException('Malocher\Cqrs\Bus\BusException');
-
-        $bus = $this->getMockForAbstractClass('Malocher\Cqrs\Bus\AbstractBus');
-
+        $bus = new MockBus();
         $bus->setGate(new Gate());
         $bus->mapQuery('Malocher\Test\Coverage\Mock\Query\MockQuery', array(
             'alias' => 'Malocher\Test\Coverage\Mock\Query\MockQueryHandler',
             'method' => 'handleQueryWithNoResult'
         ));
         $mockQuery = new MockQuery();
-        $result = $bus->executeQuery($mockQuery);
+        $bus->executeQuery($mockQuery);
     }
 
     public function testMapCommand()
@@ -245,9 +244,7 @@ class BusProxyTest extends TestCase implements BusInterfaceTest
     public function testInvokeCommandHanlderNoCommandHandlerLoader()
     {
         $this->setExpectedException('Malocher\Cqrs\Bus\BusException');
-
-        $bus = $this->getMockForAbstractClass('Malocher\Cqrs\Bus\AbstractBus');
-
+        $bus = new MockBus();
         $bus->setGate(new Gate());
         $bus->mapCommand('Malocher\Test\Coverage\Mock\Command\MockCommand', array(
             'alias' => 'Malocher\Test\Coverage\Mock\Command\MockCommandHandler',
@@ -325,9 +322,7 @@ class BusProxyTest extends TestCase implements BusInterfaceTest
     public function testPublishEventHandlerNoEventHandlerLoader()
     {
         $this->setExpectedException('Malocher\Cqrs\Bus\BusException');
-
-        $bus = $this->getMockForAbstractClass('Malocher\Cqrs\Bus\AbstractBus');
-
+        $bus = new MockBus();
         $bus->setGate(new Gate());
         $bus->registerEventListener('Malocher\Test\Coverage\Mock\Event\MockEvent', array(
             'alias' => 'Malocher\Test\Coverage\Mock\Event\MockEventHandler',
