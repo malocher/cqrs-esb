@@ -51,11 +51,15 @@ class BusProxyTest extends TestCase implements BusInterfaceTest
         $this->assertInstanceOf('Malocher\Cqrs\Gate\BusProxy', $this->busProxy);
     }
 
-    /*
-    public function __call($name, $arguments) {
-        return call_user_func_array(array($this->bus, $name), $arguments);
+    
+    public function test__call() 
+    {
+        $this->assertEquals(
+            'Called from BusProxyText with message call works',
+            $this->busProxy->customFunction('BusProxyText', 'call works')
+        );
     }
-    */
+    
 
     public function testSetGate()
     {

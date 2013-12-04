@@ -25,4 +25,9 @@ class MockBus extends AbstractBus
     {
         return 'test-coverage-mock-bus';
     }
+    
+    public function customFunction($caller, $message)
+    {
+        return 'Called from ' . $caller . ' with message ' . $message;
+    }
 }

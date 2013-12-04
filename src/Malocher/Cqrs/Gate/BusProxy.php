@@ -50,6 +50,13 @@ class BusProxy implements BusInterface
         $this->bus = $bus;
     }
     
+    /**
+     * Proxy unknown method calls to target bus
+     * 
+     * @param string $name
+     * @param array $arguments
+     * @return mixed
+     */
     public function __call($name, $arguments) {
         return call_user_func_array(array($this->bus, $name), $arguments);
     }
