@@ -8,8 +8,9 @@ CQRS plays well with Domain Driven Design (DDD) or traditional MVC patterns.
 
 ## Installation
 
-Installation of CqrsModule uses composer. For composer documentation, please refer to
-[getcomposer.org](http://getcomposer.org/). Add following requirement to your composer.json
+Installation of Malocher\cqrs-esb uses composer. For composer documentation, please refer to
+[getcomposer.org](http://getcomposer.org/). 
+Add following requirement to your composer.json
 
 ```sh
 "malocher/cqrs-esb" : "dev-master"
