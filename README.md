@@ -6,6 +6,15 @@ CQRS plays well with Domain Driven Design (DDD) or traditional MVC patterns.
 [![Build Status](https://travis-ci.org/Malocher/cqrs-esb.png?branch=master)](https://travis-ci.org/Malocher/cqrs-esb)
 [![Coverage Status](https://coveralls.io/repos/Malocher/cqrs-esb/badge.png?branch=master)](https://coveralls.io/r/Malocher/cqrs-esb?branch=master)
 
+## Installation
+
+Installation of CqrsModule uses composer. For composer documentation, please refer to
+[getcomposer.org](http://getcomposer.org/). Add following requirement to your composer.json
+
+```sh
+"malocher/cqrs-esb" : "dev-master"
+```
+
 ## Iterations
 
 https://github.com/malocher/cqrs-esb/tree/master/iterations/Iteration
