@@ -22,10 +22,10 @@ https://github.com/malocher/cqrs-esb/tree/master/iterations/Iteration
 
 Zend Framework 2 Integration
 -----------------------------
-If you want to use Malocher/cqrs-esb in a ZF2 project, check out the [codeliner/zf2-cqrs-module](https://github.com/codeliner/zf2-cqrs-module).
+If you want to use Malocher/cqrs-esb in a ZF2 project, check out the [malocher/zf2-cqrs-module](https://github.com/malocher/zf2-cqrs-module).
 
 Sample Application
 -------------------
-You can find a sample application with annotated sourcecode on [codeliner/zf2-cqrs-sample](https://github.com/codeliner/zf2-cqrs-sample)
+You can find a sample application with annotated sourcecode on [malocher/zf2-cqrs-sample](https://github.com/malocher/zf2-cqrs-sample)
 
 
