@@ -3,7 +3,7 @@
     "description": "PHP CQRS ESB Framework",
     "type": "library",
     "license": "BSD-3-Clause",
-    "homepage": "https://github.com/Malocher/cqrs-esb/",
+    "homepage": "https://github.com/malocher/cqrs-esb/",
     "authors": [
         {
             "name": "Alexander Miertsch",
