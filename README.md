@@ -13,7 +13,7 @@ Installation of malocher\cqrs-esb uses composer. For composer documentation, ple
 Add following requirement to your composer.json
 
 ```sh
-"malocher/cqrs-esb" : "dev-master"
+"malocher/cqrs-esb" : "1.*"
 ```
 
 ## Iterations
