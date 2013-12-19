@@ -27,6 +27,6 @@
         "satooshi/php-coveralls": "dev-master"
     },
     "autoload": {
-        "psr-0": { "Malocher\\Test\\": "tests/","Iteration\\": "iterations/","Malocher\\Cqrs\\": "src/" }
+        "psr-0": { "Malocher\\CqrsTest\\": "tests/","Iteration\\": "iterations/","Malocher\\Cqrs\\": "src/" }
     }
 }
