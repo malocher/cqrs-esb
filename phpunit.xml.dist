@@ -7,10 +7,10 @@
     stopOnFailure="true">
     <testsuites>
         <testsuite name="Coverage">
-            <directory>./tests/Malocher/Test/Coverage/</directory>
+            <directory>./tests/Malocher/CqrsTest/Coverage/</directory>
         </testsuite>
         <testsuite name="Integration">
-            <directory>./tests/Malocher/Test/Integration/</directory>
+            <directory>./tests/Malocher/CqrsTest/Integration/</directory>
         </testsuite>
     </testsuites>
     <logging>
