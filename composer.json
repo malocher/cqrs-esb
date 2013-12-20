@@ -28,5 +28,8 @@
     },
     "autoload": {
         "psr-0": { "Malocher\\CqrsTest\\": "tests/","Iteration\\": "iterations/","Malocher\\Cqrs\\": "src/" }
+    },
+    "suggest": {
+        "malocher/zf2-cqrs-module": "Integrates malocher/cqrs-esb in a ZF2 application"
     }
 }
